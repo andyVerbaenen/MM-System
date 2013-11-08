@@ -293,9 +293,19 @@ namespace Pinguin
                 SpelSpeelstuk hulp = sender as SpelSpeelstuk;
                 hulpSpeelstuk2 = hulp;
 
+                foreach (SpelTile tile in SpelBord.Children)
+                {
+                    if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile))
+                    {
+                        hulpTegel2 = tile;
+                        break;
+                    }
 
-                hulpTegel2.Row = hulpSpeelstuk2.Row;
-                hulpTegel2.Column = hulpSpeelstuk2.Column;
+                }
+
+               // hulpTegel2 = hulp;
+                //hulpTegel2.Row = hulpSpeelstuk2.Row;
+                //hulpTegel2.Column = hulpSpeelstuk2.Column;
 
                 verplaatsingsface = true;
             }
