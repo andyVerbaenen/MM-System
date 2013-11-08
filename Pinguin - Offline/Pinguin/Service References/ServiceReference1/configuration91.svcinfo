@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="p1RbETxYFb6sJ0ELlKYbRsH0yXg=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="NE5vLuHOUiQAS96bLRGdMFcgRrI=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="customBinding" name="CustomBinding_Service1">
       <properties>
@@ -154,10 +154,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="CustomBinding_Service1" contract="ServiceReference1.Service1" bindingType="customBinding" address="http://localhost:4511/Service1.svc" bindingConfiguration="CustomBinding_Service1">
+    <endpoint name="CustomBinding_Service1" contract="ServiceReference1.Service1" bindingType="customBinding" address="http://localhost:6758/Service1.svc" bindingConfiguration="CustomBinding_Service1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:4511/Service1.svc</serializedValue>
+          <serializedValue>http://localhost:6758/Service1.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

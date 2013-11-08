@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:6758/Service1.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="RolDobbelsteen">
     <xs:complexType>
       <xs:sequence />
@@ -14,26 +15,73 @@
   </xs:element>
   <xs:element name="MakeMap">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="rows" type="xs:int" />
-        <xs:element minOccurs="0" name="columns" type="xs:int" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="MakeMapResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MakeMapResult" nillable="true" type="q1:ArrayOfArrayOfint" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="MijnTestString">
+  <xs:element name="MakeGrid">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="MijnTestStringResponse">
+  <xs:element name="MakeGridResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="MijnTestStringResult" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MakeGridResult" nillable="true" type="q2:ArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PlacePinguin">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PlacePinguinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PlacePinguinResult" nillable="true" type="q3:ArrayOfArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OpzetFase">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OpzetFaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OpzetFaseResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChanceOpzetFase">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChanceOpzetFaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ChanceOpzetFaseResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetOpzetFase">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetOpzetFaseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetOpzetFaseResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

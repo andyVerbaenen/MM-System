@@ -9,7 +9,7 @@
             </customBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:4511/Service1.svc" binding="customBinding"
+            <endpoint address="http://localhost:6758/Service1.svc" binding="customBinding"
                 bindingConfiguration="CustomBinding_Service1" contract="ServiceReference1.Service1"
                 name="CustomBinding_Service1" />
         </client>

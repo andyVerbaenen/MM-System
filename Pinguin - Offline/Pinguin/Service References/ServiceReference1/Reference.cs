@@ -24,14 +24,34 @@ namespace Pinguin.ServiceReference1 {
         int EndRolDobbelsteen(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/MakeMap", ReplyAction="urn:Service1/MakeMapResponse")]
-        System.IAsyncResult BeginMakeMap(int rows, int columns, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState);
         
-        void EndMakeMap(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndMakeMap(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/MijnTestString", ReplyAction="urn:Service1/MijnTestStringResponse")]
-        System.IAsyncResult BeginMijnTestString(System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/MakeGrid", ReplyAction="urn:Service1/MakeGridResponse")]
+        System.IAsyncResult BeginMakeGrid(System.AsyncCallback callback, object asyncState);
         
-        string EndMijnTestString(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<int> EndMakeGrid(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/PlacePinguin", ReplyAction="urn:Service1/PlacePinguinResponse")]
+        System.IAsyncResult BeginPlacePinguin(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndPlacePinguin(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/OpzetFase", ReplyAction="urn:Service1/OpzetFaseResponse")]
+        System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState);
+        
+        bool EndOpzetFase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/ChanceOpzetFase", ReplyAction="urn:Service1/ChanceOpzetFaseResponse")]
+        System.IAsyncResult BeginChanceOpzetFase(System.AsyncCallback callback, object asyncState);
+        
+        bool EndChanceOpzetFase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/SetOpzetFase", ReplyAction="urn:Service1/SetOpzetFaseResponse")]
+        System.IAsyncResult BeginSetOpzetFase(System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetOpzetFase(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -59,19 +79,114 @@ namespace Pinguin.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MijnTestStringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class MakeMapCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public MijnTestStringCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public MakeMapCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public string Result {
+        public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class MakeGridCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public MakeGridCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<int> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<int>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class PlacePinguinCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public PlacePinguinCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class OpzetFaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public OpzetFaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ChanceOpzetFaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ChanceOpzetFaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetOpzetFaseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetOpzetFaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -92,11 +207,35 @@ namespace Pinguin.ServiceReference1 {
         
         private System.Threading.SendOrPostCallback onMakeMapCompletedDelegate;
         
-        private BeginOperationDelegate onBeginMijnTestStringDelegate;
+        private BeginOperationDelegate onBeginMakeGridDelegate;
         
-        private EndOperationDelegate onEndMijnTestStringDelegate;
+        private EndOperationDelegate onEndMakeGridDelegate;
         
-        private System.Threading.SendOrPostCallback onMijnTestStringCompletedDelegate;
+        private System.Threading.SendOrPostCallback onMakeGridCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginPlacePinguinDelegate;
+        
+        private EndOperationDelegate onEndPlacePinguinDelegate;
+        
+        private System.Threading.SendOrPostCallback onPlacePinguinCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginOpzetFaseDelegate;
+        
+        private EndOperationDelegate onEndOpzetFaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onOpzetFaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginChanceOpzetFaseDelegate;
+        
+        private EndOperationDelegate onEndChanceOpzetFaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onChanceOpzetFaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetOpzetFaseDelegate;
+        
+        private EndOperationDelegate onEndSetOpzetFaseDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetOpzetFaseCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -153,9 +292,17 @@ namespace Pinguin.ServiceReference1 {
         
         public event System.EventHandler<RolDobbelsteenCompletedEventArgs> RolDobbelsteenCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> MakeMapCompleted;
+        public event System.EventHandler<MakeMapCompletedEventArgs> MakeMapCompleted;
         
-        public event System.EventHandler<MijnTestStringCompletedEventArgs> MijnTestStringCompleted;
+        public event System.EventHandler<MakeGridCompletedEventArgs> MakeGridCompleted;
+        
+        public event System.EventHandler<PlacePinguinCompletedEventArgs> PlacePinguinCompleted;
+        
+        public event System.EventHandler<OpzetFaseCompletedEventArgs> OpzetFaseCompleted;
+        
+        public event System.EventHandler<ChanceOpzetFaseCompletedEventArgs> ChanceOpzetFaseCompleted;
+        
+        public event System.EventHandler<SetOpzetFaseCompletedEventArgs> SetOpzetFaseCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -206,38 +353,37 @@ namespace Pinguin.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginMakeMap(int rows, int columns, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginMakeMap(rows, columns, callback, asyncState);
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginMakeMap(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginMakeMap(callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void Pinguin.ServiceReference1.Service1.EndMakeMap(System.IAsyncResult result) {
-            base.Channel.EndMakeMap(result);
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Pinguin.ServiceReference1.Service1.EndMakeMap(System.IAsyncResult result) {
+            return base.Channel.EndMakeMap(result);
         }
         
         private System.IAsyncResult OnBeginMakeMap(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int rows = ((int)(inValues[0]));
-            int columns = ((int)(inValues[1]));
-            return ((Pinguin.ServiceReference1.Service1)(this)).BeginMakeMap(rows, columns, callback, asyncState);
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginMakeMap(callback, asyncState);
         }
         
         private object[] OnEndMakeMap(System.IAsyncResult result) {
-            ((Pinguin.ServiceReference1.Service1)(this)).EndMakeMap(result);
-            return null;
+            System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndMakeMap(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnMakeMapCompleted(object state) {
             if ((this.MakeMapCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.MakeMapCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.MakeMapCompleted(this, new MakeMapCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void MakeMapAsync(int rows, int columns) {
-            this.MakeMapAsync(rows, columns, null);
+        public void MakeMapAsync() {
+            this.MakeMapAsync(null);
         }
         
-        public void MakeMapAsync(int rows, int columns, object userState) {
+        public void MakeMapAsync(object userState) {
             if ((this.onBeginMakeMapDelegate == null)) {
                 this.onBeginMakeMapDelegate = new BeginOperationDelegate(this.OnBeginMakeMap);
             }
@@ -247,53 +393,227 @@ namespace Pinguin.ServiceReference1 {
             if ((this.onMakeMapCompletedDelegate == null)) {
                 this.onMakeMapCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMakeMapCompleted);
             }
-            base.InvokeAsync(this.onBeginMakeMapDelegate, new object[] {
-                        rows,
-                        columns}, this.onEndMakeMapDelegate, this.onMakeMapCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginMakeMapDelegate, null, this.onEndMakeMapDelegate, this.onMakeMapCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginMijnTestString(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginMijnTestString(callback, asyncState);
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginMakeGrid(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginMakeGrid(callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string Pinguin.ServiceReference1.Service1.EndMijnTestString(System.IAsyncResult result) {
-            return base.Channel.EndMijnTestString(result);
+        System.Collections.ObjectModel.ObservableCollection<int> Pinguin.ServiceReference1.Service1.EndMakeGrid(System.IAsyncResult result) {
+            return base.Channel.EndMakeGrid(result);
         }
         
-        private System.IAsyncResult OnBeginMijnTestString(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((Pinguin.ServiceReference1.Service1)(this)).BeginMijnTestString(callback, asyncState);
+        private System.IAsyncResult OnBeginMakeGrid(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginMakeGrid(callback, asyncState);
         }
         
-        private object[] OnEndMijnTestString(System.IAsyncResult result) {
-            string retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndMijnTestString(result);
+        private object[] OnEndMakeGrid(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<int> retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndMakeGrid(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnMijnTestStringCompleted(object state) {
-            if ((this.MijnTestStringCompleted != null)) {
+        private void OnMakeGridCompleted(object state) {
+            if ((this.MakeGridCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.MijnTestStringCompleted(this, new MijnTestStringCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.MakeGridCompleted(this, new MakeGridCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void MijnTestStringAsync() {
-            this.MijnTestStringAsync(null);
+        public void MakeGridAsync() {
+            this.MakeGridAsync(null);
         }
         
-        public void MijnTestStringAsync(object userState) {
-            if ((this.onBeginMijnTestStringDelegate == null)) {
-                this.onBeginMijnTestStringDelegate = new BeginOperationDelegate(this.OnBeginMijnTestString);
+        public void MakeGridAsync(object userState) {
+            if ((this.onBeginMakeGridDelegate == null)) {
+                this.onBeginMakeGridDelegate = new BeginOperationDelegate(this.OnBeginMakeGrid);
             }
-            if ((this.onEndMijnTestStringDelegate == null)) {
-                this.onEndMijnTestStringDelegate = new EndOperationDelegate(this.OnEndMijnTestString);
+            if ((this.onEndMakeGridDelegate == null)) {
+                this.onEndMakeGridDelegate = new EndOperationDelegate(this.OnEndMakeGrid);
             }
-            if ((this.onMijnTestStringCompletedDelegate == null)) {
-                this.onMijnTestStringCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMijnTestStringCompleted);
+            if ((this.onMakeGridCompletedDelegate == null)) {
+                this.onMakeGridCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMakeGridCompleted);
             }
-            base.InvokeAsync(this.onBeginMijnTestStringDelegate, null, this.onEndMijnTestStringDelegate, this.onMijnTestStringCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginMakeGridDelegate, null, this.onEndMakeGridDelegate, this.onMakeGridCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginPlacePinguin(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginPlacePinguin(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Pinguin.ServiceReference1.Service1.EndPlacePinguin(System.IAsyncResult result) {
+            return base.Channel.EndPlacePinguin(result);
+        }
+        
+        private System.IAsyncResult OnBeginPlacePinguin(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginPlacePinguin(callback, asyncState);
+        }
+        
+        private object[] OnEndPlacePinguin(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndPlacePinguin(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnPlacePinguinCompleted(object state) {
+            if ((this.PlacePinguinCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.PlacePinguinCompleted(this, new PlacePinguinCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void PlacePinguinAsync() {
+            this.PlacePinguinAsync(null);
+        }
+        
+        public void PlacePinguinAsync(object userState) {
+            if ((this.onBeginPlacePinguinDelegate == null)) {
+                this.onBeginPlacePinguinDelegate = new BeginOperationDelegate(this.OnBeginPlacePinguin);
+            }
+            if ((this.onEndPlacePinguinDelegate == null)) {
+                this.onEndPlacePinguinDelegate = new EndOperationDelegate(this.OnEndPlacePinguin);
+            }
+            if ((this.onPlacePinguinCompletedDelegate == null)) {
+                this.onPlacePinguinCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnPlacePinguinCompleted);
+            }
+            base.InvokeAsync(this.onBeginPlacePinguinDelegate, null, this.onEndPlacePinguinDelegate, this.onPlacePinguinCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginOpzetFase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginOpzetFase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool Pinguin.ServiceReference1.Service1.EndOpzetFase(System.IAsyncResult result) {
+            return base.Channel.EndOpzetFase(result);
+        }
+        
+        private System.IAsyncResult OnBeginOpzetFase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginOpzetFase(callback, asyncState);
+        }
+        
+        private object[] OnEndOpzetFase(System.IAsyncResult result) {
+            bool retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndOpzetFase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnOpzetFaseCompleted(object state) {
+            if ((this.OpzetFaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.OpzetFaseCompleted(this, new OpzetFaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void OpzetFaseAsync() {
+            this.OpzetFaseAsync(null);
+        }
+        
+        public void OpzetFaseAsync(object userState) {
+            if ((this.onBeginOpzetFaseDelegate == null)) {
+                this.onBeginOpzetFaseDelegate = new BeginOperationDelegate(this.OnBeginOpzetFase);
+            }
+            if ((this.onEndOpzetFaseDelegate == null)) {
+                this.onEndOpzetFaseDelegate = new EndOperationDelegate(this.OnEndOpzetFase);
+            }
+            if ((this.onOpzetFaseCompletedDelegate == null)) {
+                this.onOpzetFaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnOpzetFaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginOpzetFaseDelegate, null, this.onEndOpzetFaseDelegate, this.onOpzetFaseCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginChanceOpzetFase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginChanceOpzetFase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool Pinguin.ServiceReference1.Service1.EndChanceOpzetFase(System.IAsyncResult result) {
+            return base.Channel.EndChanceOpzetFase(result);
+        }
+        
+        private System.IAsyncResult OnBeginChanceOpzetFase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginChanceOpzetFase(callback, asyncState);
+        }
+        
+        private object[] OnEndChanceOpzetFase(System.IAsyncResult result) {
+            bool retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndChanceOpzetFase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnChanceOpzetFaseCompleted(object state) {
+            if ((this.ChanceOpzetFaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ChanceOpzetFaseCompleted(this, new ChanceOpzetFaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ChanceOpzetFaseAsync() {
+            this.ChanceOpzetFaseAsync(null);
+        }
+        
+        public void ChanceOpzetFaseAsync(object userState) {
+            if ((this.onBeginChanceOpzetFaseDelegate == null)) {
+                this.onBeginChanceOpzetFaseDelegate = new BeginOperationDelegate(this.OnBeginChanceOpzetFase);
+            }
+            if ((this.onEndChanceOpzetFaseDelegate == null)) {
+                this.onEndChanceOpzetFaseDelegate = new EndOperationDelegate(this.OnEndChanceOpzetFase);
+            }
+            if ((this.onChanceOpzetFaseCompletedDelegate == null)) {
+                this.onChanceOpzetFaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnChanceOpzetFaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginChanceOpzetFaseDelegate, null, this.onEndChanceOpzetFaseDelegate, this.onChanceOpzetFaseCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginSetOpzetFase(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetOpzetFase(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool Pinguin.ServiceReference1.Service1.EndSetOpzetFase(System.IAsyncResult result) {
+            return base.Channel.EndSetOpzetFase(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetOpzetFase(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((Pinguin.ServiceReference1.Service1)(this)).BeginSetOpzetFase(callback, asyncState);
+        }
+        
+        private object[] OnEndSetOpzetFase(System.IAsyncResult result) {
+            bool retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndSetOpzetFase(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetOpzetFaseCompleted(object state) {
+            if ((this.SetOpzetFaseCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetOpzetFaseCompleted(this, new SetOpzetFaseCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetOpzetFaseAsync() {
+            this.SetOpzetFaseAsync(null);
+        }
+        
+        public void SetOpzetFaseAsync(object userState) {
+            if ((this.onBeginSetOpzetFaseDelegate == null)) {
+                this.onBeginSetOpzetFaseDelegate = new BeginOperationDelegate(this.OnBeginSetOpzetFase);
+            }
+            if ((this.onEndSetOpzetFaseDelegate == null)) {
+                this.onEndSetOpzetFaseDelegate = new EndOperationDelegate(this.OnEndSetOpzetFase);
+            }
+            if ((this.onSetOpzetFaseCompletedDelegate == null)) {
+                this.onSetOpzetFaseCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetOpzetFaseCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetOpzetFaseDelegate, null, this.onEndSetOpzetFaseDelegate, this.onSetOpzetFaseCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -384,28 +704,75 @@ namespace Pinguin.ServiceReference1 {
                 return _result;
             }
             
-            public System.IAsyncResult BeginMakeMap(int rows, int columns, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = rows;
-                _args[1] = columns;
+            public System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
                 System.IAsyncResult _result = base.BeginInvoke("MakeMap", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndMakeMap(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndMakeMap(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("MakeMap", _args, result);
-            }
-            
-            public System.IAsyncResult BeginMijnTestString(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("MijnTestString", _args, callback, asyncState);
+                System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> _result = ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(base.EndInvoke("MakeMap", _args, result)));
                 return _result;
             }
             
-            public string EndMijnTestString(System.IAsyncResult result) {
+            public System.IAsyncResult BeginMakeGrid(System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("MijnTestString", _args, result)));
+                System.IAsyncResult _result = base.BeginInvoke("MakeGrid", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<int> EndMakeGrid(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<int> _result = ((System.Collections.ObjectModel.ObservableCollection<int>)(base.EndInvoke("MakeGrid", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginPlacePinguin(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("PlacePinguin", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndPlacePinguin(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> _result = ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(base.EndInvoke("PlacePinguin", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("OpzetFase", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndOpzetFase(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("OpzetFase", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginChanceOpzetFase(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("ChanceOpzetFase", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndChanceOpzetFase(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("ChanceOpzetFase", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetOpzetFase(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("SetOpzetFase", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetOpzetFase(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetOpzetFase", _args, result)));
                 return _result;
             }
         }
