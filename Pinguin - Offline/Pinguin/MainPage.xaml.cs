@@ -79,9 +79,6 @@ namespace Pinguin
                 int waarde = 0;
                 for (int j = begin; j < 19; j += 2)
                 {
-                    //hulpMap[i][j] = new int();
-
-                    //MessageBox.Show("i: " + i + " j: " + j +" hulpMap[i][waarde]: " + hulpMap[i][waarde] + " waarde: " + waarde);
                     AddTile(i, j, hulpMap[i][waarde]); 
                     waarde++;
                 }
@@ -91,16 +88,6 @@ namespace Pinguin
                     begin = 0;
             }
             MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis.");
-            #region AddPinguin
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.PlacePinguinCompleted += new EventHandler<ServiceReference1.PlacePinguinCompletedEventArgs>(client_PlacePinguinCompleted);
-            client.PlacePinguinAsync();
-            #endregion
-        }
-
-        void client_MakeMapCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            
         }
         
         Grid AddGrid(int rows, int columns, int height, int width)
@@ -130,15 +117,15 @@ namespace Pinguin
             return SpelBord;
         }
 
-        Button AddButton(string caption, int row, int column, Grid parent)
-        {
-            Button button = new Button();
-            button.Content = caption;
-            parent.Children.Add(button);
-            Grid.SetRow(button, row);
-            Grid.SetColumn(button, column);
-            return button;
-        }
+        //Button AddButton(string caption, int row, int column, Grid parent)
+        //{
+        //    Button button = new Button();
+        //    button.Content = caption;
+        //    parent.Children.Add(button);
+        //    Grid.SetRow(button, row);
+        //    Grid.SetColumn(button, column);
+        //    return button;
+        //}
           
 
         //void client_RolDobbelsteenCompleted(object sender, ServiceReference1.RolDobbelsteenCompletedEventArgs e)
@@ -153,26 +140,13 @@ namespace Pinguin
         {
             Grid parent = SpelBord;
             string fotoString = "/Pinguin;component/Images/" + randomNumber + "Vis.png";
-         //   Image image = new Image();
-          //  image.Source = new BitmapImage(new Uri(fotoString, UriKind.RelativeOrAbsolute));
             SpelTile st = new SpelTile(row, column, randomNumber);
             st.Afbeelding = fotoString;
-           // parent.Children.Add(image);
             parent.Children.Add(st);
-            //Grid.SetRow(image, row);
-            //Grid.SetColumn(image, column);
-            //Grid.SetColumnSpan(image, 2);
-
             Grid.SetRow(st, row);
             Grid.SetColumn(st, column);
             Grid.SetColumnSpan(st, 2);
-            //image.Height = 50;
-            //image.Width = 53;
-            //image.HorizontalAlignment = new HorizontalAlignment();
-            //image.MouseLeftButtonDown+=new MouseButtonEventHandler(tile_MouseLeftButtonDown);
             st.MouseLeftButtonDown += new MouseButtonEventHandler(PushTile_MouseLeftButtonDown);
-            //image.HorizontalAlignment = "Center";
-            //return image;
         }
         SpelTile hulpTegel2;
         SpelTile VorigeTegel;
@@ -184,10 +158,33 @@ namespace Pinguin
             
             if (opZetFace == false && verplaatsingsface == true)
             {
-                if (hulp.Row == hulpTegel2.Row)
+                int rowVerschil = hulp.Row - hulpTegel2.Row;
+                int columnVerschil = hulp.Column - hulpTegel2.Column;
+                int zoekTussenliggendeRows;
+                int zoekTussenliggendeColumns;
+                if (Math.Abs(rowVerschil) == Math.Abs(columnVerschil) || (hulp.Row == hulpTegel2.Row))
                 {
+                    if (rowVerschil > 0)
+                        zoekTussenliggendeRows = 1;
+                    else
+                        zoekTussenliggendeRows = -1;
+                    if (columnVerschil > 0)
+                        zoekTussenliggendeColumns = 1;
+                    else
+                        zoekTussenliggendeColumns = -1;
+
+                    for (int i = 0; i < Math.Abs(rowVerschil); i++)
+                    {
+                         
+                    }
+
                     magVerplaatsen = true;
                 }
+                else
+                {
+                    MessageBox.Show("Invalid action!");
+                }
+               
 
             }
             if (opZetFace == true || magVerplaatsen == true)
