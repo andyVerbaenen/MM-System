@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="Pinguin.Web.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*" schemaVersion="2013-03.2.0">
+  <Role name="Pinguin.Web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=onzestorageservice;AccountKey=r3HjcHRnm/BT8lexA8ON3c9gVV8og0mN3JKKXhgjzaTO91T7eNGXH2uGMHOQGgxSBpz8xjDBvQCyNOtB8wldXA==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
