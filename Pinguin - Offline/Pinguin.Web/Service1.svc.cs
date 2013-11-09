@@ -30,22 +30,22 @@ namespace Pinguin.Web
 
         Random random = new Random();
         [OperationContract]
-        public int[][] MakeMap()
+        public int[][] MakeMap() //Bepalen welke tegels er waar staan.
         {
             
             for (int i = 0; i < 10; i++)
             {
-                map[i] = new int[10];
+                map[i] = new int[10]; //Steek in elke rij 10 colommen.
                 for (int j = 0; j < 10; j++)
                 {
-                    map[i][ j] = random.Next(1, 4);
+                    map[i][ j] = random.Next(1, 4); //Kies het aantal vissen op de tegels.
                 }
             }
             return map;
         }
 
         [OperationContract]
-        public int[] MakeGrid()
+        public int[] MakeGrid() //De waarde van de grid bepalen.
         {
             for (int i = 0; i < grid.Length; i++)
             {
@@ -57,24 +57,24 @@ namespace Pinguin.Web
             return grid;
         }
 
-        [OperationContract]
-        public int[][] PlacePinguin()
-        {
-            for (int i = 0; i < 16; i++)
-            {
-                pinguinPos[i] = new int[2];
-                for (int j = 0; j < 2; j++)
-                {
-                    pinguinPos[i][j] = -1;
-                }
+        //[OperationContract]
+        //public int[][] PlacePinguin()
+        //{
+        //    for (int i = 0; i < 16; i++)
+        //    {
+        //        pinguinPos[i] = new int[2];
+        //        for (int j = 0; j < 2; j++)
+        //        {
+        //            pinguinPos[i][j] = -1;
+        //        }
                 
-            }
-            //pinguinPos[5][1] = 5;
-            //pinguinPos[5][0] = 5;
-            //pinguinPos[1][1] = 8;
-            //pinguinPos[1][0] = 4;
-            return pinguinPos;
-        }
+        //    }
+        //    //pinguinPos[5][1] = 5;
+        //    //pinguinPos[5][0] = 5;
+        //    //pinguinPos[1][1] = 8;
+        //    //pinguinPos[1][0] = 4;
+        //    return pinguinPos;
+        //}
 
         [OperationContract]
         public bool OpzetFase()
@@ -95,5 +95,6 @@ namespace Pinguin.Web
             opzetFase = true;
             return opzetFase;
         }
+
     }
 }

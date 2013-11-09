@@ -33,11 +33,6 @@ namespace Pinguin.ServiceReference1 {
         
         System.Collections.ObjectModel.ObservableCollection<int> EndMakeGrid(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/PlacePinguin", ReplyAction="urn:Service1/PlacePinguinResponse")]
-        System.IAsyncResult BeginPlacePinguin(System.AsyncCallback callback, object asyncState);
-        
-        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndPlacePinguin(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:Service1/OpzetFase", ReplyAction="urn:Service1/OpzetFaseResponse")]
         System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState);
         
@@ -111,25 +106,6 @@ namespace Pinguin.ServiceReference1 {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<int>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class PlacePinguinCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public PlacePinguinCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(this.results[0]));
             }
         }
     }
@@ -213,12 +189,6 @@ namespace Pinguin.ServiceReference1 {
         
         private System.Threading.SendOrPostCallback onMakeGridCompletedDelegate;
         
-        private BeginOperationDelegate onBeginPlacePinguinDelegate;
-        
-        private EndOperationDelegate onEndPlacePinguinDelegate;
-        
-        private System.Threading.SendOrPostCallback onPlacePinguinCompletedDelegate;
-        
         private BeginOperationDelegate onBeginOpzetFaseDelegate;
         
         private EndOperationDelegate onEndOpzetFaseDelegate;
@@ -295,8 +265,6 @@ namespace Pinguin.ServiceReference1 {
         public event System.EventHandler<MakeMapCompletedEventArgs> MakeMapCompleted;
         
         public event System.EventHandler<MakeGridCompletedEventArgs> MakeGridCompleted;
-        
-        public event System.EventHandler<PlacePinguinCompletedEventArgs> PlacePinguinCompleted;
         
         public event System.EventHandler<OpzetFaseCompletedEventArgs> OpzetFaseCompleted;
         
@@ -438,50 +406,6 @@ namespace Pinguin.ServiceReference1 {
                 this.onMakeGridCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMakeGridCompleted);
             }
             base.InvokeAsync(this.onBeginMakeGridDelegate, null, this.onEndMakeGridDelegate, this.onMakeGridCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Pinguin.ServiceReference1.Service1.BeginPlacePinguin(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginPlacePinguin(callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> Pinguin.ServiceReference1.Service1.EndPlacePinguin(System.IAsyncResult result) {
-            return base.Channel.EndPlacePinguin(result);
-        }
-        
-        private System.IAsyncResult OnBeginPlacePinguin(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((Pinguin.ServiceReference1.Service1)(this)).BeginPlacePinguin(callback, asyncState);
-        }
-        
-        private object[] OnEndPlacePinguin(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> retVal = ((Pinguin.ServiceReference1.Service1)(this)).EndPlacePinguin(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnPlacePinguinCompleted(object state) {
-            if ((this.PlacePinguinCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.PlacePinguinCompleted(this, new PlacePinguinCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void PlacePinguinAsync() {
-            this.PlacePinguinAsync(null);
-        }
-        
-        public void PlacePinguinAsync(object userState) {
-            if ((this.onBeginPlacePinguinDelegate == null)) {
-                this.onBeginPlacePinguinDelegate = new BeginOperationDelegate(this.OnBeginPlacePinguin);
-            }
-            if ((this.onEndPlacePinguinDelegate == null)) {
-                this.onEndPlacePinguinDelegate = new EndOperationDelegate(this.OnEndPlacePinguin);
-            }
-            if ((this.onPlacePinguinCompletedDelegate == null)) {
-                this.onPlacePinguinCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnPlacePinguinCompleted);
-            }
-            base.InvokeAsync(this.onBeginPlacePinguinDelegate, null, this.onEndPlacePinguinDelegate, this.onPlacePinguinCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -725,18 +649,6 @@ namespace Pinguin.ServiceReference1 {
             public System.Collections.ObjectModel.ObservableCollection<int> EndMakeGrid(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<int> _result = ((System.Collections.ObjectModel.ObservableCollection<int>)(base.EndInvoke("MakeGrid", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginPlacePinguin(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("PlacePinguin", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> EndPlacePinguin(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>> _result = ((System.Collections.ObjectModel.ObservableCollection<System.Collections.ObjectModel.ObservableCollection<int>>)(base.EndInvoke("PlacePinguin", _args, result)));
                 return _result;
             }
             

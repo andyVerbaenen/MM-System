@@ -40,15 +40,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="PlacePinguin">
-      <soap12:operation soapAction="urn:Service1/PlacePinguin" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="OpzetFase">
       <soap12:operation soapAction="urn:Service1/OpzetFase" style="document" />
       <wsdl:input>

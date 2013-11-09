@@ -15,7 +15,12 @@ namespace Pinguin
 {
     public partial class SpelSpeelstuk : UserControl
     {
-        
+        /* Deze UserControl classe is aangemaakt zondat als er op een pinguin wordt geklilt, 
+         * dat we de gegevens van deze pinguin kunnen achterhalen. 
+         * Zoals rij, kollom, kleur,... 
+         * Als we met een afbeelding werken ipv een usercontrol, dan gaat dit niet.
+         */
+
         private string _Afbeelding;
         public string Afbeelding
         {
@@ -25,8 +30,8 @@ namespace Pinguin
             }
             set
             {
+                //Zeg welke afbeelding het moet worden.
                 string fotoString = "/Pinguin;component/Images/Pinguwin" + Kleur + ".png";
-                // Image image = new Image();
                 img2.Source = new BitmapImage(new Uri(fotoString, UriKind.RelativeOrAbsolute));
                 _Afbeelding = value;
             }

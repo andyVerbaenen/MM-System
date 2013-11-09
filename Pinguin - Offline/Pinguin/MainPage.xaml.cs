@@ -23,71 +23,74 @@ namespace Pinguin
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             
             #region AddGrid
+            //Maak de grid aan.
             client.MakeGridCompleted += new EventHandler<ServiceReference1.MakeGridCompletedEventArgs>(client_MakeGridCompleted);
             client.MakeGridAsync();
             #endregion
 
             #region AddIamge
+            //Voeg de tegels toe.
             client.MakeMapCompleted +=new EventHandler<ServiceReference1.MakeMapCompletedEventArgs>(client_MakeMapCompleted);
             client.MakeMapAsync();
             #endregion
 
+            //Laat weten dat dit alles gebeurt is.
             client.SetOpzetFaseCompleted += new EventHandler<ServiceReference1.SetOpzetFaseCompletedEventArgs>(client_SetOpzetFaseCompleted);
             client.SetOpzetFaseAsync();
             
         }
 
-        void client_PlacePinguinCompleted(object sender, ServiceReference1.PlacePinguinCompletedEventArgs e)
-        {
-            //AddPinguin(1, 1, "Groen");
-            //AddPinguin(2, 2, "Blauw");
-            //AddPinguin(2, 4, "Geel");
-            //AddPinguin(3, 3, "Rood");
+        //void client_PlacePinguinCompleted(object sender, ServiceReference1.PlacePinguinCompletedEventArgs e)
+        //{
+        //    //AddPinguin(1, 1, "Groen");
+        //    //AddPinguin(2, 2, "Blauw");
+        //    //AddPinguin(2, 4, "Geel");
+        //    //AddPinguin(3, 3, "Rood");
 
-            ObservableCollection<ObservableCollection<int>> hulpPinguin = e.Result;
-            string kleur;
-            for (int i = 0; i < 16; i++)
-            {
-                if (hulpPinguin[i][0] != -1 && hulpPinguin[i][1] != -1)
-                {
-                    if (i < 4)
-                        kleur = "Groen";
-                    else if (i < 8)
-                        kleur = "Geel";
-                    else if (i < 12)
-                        kleur = "Rood";
-                    else
-                        kleur = "Blauw";
-                    AddPinguin(hulpPinguin[i][0], hulpPinguin[i][1], kleur);
-                } 
-            }
-        }
+        //    ObservableCollection<ObservableCollection<int>> hulpPinguin = e.Result;
+        //    string kleur;
+        //    for (int i = 0; i < 16; i++)
+        //    {
+        //        if (hulpPinguin[i][0] != -1 && hulpPinguin[i][1] != -1)
+        //        {
+        //            if (i < 4)
+        //                kleur = "Groen";
+        //            else if (i < 8)
+        //                kleur = "Geel";
+        //            else if (i < 12)
+        //                kleur = "Rood";
+        //            else
+        //                kleur = "Blauw";
+        //            AddPinguin(hulpPinguin[i][0], hulpPinguin[i][1], kleur);
+        //        } 
+        //    }
+        //}
 
         void client_MakeGridCompleted(object sender, ServiceReference1.MakeGridCompletedEventArgs e)
         {
-            ObservableCollection<int> hulpGrid = e.Result;
-            AddGrid(hulpGrid[0], hulpGrid[1], hulpGrid[2], hulpGrid[3]);
+            ObservableCollection<int> hulpGrid = e.Result; //Een hulp grid aanmaken voor met de meegegeven waarden te kunnen werken.
+            AddGrid(hulpGrid[0], hulpGrid[1], hulpGrid[2], hulpGrid[3]); //Geef de rows, colomns, height en width mee.
         }
 
         void client_MakeMapCompleted(object sender, ServiceReference1.MakeMapCompletedEventArgs e)
         {
-            ObservableCollection<ObservableCollection<int>> hulpMap = e.Result;
-            int begin = 0;
+            ObservableCollection<ObservableCollection<int>> hulpMap = e.Result; //Maak hulpmap aan voor met waarden van sender te kunnen werken.
+            int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
             
             for (int i = 0; i < 10; i++)
             {
-                int waarde = 0;
-                for (int j = begin; j < 19; j += 2)
+                int echteKollomWaarde = 0; //Omdat de collomen per twee optellen en soms starten bij 0 of 1, naargelang het even of oneven moet zijn, is het moeilijk om te weten in welke zichtbare kollom we echt zitten. Daarom deze variabele.
+                for (int j = evenOfOneven; j < 19; j += 2) //+2 omdat er dubbele zoveel collomen zijn als rijen voor de kollomen van de oneven rijen te laten uitkomen tussen twee kollomen van de even rijen.
                 {
-                    AddTile(i, j, hulpMap[i][waarde]); 
-                    waarde++;
+                    AddTile(i, j, hulpMap[i][echteKollomWaarde]); //Add de tegel met parameters: rij, kollom, en aantal vissen.
+                    echteKollomWaarde++; //We zijn nu 1 kollom verder dus daarom + 1.
                 }
-                if (begin == 0)
-                    begin = 1;
+                if (evenOfOneven == 0) //Hebben we net een even rij gehad, dan wordt deze nu oneven.
+                    evenOfOneven = 1;
                 else
-                    begin = 0;
+                    evenOfOneven = 0; //Hebben we een oneven rij gehad, dan wordt deze nu even.
             }
-            MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis.");
+            MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
         }
         
         Grid AddGrid(int rows, int columns, int height, int width)
@@ -101,7 +104,7 @@ namespace Pinguin
             {
                 gridCol[i] = new ColumnDefinition();
                 gridCol[i].Width = new GridLength(width);
-                SpelBord.ColumnDefinitions.Add(gridCol[i]);
+                SpelBord.ColumnDefinitions.Add(gridCol[i]); //Add colomns to the grid.
             }
             #endregion
 
@@ -139,24 +142,25 @@ namespace Pinguin
         void AddTile(int row, int column, int randomNumber)
         {
             Grid parent = SpelBord;
-            string fotoString = "/Pinguin;component/Images/" + randomNumber + "Vis.png";
-            SpelTile st = new SpelTile(row, column, randomNumber);
-            st.Afbeelding = fotoString;
-            parent.Children.Add(st);
-            Grid.SetRow(st, row);
+            string fotoString = "/Pinguin;component/Images/" + randomNumber + "Vis.png"; //Locatie van afbeelding, hoeveel vissen er moeten opstaan.
+            SpelTile st = new SpelTile(row, column, randomNumber); //Maak een usercontrol aan.
+            st.Afbeelding = fotoString; //Geef de afbeelding mee.
+            parent.Children.Add(st); //Voeg de tegel toe aan de grid.
+            Grid.SetRow(st, row); 
             Grid.SetColumn(st, column);
             Grid.SetColumnSpan(st, 2);
-            st.MouseLeftButtonDown += new MouseButtonEventHandler(PushTile_MouseLeftButtonDown);
+            st.MouseLeftButtonDown += new MouseButtonEventHandler(PushTile_MouseLeftButtonDown); //Laat een tegel reageren als op hem gedrukt wordt.
         }
+        
         SpelTile hulpTegel2;
         SpelTile VorigeTegel;
-
         bool magVerplaatsen = false;
+
         void PushTile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SpelTile hulp = sender as SpelTile;
+            SpelTile hulp = sender as SpelTile; //Maak een hulptegel aan zondat we met de waarde van de sender kunnen werken.
             
-            if (opZetFace == false && verplaatsingsface == true)
+            if (opZetFace == false && verplaatsingsface == true) //Wanneer we een pinguin willen verplaatsen. Dit is het moment dat we op de nieuwe tegel drukken.
             {
                 int rowVerschil = hulp.Row - hulpTegel2.Row;
                 int columnVerschil = hulp.Column - hulpTegel2.Column;
@@ -187,30 +191,28 @@ namespace Pinguin
                
 
             }
-            if (opZetFace == true || magVerplaatsen == true)
+            if (opZetFace == true || magVerplaatsen == true) //Wanneer we een pinguin mogen plaatsen of verplaatsen.
             {
-                //VorigeTegel = hulpTegel2;
                 ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
                 client.OpzetFaseCompleted+=new EventHandler<ServiceReference1.OpzetFaseCompletedEventArgs>(client_OpzetFaseCompleted);
                 client.OpzetFaseAsync();
-            
-                //hulpTegel2.Visibility = Visibility.Collapsed;
-                
-                VorigeTegel = hulpTegel2;
-                hulpTegel2 = hulp;
-                magVerplaatsen = false;
+                            
+                VorigeTegel = hulpTegel2; //Onthoud van waar de pinguin kwam.
+                hulpTegel2 = hulp; //Onthound waar de pinguin op gezet wordt.
+                magVerplaatsen = false; //De pinguin mag niet meer verpaatst worden.
             }
             
         }
+        
         int teller = 1;
         int tellerAantalPinguins = 0;
         int aantalSpelers = 4;
         bool opZetFace = true;
         void client_OpzetFaseCompleted(object sender, ServiceReference1.OpzetFaseCompletedEventArgs e)
         {
-            if (e.Result == true && hulpTegel2.RandomNummer == 1)
+            if (e.Result == true && hulpTegel2.RandomNummer == 1) //Als het de opzetfase is en de tegel waar we op klikken heeft 1 vis.
             {
-                string kleur;
+                string kleur; //Kleur van de speler bepalen.
                 if (teller == 1)
                     kleur = "Groen";
                 else if (teller == 2)
@@ -220,34 +222,30 @@ namespace Pinguin
                 else
                     kleur = "Blauw";
                 
-                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleur);
-                teller++;
+                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleur); //Voeg pinguin toe.
+                teller++; //Volgende speler
                 if (teller == 5)
                 {
                     teller = 1;
                 }
-                tellerAantalPinguins++;
+                tellerAantalPinguins++; //Zien wanneer alle pinguins geplaatst zijn.
                 if (aantalSpelers == 4 && tellerAantalPinguins == 8 || 
                     aantalSpelers == 3 && tellerAantalPinguins == 9 || 
                     aantalSpelers == 2 && tellerAantalPinguins == 8)
                 {
+                    //Verander opzet fase naar speel fase.
                     ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
                     client.ChanceOpzetFaseCompleted += new EventHandler<ServiceReference1.ChanceOpzetFaseCompletedEventArgs>(client_ChanceOpzetFaseCompleted);
                     client.ChanceOpzetFaseAsync();
                     opZetFace = false;
                 }
             }
-            else if (e.Result == false && verplaatsingsface == true)
+            else if (e.Result == false && verplaatsingsface == true) //Als we tijdens het spel zijn en de pinguin mag verplaatst worden.
             {
-                
-                //hulpTegel2.Visibility = Visibility.Collapsed;
-                VorigeTegel.Visibility = Visibility.Collapsed;
-                //SpelTile hulp = sender as SpelTile;
-                //hulpTegel2 = hulp;
-                hulpSpeelstuk2.Visibility = Visibility.Collapsed;
-
-                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, hulpSpeelstuk2.Kleur);
-                verplaatsingsface = false;
+                VorigeTegel.Visibility = Visibility.Collapsed; //Laat de tegel van waar de pinguin kwam verdwijnen.
+                hulpSpeelstuk2.Visibility = Visibility.Collapsed; //Laat ook de pinguin op die tegel verdwijnen.
+                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, hulpSpeelstuk2.Kleur); //Plaats de pinguin op zijn nieuwe lokatie.
+                verplaatsingsface = false; //de speler heeft gedaan met spelen.
             }
 
             
@@ -265,94 +263,34 @@ namespace Pinguin
         void AddPinguin(int row, int column, string kleur)
         {
             Grid parent = SpelBord;
-            string fotoString = "/Pinguin;component/Images/Pinguwin" + kleur + ".png";
-            //Image image = new Image();
-            //image.Source = new BitmapImage(new Uri(fotoString, UriKind.RelativeOrAbsolute));
-            SpelSpeelstuk Ss = new SpelSpeelstuk(row, column, kleur);
-            Ss.Afbeelding = fotoString;
-            //parent.Children.Add(image);
-            //Grid.SetRow(image, row);
-            //Grid.SetColumn(image, column);
-            //Grid.SetColumnSpan(image, 2);
-            parent.Children.Add(Ss);
+            string fotoString = "/Pinguin;component/Images/Pinguwin" + kleur + ".png"; //Locatie van afbeelding, welke kleur het moet zijn.
+            SpelSpeelstuk Ss = new SpelSpeelstuk(row, column, kleur); //Maak een usercontrol aan.
+            Ss.Afbeelding = fotoString; //Geef de afbeelding mee.
+            parent.Children.Add(Ss); //Voef de pinguin toe aan de grid.
             Grid.SetRow(Ss, row);
             Grid.SetColumn(Ss, column);
             Grid.SetColumnSpan(Ss, 2);
-            Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown);
-            //image.MouseDown = "image1_MouseDown";
+            Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
         }
 
         SpelSpeelstuk hulpSpeelstuk2;
         void PushPinguin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (opZetFace == false)
+            if (opZetFace == false) //Er mag alleen iets gebeuren wanneer het spel bezig is.
             {
-                SpelSpeelstuk hulp = sender as SpelSpeelstuk;
-                hulpSpeelstuk2 = hulp;
+                SpelSpeelstuk hulp = sender as SpelSpeelstuk; //Hulp speelstuk aanmaken zodat we aan de waarde van de sender kunnen.
+                hulpSpeelstuk2 = hulp; 
 
-                foreach (SpelTile tile in SpelBord.Children)
+                foreach (SpelTile tile in SpelBord.Children) //Gaat alle tegels af.
                 {
-                    if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile))
+                    if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile)) //Wanneer hij een tegel vind die gelijk is aan de coördinaten van de pinguin..
                     {
-                        hulpTegel2 = tile;
+                        hulpTegel2 = tile; //Krijgt de hulptegel de coördinaten van de pinguin. Op deze manier want anders zit je met referentie problemen. 
                         break;
                     }
-
                 }
-
-               // hulpTegel2 = hulp;
-                //hulpTegel2.Row = hulpSpeelstuk2.Row;
-                //hulpTegel2.Column = hulpSpeelstuk2.Column;
-
-                verplaatsingsface = true;
+                verplaatsingsface = true; //Nu mag de pinguin verplaatst worden.
             }
-            
-
-            //Speelstuk.X = hulp.Row;
-            //Speelstuk.Y = hulp.Column;
-            //Tile.X = Speelstuk.X;
-            //Tile.Y = Speelstuk.Y;
         }
-        //Image tempPinguin2;
-        //Image tempTile2;
-        //void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    Image temp = sender as Image;
-        //    tempPinguin2 = temp;
-        //}
-        //void tile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-            
-            
-        //    Image temp = sender as Image;
-        //    tempTile2 = temp;
-            
-            
-        //    tempPinguin2.Visibility = Visibility.Collapsed;
-        //    // AddPinguin();
-
-            
-        //    //temp.Visibility = Visibility.Collapsed;
-            
-        //}
-        //private void image1_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        //{
-        //    this.Visibility = Visibility.Collapsed;
-        //}
-
-        //private void button1_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-        //    //client.RolDobbelsteenCompleted +=new EventHandler<ServiceReference1.RolDobbelsteenCompletedEventArgs>(client_RolDobbelsteenCompleted);
-        //    //client.RolDobbelsteenAsync(); 
-        
-        //    //image00.Visibility = Visibility.Collapsed;
-        //}
-
-        ////private void image00_Tap(object sender, GestureEventArgs e)
-        ////{
-        ////    Image send = sender as Image;
-        ////    send.Visibility = Visibility.Collapsed;
-        ////}
     }
 }
