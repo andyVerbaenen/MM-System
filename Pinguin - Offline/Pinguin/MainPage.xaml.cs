@@ -16,7 +16,24 @@ namespace Pinguin
 {
     public partial class MainPage : UserControl
     {
-       
+        #region Aanmaken van variabelen
+        SpelTile hulpTegel2; //Dit is de laats aangeklikte tegel.
+        SpelTile VorigeTegel; //Dit is de op 1 na laatst aangeklitke tegel.
+        
+        SpelSpeelstuk hulpSpeelstuk2; //Dit is de laatst aangeklikte pinguin.
+        
+        int teller = 1; //Dit is een teller voor te zien aan wie het is.
+        int tellerAantalPinguins = 0; //Dit is een teller voor te te weten als het spel nog in de opzet fase is of niet.
+        int aantalSpelers = 4;
+
+        string kleur; //Kleur van de speler bepalen.
+
+        bool magVerplaatsen = false; //Bool voor te zien als de pinguin verplaatst mag worden.
+        bool opZetFace = true; //Bool voor te zien als we in de opzet fase zitten of niet.
+        bool verplaatsingsface = false; //Bool voor te zien als we in de aanduidingsfase of verplaatsingsface zitten.
+        
+        #endregion
+
         public MainPage()
         {
             InitializeComponent();
@@ -34,10 +51,11 @@ namespace Pinguin
             client.MakeMapAsync();
             #endregion
 
+            #region Zet het spel in de Opzet fase
             //Laat weten dat dit alles gebeurt is.
             client.SetOpzetFaseCompleted += new EventHandler<ServiceReference1.SetOpzetFaseCompletedEventArgs>(client_SetOpzetFaseCompleted);
             client.SetOpzetFaseAsync();
-            
+            #endregion
         }
 
         //void client_PlacePinguinCompleted(object sender, ServiceReference1.PlacePinguinCompletedEventArgs e)
@@ -66,6 +84,30 @@ namespace Pinguin
         //    }
         //}
 
+        
+        
+        
+
+        //Button AddButton(string caption, int row, int column, Grid parent)
+        //{
+        //    Button button = new Button();
+        //    button.Content = caption;
+        //    parent.Children.Add(button);
+        //    Grid.SetRow(button, row);
+        //    Grid.SetColumn(button, column);
+        //    return button;
+        //}
+          
+
+        //void client_RolDobbelsteenCompleted(object sender, ServiceReference1.RolDobbelsteenCompletedEventArgs e)
+        //{
+        //    int getal = (int)e.Result;
+        //    MessageBox.Show(getal.ToString());
+        //}
+
+
+
+        #region Make Grid & Map Completted
         void client_MakeGridCompleted(object sender, ServiceReference1.MakeGridCompletedEventArgs e)
         {
             ObservableCollection<int> hulpGrid = e.Result; //Een hulp grid aanmaken voor met de meegegeven waarden te kunnen werken.
@@ -76,7 +118,7 @@ namespace Pinguin
         {
             ObservableCollection<ObservableCollection<int>> hulpMap = e.Result; //Maak hulpmap aan voor met waarden van sender te kunnen werken.
             int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
-            
+
             for (int i = 0; i < 10; i++)
             {
                 int echteKollomWaarde = 0; //Omdat de collomen per twee optellen en soms starten bij 0 of 1, naargelang het even of oneven moet zijn, is het moeilijk om te weten in welke zichtbare kollom we echt zitten. Daarom deze variabele.
@@ -92,8 +134,10 @@ namespace Pinguin
             }
             MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
         }
-        
-        Grid AddGrid(int rows, int columns, int height, int width)
+        #endregion
+
+        #region Add Grid, Tile, Pinguin
+        void AddGrid(int rows, int columns, int height, int width)
         {
             SpelBord.HorizontalAlignment = HorizontalAlignment.Center;
             SpelBord.VerticalAlignment = VerticalAlignment.Center;
@@ -117,28 +161,8 @@ namespace Pinguin
                 SpelBord.RowDefinitions.Add(gridRow[i]);
             }
             #endregion
-            return SpelBord;
         }
 
-        //Button AddButton(string caption, int row, int column, Grid parent)
-        //{
-        //    Button button = new Button();
-        //    button.Content = caption;
-        //    parent.Children.Add(button);
-        //    Grid.SetRow(button, row);
-        //    Grid.SetColumn(button, column);
-        //    return button;
-        //}
-          
-
-        //void client_RolDobbelsteenCompleted(object sender, ServiceReference1.RolDobbelsteenCompletedEventArgs e)
-        //{
-        //    int getal = (int)e.Result;
-        //    MessageBox.Show(getal.ToString());
-        //}
-
-    
-        
         void AddTile(int row, int column, int randomNumber)
         {
             Grid parent = SpelBord;
@@ -151,23 +175,72 @@ namespace Pinguin
             Grid.SetColumnSpan(st, 2);
             st.MouseLeftButtonDown += new MouseButtonEventHandler(PushTile_MouseLeftButtonDown); //Laat een tegel reageren als op hem gedrukt wordt.
         }
-        
-        SpelTile hulpTegel2;
-        SpelTile VorigeTegel;
-        bool magVerplaatsen = false;
+
+        void AddPinguin(int row, int column, string kleur)
+        {
+            Grid parent = SpelBord;
+            string fotoString = "/Pinguin;component/Images/Pinguwin" + kleur + ".png"; //Locatie van afbeelding, welke kleur het moet zijn.
+            SpelSpeelstuk Ss = new SpelSpeelstuk(row, column, kleur); //Maak een usercontrol aan.
+            Ss.Afbeelding = fotoString; //Geef de afbeelding mee.
+            parent.Children.Add(Ss); //Voef de pinguin toe aan de grid.
+            Grid.SetRow(Ss, row);
+            Grid.SetColumn(Ss, column);
+            Grid.SetColumnSpan(Ss, 2);
+            Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
+            
+            teller++; //Volgende speler
+            if (teller == 5)
+            {
+                teller = 1;
+            }
+        }
+
+        #endregion
+
+        #region Push Pinguin, Tile
+        void PushPinguin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (opZetFace == false) //Er mag alleen iets gebeuren wanneer het spel bezig is.
+            {
+                SpelSpeelstuk hulp = sender as SpelSpeelstuk; //Hulp speelstuk aanmaken zodat we aan de waarde van de sender kunnen.
+                hulpSpeelstuk2 = hulp;
+                kleur = CheckKleurVanSpeler(kleur);
+                if (hulpSpeelstuk2.Kleur == kleur)
+                {
+                    foreach (SpelTile tile in SpelBord.Children) //Gaat alle tegels af.
+                    {
+                        if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile)) //Wanneer hij een tegel vind die gelijk is aan de coördinaten van de pinguin..
+                        {
+                            hulpTegel2 = tile; //Krijgt de hulptegel de coördinaten van de pinguin. Op deze manier want anders zit je met referentie problemen. 
+                            break;
+                        }
+                    }
+                    verplaatsingsface = true; //Nu mag de pinguin verplaatst worden.
+                }
+                else
+                {
+                    MessageBox.Show("Invalid action!\nJe mag alleen een pinguin van je eigen kleur verplaatsen.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid action!\nJe kan geen meerdere pinguins op de zelfde tegel paatsen.");
+            }
+        }
 
         void PushTile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SpelTile hulp = sender as SpelTile; //Maak een hulptegel aan zondat we met de waarde van de sender kunnen werken.
-            
-            if (opZetFace == false && verplaatsingsface == true) //Wanneer we een pinguin willen verplaatsen. Dit is het moment dat we op de nieuwe tegel drukken.
+
+            if (opZetFace == false && verplaatsingsface == true)  //Wanneer we een pinguin willen verplaatsen. Dit is het moment dat we op de nieuwe tegel drukken.
             {
                 int rowVerschil = hulp.Row - hulpTegel2.Row;
                 int columnVerschil = hulp.Column - hulpTegel2.Column;
                 int zoekTussenliggendeRows;
                 int zoekTussenliggendeColumns;
-                if (Math.Abs(rowVerschil) == Math.Abs(columnVerschil) || (hulp.Row == hulpTegel2.Row))
+                if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil)) || (hulp.Row == hulpTegel2.Row))
                 {
+                    magVerplaatsen = true;
                     if (rowVerschil > 0)
                         zoekTussenliggendeRows = 1;
                     else
@@ -177,16 +250,33 @@ namespace Pinguin
                     else
                         zoekTussenliggendeColumns = -1;
 
-                    for (int i = 0; i < Math.Abs(rowVerschil); i++)
-                    {
-                         
-                    }
 
-                    magVerplaatsen = true;
+                    for (int i = 1; i <= Math.Abs(columnVerschil); i++)
+                    {
+                        foreach (var pinguin in SpelBord.Children)
+                        {
+                            SpelSpeelstuk eenSpeelstuk = pinguin as SpelSpeelstuk;
+                            if (eenSpeelstuk != null)
+                            {
+                                if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil) &&
+                                    Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row + i * zoekTussenliggendeRows &&
+                                    Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns) ||
+                                    (hulp.Row == hulpTegel2.Row &&
+                                    Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row &&
+                                    Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns))
+                                {
+                                    magVerplaatsen = false;
+                                    MessageBox.Show("Invalid action!\nJe mag niet over gaten en andere pinguins springen.");
+                                    break;
+                                }
+                            }
+                            
+                        }
+                    }                    
                 }
                 else
                 {
-                    MessageBox.Show("Invalid action!");
+                    MessageBox.Show("Invalid action!\nJe mag je alleen over de horizontale en diagonale lijnen verplaantsen.");
                 }
                
 
@@ -203,31 +293,16 @@ namespace Pinguin
             }
             
         }
-        
-        int teller = 1;
-        int tellerAantalPinguins = 0;
-        int aantalSpelers = 4;
-        bool opZetFace = true;
+        #endregion
+
+        #region Fase Opzet, Set, Chance
         void client_OpzetFaseCompleted(object sender, ServiceReference1.OpzetFaseCompletedEventArgs e)
         {
             if (e.Result == true && hulpTegel2.RandomNummer == 1) //Als het de opzetfase is en de tegel waar we op klikken heeft 1 vis.
             {
-                string kleur; //Kleur van de speler bepalen.
-                if (teller == 1)
-                    kleur = "Groen";
-                else if (teller == 2)
-                    kleur = "Geel";
-                else if (teller == 3)
-                    kleur = "Rood";
-                else
-                    kleur = "Blauw";
-                
+                kleur = CheckKleurVanSpeler(kleur);
                 AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleur); //Voeg pinguin toe.
-                teller++; //Volgende speler
-                if (teller == 5)
-                {
-                    teller = 1;
-                }
+                
                 tellerAantalPinguins++; //Zien wanneer alle pinguins geplaatst zijn.
                 if (aantalSpelers == 4 && tellerAantalPinguins == 8 || 
                     aantalSpelers == 3 && tellerAantalPinguins == 9 || 
@@ -250,7 +325,7 @@ namespace Pinguin
 
             
         }
-        bool verplaatsingsface = false;
+        
         void client_SetOpzetFaseCompleted(object sender, ServiceReference1.SetOpzetFaseCompletedEventArgs e)
         {
             //throw new NotImplementedException();
@@ -260,37 +335,22 @@ namespace Pinguin
         {
             MessageBox.Show("Game begin! Move your pinguins \nKlik op je pinguin en vervolgens op de tegel dat je hem wilt verplaatsen.");
         }
-        void AddPinguin(int row, int column, string kleur)
-        {
-            Grid parent = SpelBord;
-            string fotoString = "/Pinguin;component/Images/Pinguwin" + kleur + ".png"; //Locatie van afbeelding, welke kleur het moet zijn.
-            SpelSpeelstuk Ss = new SpelSpeelstuk(row, column, kleur); //Maak een usercontrol aan.
-            Ss.Afbeelding = fotoString; //Geef de afbeelding mee.
-            parent.Children.Add(Ss); //Voef de pinguin toe aan de grid.
-            Grid.SetRow(Ss, row);
-            Grid.SetColumn(Ss, column);
-            Grid.SetColumnSpan(Ss, 2);
-            Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
-        }
+        #endregion
 
-        SpelSpeelstuk hulpSpeelstuk2;
-        void PushPinguin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (opZetFace == false) //Er mag alleen iets gebeuren wanneer het spel bezig is.
-            {
-                SpelSpeelstuk hulp = sender as SpelSpeelstuk; //Hulp speelstuk aanmaken zodat we aan de waarde van de sender kunnen.
-                hulpSpeelstuk2 = hulp; 
 
-                foreach (SpelTile tile in SpelBord.Children) //Gaat alle tegels af.
-                {
-                    if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile)) //Wanneer hij een tegel vind die gelijk is aan de coördinaten van de pinguin..
-                    {
-                        hulpTegel2 = tile; //Krijgt de hulptegel de coördinaten van de pinguin. Op deze manier want anders zit je met referentie problemen. 
-                        break;
-                    }
-                }
-                verplaatsingsface = true; //Nu mag de pinguin verplaatst worden.
-            }
+        #region Methoden
+        private string CheckKleurVanSpeler(string kleur)
+        {
+            if (teller == 1)
+                kleur = "Groen";
+            else if (teller == 2)
+                kleur = "Geel";
+            else if (teller == 3)
+                kleur = "Rood";
+            else
+                kleur = "Blauw";
+            return kleur;
         }
+        #endregion
     }
 }
