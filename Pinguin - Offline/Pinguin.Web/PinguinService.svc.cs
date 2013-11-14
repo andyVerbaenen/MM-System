@@ -1,50 +1,89 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Activation;
-using System.Web.UI.WebControls;
+using System.Text;
 
 namespace Pinguin.Web
 {
-    [ServiceContract(Namespace = "")]
-    [SilverlightFaultBehavior]
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class Service1
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "PinguinService" in code, svc and config file together.
+    public class PinguinService : IPinguinService
     {
-        [OperationContract]
+
+        LinqToDatabaseDataContext dc;
+        public PinguinService()
+        {
+            dc = new LinqToDatabaseDataContext();
+        }
+
+        public void DoWork()
+        {
+        }
+
+
+        public List<DTO.DTOSpeler> GetAllSpelers()
+        {
+            var spelers = from s in dc.Spelers
+                          select s;
+            
+            List<DTO.DTOSpeler> spelersLijst = new List<DTO.DTOSpeler>();
+            
+            foreach (var speler in spelers)
+            {
+                DTO.DTOSpeler eenSpeler = new DTO.DTOSpeler();
+                eenSpeler.ID = speler.ID;
+                eenSpeler.NickName = speler.NickName;
+                eenSpeler.Wachtwoord = speler.Wachtwoord;
+                eenSpeler.Gewonnen = Convert.ToInt32(speler.Gewonnen);
+                eenSpeler.Gelijk = Convert.ToInt32(speler.Gelijk);
+                eenSpeler.Verloren = Convert.ToInt32(speler.Verloren);
+                eenSpeler.LobbyID = speler.Lobby;
+                eenSpeler.Punten = Convert.ToInt32(speler.Punten);
+                eenSpeler.IsReady = speler.Ready;
+
+                spelersLijst.Add(eenSpeler);
+            }
+
+            return spelersLijst;
+            
+        }
+
+
+
+       
         public int RolDobbelsteen()
         {
-            
+
             return 4;
         }
 
-        [DataMember]
+       // [DataMember]
         static int[][] map = new int[10][];
-        [DataMember]
+        //[DataMember]
         static int[] grid = new int[4];
-        [DataMember]
+        //[DataMember]
         static int[][] pinguinPos = new int[16][];
-        [DataMember]
+        //[DataMember]
         public static bool opzetFase = true;
 
         Random random = new Random();
-        [OperationContract]
+      
         public int[][] MakeMap() //Bepalen welke tegels er waar staan.
         {
-            
+
             for (int i = 0; i < 10; i++)
             {
                 map[i] = new int[10]; //Steek in elke rij 10 colommen.
                 for (int j = 0; j < 10; j++)
                 {
-                    map[i][ j] = random.Next(1, 4); //Kies het aantal vissen op de tegels.
+                    map[i][j] = random.Next(1, 4); //Kies het aantal vissen op de tegels.
                 }
             }
             return map;
         }
 
-        [OperationContract]
+      
         public int[] MakeGrid() //De waarde van de grid bepalen.
         {
             for (int i = 0; i < grid.Length; i++)
@@ -67,7 +106,7 @@ namespace Pinguin.Web
         //        {
         //            pinguinPos[i][j] = -1;
         //        }
-                
+
         //    }
         //    //pinguinPos[5][1] = 5;
         //    //pinguinPos[5][0] = 5;
@@ -76,27 +115,24 @@ namespace Pinguin.Web
         //    return pinguinPos;
         //}
 
-        [OperationContract]
+       
         public bool OpzetFase()
         {
-            
+
             return opzetFase;
         }
 
-        [OperationContract]
+       
         public bool ChanceOpzetFase()
         {
             opzetFase = false;
             return opzetFase;
         }
-        [OperationContract]
+       
         public bool SetOpzetFase()
         {
             opzetFase = true;
             return opzetFase;
         }
-
-      
-
     }
 }

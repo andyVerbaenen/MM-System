@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2f10094f-6e12-4e6f-8307-d29289b839ae" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="938dc802-603a-45d1-8d88-72aaccc5b05d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -20,15 +20,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:6758/Service1.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:6758/PinguinService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service1.disco" MetadataType="Disco" ID="512d51f5-58f1-47e1-9e51-0f81c2a7eb42" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?disco" />
-    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="7b78d7f6-a563-48e4-826d-c9bb206628bf" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?xsd=xsd0" />
-    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="198ec592-86af-4d1d-b29d-ea0b95a820c2" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="76fc8ffa-2e6d-41fd-b8a9-25137a9a8224" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="392b6ac8-4054-4273-956f-0d377468496d" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="5f7ec70f-41d9-4e28-a9a9-b9e793707c38" SourceId="1" SourceUrl="http://localhost:6758/Service1.svc?wsdl" />
+    <MetadataFile FileName="PinguinService.wsdl" MetadataType="Wsdl" ID="745b429b-1b45-4329-9b35-d4290c0ede6c" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?wsdl" />
+    <MetadataFile FileName="PinguinService.disco" MetadataType="Disco" ID="24d5a860-8826-4f08-8a83-2aa8c70fd1ee" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?disco" />
+    <MetadataFile FileName="PinguinService.xsd" MetadataType="Schema" ID="aea6d9c7-1f69-4b82-ad16-22e7fa522dff" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PinguinService1.xsd" MetadataType="Schema" ID="86df8a1a-15b7-40b7-a1e8-875c8d2cb3d9" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PinguinService2.xsd" MetadataType="Schema" ID="38000139-aebe-4e2a-9e72-8b44ccada970" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PinguinService3.xsd" MetadataType="Schema" ID="482424c2-1da9-42d7-8781-a86bc792554c" SourceId="1" SourceUrl="http://localhost:6758/PinguinService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

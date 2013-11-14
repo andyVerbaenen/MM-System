@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Pinguin.Web.PinguinService" CodeBehind="PinguinService.svc.cs" %>

@@ -1,17 +1,17 @@
 ﻿<configuration>
     <system.serviceModel>
         <bindings>
-            <customBinding>
-                <binding name="CustomBinding_Service1">
-                    <binaryMessageEncoding />
-                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IPinguinService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
                 </binding>
-            </customBinding>
+            </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:6758/Service1.svc" binding="customBinding"
-                bindingConfiguration="CustomBinding_Service1" contract="ServiceReference1.Service1"
-                name="CustomBinding_Service1" />
+            <endpoint address="http://localhost:6758/PinguinService.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IPinguinService"
+                contract="ServiceReference1.IPinguinService" name="BasicHttpBinding_IPinguinService" />
         </client>
     </system.serviceModel>
 </configuration>

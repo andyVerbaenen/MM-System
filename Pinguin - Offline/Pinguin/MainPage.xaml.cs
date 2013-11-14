@@ -37,7 +37,7 @@ namespace Pinguin
         public MainPage()
         {
             InitializeComponent();
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            ServiceReference1.PinguinServiceClient client = new ServiceReference1.PinguinServiceClient();
             
             #region AddGrid
             //Maak de grid aan.
@@ -56,6 +56,23 @@ namespace Pinguin
             client.SetOpzetFaseCompleted += new EventHandler<ServiceReference1.SetOpzetFaseCompletedEventArgs>(client_SetOpzetFaseCompleted);
             client.SetOpzetFaseAsync();
             #endregion
+
+            
+            
+            client.GetAllSpelersCompleted += new EventHandler<ServiceReference1.GetAllSpelersCompletedEventArgs>(client_GetAllSpelersCompleted);
+            client.GetAllSpelersAsync();
+            
+        }
+
+        void client_GetAllSpelersCompleted(object sender, ServiceReference1.GetAllSpelersCompletedEventArgs e)
+        {
+            string showResult = "De Spelers:";
+
+            foreach (var item in e.Result)
+            {
+                showResult += "\nSpeler: " + item.NickName;
+            }
+            MessageBox.Show(showResult);
         }
 
         //void client_PlacePinguinCompleted(object sender, ServiceReference1.PlacePinguinCompletedEventArgs e)
@@ -283,7 +300,7 @@ namespace Pinguin
             }
             if (opZetFace == true || magVerplaatsen == true) //Wanneer we een pinguin mogen plaatsen of verplaatsen.
             {
-                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                ServiceReference1.PinguinServiceClient client = new ServiceReference1.PinguinServiceClient();
                 client.OpzetFaseCompleted+=new EventHandler<ServiceReference1.OpzetFaseCompletedEventArgs>(client_OpzetFaseCompleted);
                 client.OpzetFaseAsync();
                             
@@ -309,7 +326,7 @@ namespace Pinguin
                     aantalSpelers == 2 && tellerAantalPinguins == 8)
                 {
                     //Verander opzet fase naar speel fase.
-                    ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                    ServiceReference1.PinguinServiceClient client = new ServiceReference1.PinguinServiceClient();
                     client.ChanceOpzetFaseCompleted += new EventHandler<ServiceReference1.ChanceOpzetFaseCompletedEventArgs>(client_ChanceOpzetFaseCompleted);
                     client.ChanceOpzetFaseAsync();
                     opZetFace = false;

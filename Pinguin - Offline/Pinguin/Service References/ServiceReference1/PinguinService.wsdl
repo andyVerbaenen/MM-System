@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PinguinService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:6758/PinguinService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:6758/PinguinService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:6758/PinguinService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Pinguin.Web.DTO" />
+      <xsd:import schemaLocation="http://localhost:6758/PinguinService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPinguinService_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:DoWork" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_GetAllSpelers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSpelers" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_GetAllSpelers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSpelersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_RolDobbelsteen_InputMessage">
+    <wsdl:part name="parameters" element="tns:RolDobbelsteen" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_RolDobbelsteen_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RolDobbelsteenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_MakeMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMap" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_MakeMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_MakeGrid_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeGrid" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_MakeGrid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeGridResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_OpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_OpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_ChanceOpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChanceOpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_ChanceOpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChanceOpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_SetOpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetOpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IPinguinService_SetOpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetOpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPinguinService">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/DoWork" message="tns:IPinguinService_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/DoWorkResponse" message="tns:IPinguinService_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSpelers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/GetAllSpelers" message="tns:IPinguinService_GetAllSpelers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/GetAllSpelersResponse" message="tns:IPinguinService_GetAllSpelers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RolDobbelsteen">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/RolDobbelsteen" message="tns:IPinguinService_RolDobbelsteen_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/RolDobbelsteenResponse" message="tns:IPinguinService_RolDobbelsteen_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeMap">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/MakeMap" message="tns:IPinguinService_MakeMap_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/MakeMapResponse" message="tns:IPinguinService_MakeMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeGrid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/MakeGrid" message="tns:IPinguinService_MakeGrid_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/MakeGridResponse" message="tns:IPinguinService_MakeGrid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/OpzetFase" message="tns:IPinguinService_OpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/OpzetFaseResponse" message="tns:IPinguinService_OpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChanceOpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/ChanceOpzetFase" message="tns:IPinguinService_ChanceOpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/ChanceOpzetFaseResponse" message="tns:IPinguinService_ChanceOpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetOpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPinguinService/SetOpzetFase" message="tns:IPinguinService_SetOpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPinguinService/SetOpzetFaseResponse" message="tns:IPinguinService_SetOpzetFase_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPinguinService" type="tns:IPinguinService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DoWork">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/DoWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSpelers">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/GetAllSpelers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RolDobbelsteen">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/RolDobbelsteen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeMap">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/MakeMap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeGrid">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/MakeGrid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/OpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChanceOpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/ChanceOpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IPinguinService/SetOpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PinguinService">
+    <wsdl:port name="BasicHttpBinding_IPinguinService" binding="tns:BasicHttpBinding_IPinguinService">
+      <soap:address location="http://localhost:6758/PinguinService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Pinguin.Web
+namespace Pinguin.Web.DTO
 {
-    public class Ijschots:GameEllement
+    public class Ijsschots
     {
+        public int ID { get; set; }
+        public int Column { get; set; }
+        public int Row { get; set; }
         public bool Visibility { get; set; }
         public int AantalVissen { get; set; }
-
-        public Ijschots()
-        {
-            Visibility = true;
-        }
     }
 }
