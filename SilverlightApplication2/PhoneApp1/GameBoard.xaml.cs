@@ -21,9 +21,10 @@ namespace PhoneApp1
 
         SpelSpeelstuk hulpSpeelstuk2; //Dit is de laatst aangeklikte pinguin.
 
-        int teller = 1; //Dit is een teller voor te zien aan wie het is.
+        int teller = 0; //Dit is een teller voor te zien aan wie het is.
         int tellerAantalPinguins = 0; //Dit is een teller voor te te weten als het spel nog in de opzet fase is of niet.
         int aantalSpelers = 4;
+        int[] punten = new int[4];
 
         string kleur; //Kleur van de speler bepalen.
 
@@ -55,6 +56,11 @@ namespace PhoneApp1
             client.SetOpzetFaseCompleted += new EventHandler<ServiceReference1.SetOpzetFaseCompletedEventArgs>(client_SetOpzetFaseCompleted);
             client.SetOpzetFaseAsync();
             #endregion
+
+            for (int i = 0; i < punten.Length; i++)
+            {
+                punten[i] = 0;
+            }
         }
         #region Make Grid & Map Completted
         void client_MakeGridCompleted(object sender, ServiceReference1.MakeGridCompletedEventArgs e)
@@ -67,8 +73,6 @@ namespace PhoneApp1
         {
             ObservableCollection<ObservableCollection<int>> hulpMap = e.Result; //Maak hulpmap aan voor met waarden van sender te kunnen werken.
             int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
-
-            //AddTile(2,2,3);
 
             for (int i = 0; i < 10; i++)
             {
@@ -117,7 +121,7 @@ namespace PhoneApp1
         void AddTile(int row, int column, int randomNumber)
         {
             Grid parent = SpelBord;
-            string fotoString = "/PhoneApp1;component/Images/" + randomNumber + "Vis.png"; //Locatie van afbeelding, hoeveel vissen er moeten opstaan.
+            string fotoString = "\\Images\\" + randomNumber + "Vis.png"; //Locatie van afbeelding, hoeveel vissen er moeten opstaan.
             SpelTile st = new SpelTile(row, column, randomNumber); //Maak een usercontrol aan.
             st.Afbeelding = fotoString; //Geef de afbeelding mee.
             
@@ -141,9 +145,9 @@ namespace PhoneApp1
             Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
 
             teller++; //Volgende speler
-            if (teller == 5)
+            if (teller == 4)
             {
-                teller = 1;
+                teller = 0;
             }
         }
 
@@ -242,6 +246,10 @@ namespace PhoneApp1
                 VorigeTegel = hulpTegel2; //Onthoud van waar de pinguin kwam.
                 hulpTegel2 = hulp; //Onthound waar de pinguin op gezet wordt.
                 magVerplaatsen = false; //De pinguin mag niet meer verpaatst worden.
+
+                punten[teller] += hulp.RandomNummer;
+                kleur = CheckKleurVanSpeler(kleur);
+                MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
             }
 
         }
@@ -293,11 +301,11 @@ namespace PhoneApp1
         #region Methoden
         private string CheckKleurVanSpeler(string kleur)
         {
-            if (teller == 1)
+            if (teller == 0)
                 kleur = "Groen";
-            else if (teller == 2)
+            else if (teller == 1)
                 kleur = "Geel";
-            else if (teller == 3)
+            else if (teller == 2)
                 kleur = "Rood";
             else
                 kleur = "Blauw";

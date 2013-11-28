@@ -18,8 +18,8 @@ namespace PhoneApp1
         {
             InitializeComponent();
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.GetDataCompleted += client_GetDataCompleted;
-            client.GetDataAsync(1);
+            //client.GetDataCompleted += client_GetDataCompleted;
+            //client.GetDataAsync(1);
             client.GetAllSpelersCompleted += client_GetAllSpelersCompleted;
             client.GetAllSpelersAsync();
             // Sample code to localize the ApplicationBar

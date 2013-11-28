@@ -47,7 +47,6 @@ namespace PhoneApp1
             }
             if (juisteLogin == true)
             {
-                MessageBox.Show("Ga naar GameBoard");
                 NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative));
             }
             else

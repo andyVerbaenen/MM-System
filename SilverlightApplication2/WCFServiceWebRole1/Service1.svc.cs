@@ -47,19 +47,14 @@ namespace WCFServiceWebRole1
 
         public void AddSpeler(string name, string pass)
         {
-            try
-            {
-                Speler s = new Speler();
-                s.NickName = name;
-                s.Wachtwoord = pass;
 
-                dc.Spelers.InsertOnSubmit(s);
-                dc.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Speler s = new Speler();
+            s.NickName = name;
+            s.Wachtwoord = pass;
+            
+            dc.Spelers.InsertOnSubmit(s);
+            dc.SubmitChanges();
+            
         }
 
         // [DataMember]

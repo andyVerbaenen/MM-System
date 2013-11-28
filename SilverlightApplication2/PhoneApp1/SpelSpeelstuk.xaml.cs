@@ -29,8 +29,8 @@ namespace PhoneApp1
             set
             {
                 //Zeg welke afbeelding het moet worden.
-                string fotoString = "/Pinguin;component/Images/Pinguwin" + Kleur + ".png";
-                img2.Source = new BitmapImage(new Uri(fotoString, UriKind.RelativeOrAbsolute));
+                string fotoString = "\\Images\\Pinguwin" + Kleur + ".png";
+                img2.Source = new BitmapImage(new Uri(fotoString, UriKind.Relative));
                 _Afbeelding = value;
             }
         }
