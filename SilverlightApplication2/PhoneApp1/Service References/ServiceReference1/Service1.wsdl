@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service1" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://urldatnognietisgebruikt.cloudapp.net/Service1.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://urldatnognietisgebruikt.cloudapp.net/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://urldatnognietisgebruikt.cloudapp.net/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" />
+      <xsd:import schemaLocation="http://urldatnognietisgebruikt.cloudapp.net/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService1_GetAllSpelers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSpelers" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAllSpelers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSpelersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddSpeler_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSpeler" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddSpeler_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSpelerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_MakeMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMap" />
+  </wsdl:message>
+  <wsdl:message name="IService1_MakeMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_MakeGrid_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeGrid" />
+  </wsdl:message>
+  <wsdl:message name="IService1_MakeGrid_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeGridResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_OpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:OpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IService1_OpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ChanceOpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChanceOpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ChanceOpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChanceOpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetOpzetFase_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetOpzetFase" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetOpzetFase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetOpzetFaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetData" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetDataUsingDataContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetDataUsingDataContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService1">
+    <wsdl:operation name="GetAllSpelers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllSpelers" message="tns:IService1_GetAllSpelers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAllSpelersResponse" message="tns:IService1_GetAllSpelers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSpeler">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddSpeler" message="tns:IService1_AddSpeler_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddSpelerResponse" message="tns:IService1_AddSpeler_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeMap">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeMap" message="tns:IService1_MakeMap_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeMapResponse" message="tns:IService1_MakeMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeGrid">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeGrid" message="tns:IService1_MakeGrid_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeGridResponse" message="tns:IService1_MakeGrid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="OpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/OpzetFase" message="tns:IService1_OpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/OpzetFaseResponse" message="tns:IService1_OpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChanceOpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ChanceOpzetFase" message="tns:IService1_ChanceOpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ChanceOpzetFaseResponse" message="tns:IService1_ChanceOpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetOpzetFase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetOpzetFase" message="tns:IService1_SetOpzetFase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetOpzetFaseResponse" message="tns:IService1_SetOpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDataResponse" message="tns:IService1_GetData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetDataUsingDataContract" message="tns:IService1_GetDataUsingDataContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDataUsingDataContractResponse" message="tns:IService1_GetDataUsingDataContract_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllSpelers">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAllSpelers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSpeler">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddSpeler" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeMap">
+      <soap:operation soapAction="http://tempuri.org/IService1/MakeMap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeGrid">
+      <soap:operation soapAction="http://tempuri.org/IService1/MakeGrid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IService1/OpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChanceOpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IService1/ChanceOpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetOpzetFase">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetOpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetDataUsingDataContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="BasicHttpBinding_IService1" binding="tns:BasicHttpBinding_IService1">
+      <soap:address location="http://urldatnognietisgebruikt.cloudapp.net/Service1.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
