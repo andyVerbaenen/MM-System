@@ -20,6 +20,18 @@
   <wsdl:message name="IService1_AddSpeler_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddSpelerResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_AddLobby_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLobby" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddLobby_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLobbyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAllLobbies_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLobbies" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAllLobbies_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLobbiesResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_MakeMap_InputMessage">
     <wsdl:part name="parameters" element="tns:MakeMap" />
   </wsdl:message>
@@ -50,6 +62,12 @@
   <wsdl:message name="IService1_SetOpzetFase_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetOpzetFaseResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_GameState_InputMessage">
+    <wsdl:part name="parameters" element="tns:GameState" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GameState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GameStateResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
   </wsdl:message>
@@ -71,6 +89,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddSpeler" message="tns:IService1_AddSpeler_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddSpelerResponse" message="tns:IService1_AddSpeler_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddLobby">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddLobby" message="tns:IService1_AddLobby_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddLobbyResponse" message="tns:IService1_AddLobby_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllLobbies">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllLobbies" message="tns:IService1_GetAllLobbies_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAllLobbiesResponse" message="tns:IService1_GetAllLobbies_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="MakeMap">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeMap" message="tns:IService1_MakeMap_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeMapResponse" message="tns:IService1_MakeMap_OutputMessage" />
@@ -90,6 +116,10 @@
     <wsdl:operation name="SetOpzetFase">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetOpzetFase" message="tns:IService1_SetOpzetFase_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetOpzetFaseResponse" message="tns:IService1_SetOpzetFase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GameState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GameState" message="tns:IService1_GameState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GameStateResponse" message="tns:IService1_GameState_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
@@ -113,6 +143,24 @@
     </wsdl:operation>
     <wsdl:operation name="AddSpeler">
       <soap:operation soapAction="http://tempuri.org/IService1/AddSpeler" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLobby">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddLobby" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllLobbies">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAllLobbies" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -158,6 +206,15 @@
     </wsdl:operation>
     <wsdl:operation name="SetOpzetFase">
       <soap:operation soapAction="http://tempuri.org/IService1/SetOpzetFase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GameState">
+      <soap:operation soapAction="http://tempuri.org/IService1/GameState" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

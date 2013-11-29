@@ -20,6 +20,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DTOSpeler" nillable="true" type="tns:DTOSpeler" />
+  <xs:complexType name="ArrayOfDTOLobby">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DTOLobby" nillable="true" type="tns:DTOLobby" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDTOLobby" nillable="true" type="tns:ArrayOfDTOLobby" />
+  <xs:complexType name="DTOLobby">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AantalSpelers" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="MapRows" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tijd" type="xs:int" />
+      <xs:element minOccurs="0" name="Vorm" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOLobby" nillable="true" type="tns:DTOLobby" />
   <xs:complexType name="CompositeType">
     <xs:sequence>
       <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />

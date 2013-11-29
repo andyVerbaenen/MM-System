@@ -88,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureLocalStorageTraceListener.cs" />
+    <Compile Include="DTOIjsschots.cs" />
+    <Compile Include="DTOLobby.cs" />
+    <Compile Include="DTOPion.cs" />
     <Compile Include="LinqToSQL.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,7 +101,7 @@
     </Compile>
     <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Speler.cs" />
+    <Compile Include="DTOSpeler.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -249,7 +249,7 @@ namespace PhoneApp1
 
                 punten[teller] += hulp.RandomNummer;
                 kleur = CheckKleurVanSpeler(kleur);
-                MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
+                //MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
             }
 
         }

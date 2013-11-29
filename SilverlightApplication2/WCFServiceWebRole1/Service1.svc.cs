@@ -13,13 +13,25 @@ namespace WCFServiceWebRole1
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
+        #region Aanmaken variabelen
         LinqToSQLDataContext dc;
+
+        static int[][] map = new int[10][];
+        static int[] grid = new int[4];
+        static int[][] pinguinPos = new int[16][];
+        static string[] gameState = new string[4];
+
+        public static bool opzetFase = true;
+        Random random = new Random();
+        #endregion
+
         public Service1()
         {
             dc = new LinqToSQLDataContext();
                 
         }
 
+        #region Get Add Speler
         public List<DTOSpeler> GetAllSpelers()
         {
             var spelers = from s in dc.Spelers
@@ -44,30 +56,44 @@ namespace WCFServiceWebRole1
             }
             return spelersLijst;
         }
-
         public void AddSpeler(string name, string pass)
         {
-
-            Speler s = new Speler();
-            s.NickName = name;
-            s.Wachtwoord = pass;
-            
+            Speler s = new Speler() { Gelijk=0, Gewonnen=0, Lobby= 0, NickName=name, Punten=0, Ready= "false", Verloren=0, Wachtwoord= pass };
             dc.Spelers.InsertOnSubmit(s);
-            dc.SubmitChanges();
-            
+            dc.SubmitChanges();           
         }
+        #endregion
 
-        // [DataMember]
-        static int[][] map = new int[10][];
-        //[DataMember]
-        static int[] grid = new int[4];
-        //[DataMember]
-        static int[][] pinguinPos = new int[16][];
-        //[DataMember]
-        public static bool opzetFase = true;
+        #region Make Get Lobby
+        public void AddLobby()
+        {
+            Lobby l = new Lobby() { MapColumns = 0, MapRows = 10, Tijd = "120", Vorm = "Default", Status = "Waiting" }; //MapColumns = aantal spelers in lobby
+            dc.Lobbies.InsertOnSubmit(l);
+            dc.SubmitChanges();
+        }
+        public List<DTOLobby> GetAllLobbies()
+        {
+            var lobbies = from l in dc.Lobbies
+                          select l;
 
-        Random random = new Random();
+            List<DTOLobby> lobbyLijst = new List<DTOLobby>();
 
+            foreach (var lobby in lobbies)
+            {
+                DTOLobby eenLobby = new DTOLobby();
+                eenLobby.ID = lobby.ID;
+                eenLobby.AantalSpelers = lobby.MapColumns;
+                eenLobby.MapRows = lobby.MapRows;
+                eenLobby.Status = lobby.Status;
+                eenLobby.Tijd =  Convert.ToInt32(lobby.Tijd);
+                eenLobby.Vorm = lobby.Vorm;
+                lobbyLijst.Add(eenLobby);
+            }
+            return lobbyLijst;
+        }
+        #endregion
+
+        #region Make Map Grid
         public int[][] MakeMap() //Bepalen welke tegels er waar staan.
         {
 
@@ -81,8 +107,6 @@ namespace WCFServiceWebRole1
             }
             return map;
         }
-
-
         public int[] MakeGrid() //De waarde van de grid bepalen.
         {
             for (int i = 0; i < grid.Length; i++)
@@ -94,52 +118,41 @@ namespace WCFServiceWebRole1
             }
             return grid;
         }
+        #endregion
 
-        //[OperationContract]
-        //public int[][] PlacePinguin()
-        //{
-        //    for (int i = 0; i < 16; i++)
-        //    {
-        //        pinguinPos[i] = new int[2];
-        //        for (int j = 0; j < 2; j++)
-        //        {
-        //            pinguinPos[i][j] = -1;
-        //        }
+        #region GameState
+        public string[] GameState()
+        {
+            gameState[0] = "kleur";     //Index 0: Kleur van speler.
+            gameState[1] = "nummer";    //Index 1: ID van de speler.
+            gameState[2] = "";
+            return gameState;
+        }
+        #endregion
 
-        //    }
-        //    //pinguinPos[5][1] = 5;
-        //    //pinguinPos[5][0] = 5;
-        //    //pinguinPos[1][1] = 8;
-        //    //pinguinPos[1][0] = 4;
-        //    return pinguinPos;
-        //}
-
-
+        #region Fases
         public bool OpzetFase()
         {
 
             return opzetFase;
         }
-
-
         public bool ChanceOpzetFase()
         {
             opzetFase = false;
             return opzetFase;
         }
-
         public bool SetOpzetFase()
         {
             opzetFase = true;
             return opzetFase;
         }
+        #endregion
 
-
+        #region TestMethode
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
         }
-
         public CompositeType GetDataUsingDataContract(CompositeType composite)
         {
             if (composite == null)
@@ -152,5 +165,6 @@ namespace WCFServiceWebRole1
             }
             return composite;
         }
+        #endregion
     }
 }

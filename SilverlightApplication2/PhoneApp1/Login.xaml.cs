@@ -47,7 +47,7 @@ namespace PhoneApp1
             }
             if (juisteLogin == true)
             {
-                NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
             }
             else
             {

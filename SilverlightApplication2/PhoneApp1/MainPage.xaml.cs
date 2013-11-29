@@ -34,7 +34,7 @@ namespace PhoneApp1
             {
                 showResult += "\nSpeler: " + item.NickName;
             }
-            MessageBox.Show(showResult);
+            //MessageBox.Show(showResult);
         }
 
         void client_GetDataCompleted(object sender, ServiceReference1.GetDataCompletedEventArgs e)
@@ -44,7 +44,7 @@ namespace PhoneApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

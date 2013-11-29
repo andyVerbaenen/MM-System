@@ -167,6 +167,111 @@ namespace PhoneApp1.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DTOLobby", Namespace="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1")]
+    public partial class DTOLobby : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private int AantalSpelersField;
+        
+        private int IDField;
+        
+        private int MapRowsField;
+        
+        private string StatusField;
+        
+        private int TijdField;
+        
+        private string VormField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AantalSpelers {
+            get {
+                return this.AantalSpelersField;
+            }
+            set {
+                if ((this.AantalSpelersField.Equals(value) != true)) {
+                    this.AantalSpelersField = value;
+                    this.RaisePropertyChanged("AantalSpelers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MapRows {
+            get {
+                return this.MapRowsField;
+            }
+            set {
+                if ((this.MapRowsField.Equals(value) != true)) {
+                    this.MapRowsField = value;
+                    this.RaisePropertyChanged("MapRows");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tijd {
+            get {
+                return this.TijdField;
+            }
+            set {
+                if ((this.TijdField.Equals(value) != true)) {
+                    this.TijdField = value;
+                    this.RaisePropertyChanged("Tijd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Vorm {
+            get {
+                return this.VormField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VormField, value) != true)) {
+                    this.VormField = value;
+                    this.RaisePropertyChanged("Vorm");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1")]
     public partial class CompositeType : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -224,6 +329,16 @@ namespace PhoneApp1.ServiceReference1 {
         
         void EndAddSpeler(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/AddLobby", ReplyAction="http://tempuri.org/IService1/AddLobbyResponse")]
+        System.IAsyncResult BeginAddLobby(System.AsyncCallback callback, object asyncState);
+        
+        void EndAddLobby(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/GetAllLobbies", ReplyAction="http://tempuri.org/IService1/GetAllLobbiesResponse")]
+        System.IAsyncResult BeginGetAllLobbies(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> EndGetAllLobbies(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/MakeMap", ReplyAction="http://tempuri.org/IService1/MakeMapResponse")]
         System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState);
         
@@ -248,6 +363,11 @@ namespace PhoneApp1.ServiceReference1 {
         System.IAsyncResult BeginSetOpzetFase(System.AsyncCallback callback, object asyncState);
         
         bool EndSetOpzetFase(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/GameState", ReplyAction="http://tempuri.org/IService1/GameStateResponse")]
+        System.IAsyncResult BeginGameState(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<string> EndGameState(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/GetData", ReplyAction="http://tempuri.org/IService1/GetDataResponse")]
         System.IAsyncResult BeginGetData(int value, System.AsyncCallback callback, object asyncState);
@@ -279,6 +399,25 @@ namespace PhoneApp1.ServiceReference1 {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOSpeler>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAllLobbiesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAllLobbiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby>)(this.results[0]));
             }
         }
     }
@@ -380,6 +519,25 @@ namespace PhoneApp1.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GameStateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GameStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<string> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<string>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -432,6 +590,18 @@ namespace PhoneApp1.ServiceReference1 {
         
         private System.Threading.SendOrPostCallback onAddSpelerCompletedDelegate;
         
+        private BeginOperationDelegate onBeginAddLobbyDelegate;
+        
+        private EndOperationDelegate onEndAddLobbyDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddLobbyCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAllLobbiesDelegate;
+        
+        private EndOperationDelegate onEndGetAllLobbiesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAllLobbiesCompletedDelegate;
+        
         private BeginOperationDelegate onBeginMakeMapDelegate;
         
         private EndOperationDelegate onEndMakeMapDelegate;
@@ -461,6 +631,12 @@ namespace PhoneApp1.ServiceReference1 {
         private EndOperationDelegate onEndSetOpzetFaseDelegate;
         
         private System.Threading.SendOrPostCallback onSetOpzetFaseCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGameStateDelegate;
+        
+        private EndOperationDelegate onEndGameStateDelegate;
+        
+        private System.Threading.SendOrPostCallback onGameStateCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetDataDelegate;
         
@@ -531,6 +707,10 @@ namespace PhoneApp1.ServiceReference1 {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddSpelerCompleted;
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddLobbyCompleted;
+        
+        public event System.EventHandler<GetAllLobbiesCompletedEventArgs> GetAllLobbiesCompleted;
+        
         public event System.EventHandler<MakeMapCompletedEventArgs> MakeMapCompleted;
         
         public event System.EventHandler<MakeGridCompletedEventArgs> MakeGridCompleted;
@@ -540,6 +720,8 @@ namespace PhoneApp1.ServiceReference1 {
         public event System.EventHandler<ChanceOpzetFaseCompletedEventArgs> ChanceOpzetFaseCompleted;
         
         public event System.EventHandler<SetOpzetFaseCompletedEventArgs> SetOpzetFaseCompleted;
+        
+        public event System.EventHandler<GameStateCompletedEventArgs> GameStateCompleted;
         
         public event System.EventHandler<GetDataCompletedEventArgs> GetDataCompleted;
         
@@ -638,6 +820,93 @@ namespace PhoneApp1.ServiceReference1 {
             base.InvokeAsync(this.onBeginAddSpelerDelegate, new object[] {
                         name,
                         pass}, this.onEndAddSpelerDelegate, this.onAddSpelerCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginAddLobby(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddLobby(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndAddLobby(System.IAsyncResult result) {
+            base.Channel.EndAddLobby(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddLobby(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginAddLobby(callback, asyncState);
+        }
+        
+        private object[] OnEndAddLobby(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndAddLobby(result);
+            return null;
+        }
+        
+        private void OnAddLobbyCompleted(object state) {
+            if ((this.AddLobbyCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddLobbyCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddLobbyAsync() {
+            this.AddLobbyAsync(null);
+        }
+        
+        public void AddLobbyAsync(object userState) {
+            if ((this.onBeginAddLobbyDelegate == null)) {
+                this.onBeginAddLobbyDelegate = new BeginOperationDelegate(this.OnBeginAddLobby);
+            }
+            if ((this.onEndAddLobbyDelegate == null)) {
+                this.onEndAddLobbyDelegate = new EndOperationDelegate(this.OnEndAddLobby);
+            }
+            if ((this.onAddLobbyCompletedDelegate == null)) {
+                this.onAddLobbyCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddLobbyCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddLobbyDelegate, null, this.onEndAddLobbyDelegate, this.onAddLobbyCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginGetAllLobbies(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAllLobbies(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> PhoneApp1.ServiceReference1.IService1.EndGetAllLobbies(System.IAsyncResult result) {
+            return base.Channel.EndGetAllLobbies(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAllLobbies(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginGetAllLobbies(callback, asyncState);
+        }
+        
+        private object[] OnEndGetAllLobbies(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> retVal = ((PhoneApp1.ServiceReference1.IService1)(this)).EndGetAllLobbies(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAllLobbiesCompleted(object state) {
+            if ((this.GetAllLobbiesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAllLobbiesCompleted(this, new GetAllLobbiesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAllLobbiesAsync() {
+            this.GetAllLobbiesAsync(null);
+        }
+        
+        public void GetAllLobbiesAsync(object userState) {
+            if ((this.onBeginGetAllLobbiesDelegate == null)) {
+                this.onBeginGetAllLobbiesDelegate = new BeginOperationDelegate(this.OnBeginGetAllLobbies);
+            }
+            if ((this.onEndGetAllLobbiesDelegate == null)) {
+                this.onEndGetAllLobbiesDelegate = new EndOperationDelegate(this.OnEndGetAllLobbies);
+            }
+            if ((this.onGetAllLobbiesCompletedDelegate == null)) {
+                this.onGetAllLobbiesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAllLobbiesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAllLobbiesDelegate, null, this.onEndGetAllLobbiesDelegate, this.onGetAllLobbiesCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -861,6 +1130,50 @@ namespace PhoneApp1.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginGameState(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGameState(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<string> PhoneApp1.ServiceReference1.IService1.EndGameState(System.IAsyncResult result) {
+            return base.Channel.EndGameState(result);
+        }
+        
+        private System.IAsyncResult OnBeginGameState(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginGameState(callback, asyncState);
+        }
+        
+        private object[] OnEndGameState(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<string> retVal = ((PhoneApp1.ServiceReference1.IService1)(this)).EndGameState(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGameStateCompleted(object state) {
+            if ((this.GameStateCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GameStateCompleted(this, new GameStateCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GameStateAsync() {
+            this.GameStateAsync(null);
+        }
+        
+        public void GameStateAsync(object userState) {
+            if ((this.onBeginGameStateDelegate == null)) {
+                this.onBeginGameStateDelegate = new BeginOperationDelegate(this.OnBeginGameState);
+            }
+            if ((this.onEndGameStateDelegate == null)) {
+                this.onEndGameStateDelegate = new EndOperationDelegate(this.OnEndGameState);
+            }
+            if ((this.onGameStateCompletedDelegate == null)) {
+                this.onGameStateCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGameStateCompleted);
+            }
+            base.InvokeAsync(this.onBeginGameStateDelegate, null, this.onEndGameStateDelegate, this.onGameStateCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginGetData(int value, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginGetData(value, callback, asyncState);
         }
@@ -1053,6 +1366,29 @@ namespace PhoneApp1.ServiceReference1 {
                 base.EndInvoke("AddSpeler", _args, result);
             }
             
+            public System.IAsyncResult BeginAddLobby(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("AddLobby", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndAddLobby(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("AddLobby", _args, result);
+            }
+            
+            public System.IAsyncResult BeginGetAllLobbies(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetAllLobbies", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> EndGetAllLobbies(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby> _result = ((System.Collections.ObjectModel.ObservableCollection<PhoneApp1.ServiceReference1.DTOLobby>)(base.EndInvoke("GetAllLobbies", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[0];
                 System.IAsyncResult _result = base.BeginInvoke("MakeMap", _args, callback, asyncState);
@@ -1110,6 +1446,18 @@ namespace PhoneApp1.ServiceReference1 {
             public bool EndSetOpzetFase(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SetOpzetFase", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGameState(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GameState", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<string> EndGameState(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<string> _result = ((System.Collections.ObjectModel.ObservableCollection<string>)(base.EndInvoke("GameState", _args, result)));
                 return _result;
             }
             

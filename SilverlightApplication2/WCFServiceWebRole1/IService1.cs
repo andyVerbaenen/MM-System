@@ -19,6 +19,12 @@ namespace WCFServiceWebRole1
         void AddSpeler(string name, string pass);
 
         [OperationContract]
+        void AddLobby();
+
+        [OperationContract]
+        List<DTOLobby> GetAllLobbies();
+
+        [OperationContract]
         int[][] MakeMap();
 
         [OperationContract]
@@ -32,8 +38,9 @@ namespace WCFServiceWebRole1
 
         [OperationContract]
         bool SetOpzetFase();
-        
 
+        [OperationContract]
+        string[] GameState();
 
         [OperationContract]
         string GetData(int value);

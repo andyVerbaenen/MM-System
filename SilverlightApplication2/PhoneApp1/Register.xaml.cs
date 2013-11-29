@@ -48,15 +48,8 @@ namespace PhoneApp1
             }
             if (nieuweGebruikersnaam == true)
             {
-                try
-                {
-                    client.AddSpelerCompleted += client_AddSpelerCompleted;
-                    client.AddSpelerAsync(username, password);
-                }
-                catch (Exception ee)
-                {
-                    MessageBox.Show(ee.ToString());
-                }
+                client.AddSpelerCompleted += client_AddSpelerCompleted;
+                client.AddSpelerAsync(username, password);
             }
             else
             {
@@ -67,6 +60,7 @@ namespace PhoneApp1
         void client_AddSpelerCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             MessageBox.Show("Speler aangemaakt.");
+            NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
         }
     }
 }
