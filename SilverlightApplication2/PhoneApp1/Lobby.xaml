@@ -42,7 +42,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Button Name="testName" Content="I'm ready" Click="Button_Click" Margin="17,213,366,10"/>
-            <Button Content="Leave lobby" Margin="365,213,0,10" Click="Button_Click_1"/>
+            <Button Name="LeaveButton" Content="Leave lobby" Margin="365,213,0,10" Click="Button_Click_1"/>
 
         </Grid>
     </Grid>

@@ -25,13 +25,28 @@ namespace WCFServiceWebRole1
         List<DTOLobby> GetAllLobbies();
 
         [OperationContract]
-        void JoinLobby(int lobbyID, int spelerID);
+        string JoinLobby(int lobbyID, int spelerID);
+
+        [OperationContract]
+        void LeaveLobby(int lobbyID, int spelerID);
 
         [OperationContract]
         int[][] MakeMap();
 
         [OperationContract]
         int[] MakeGrid();
+
+        [OperationContract]
+        void SetLetGameBegin(int lobbyID);
+
+        [OperationContract]
+        string LetGameBegin(int lobbyID);
+
+        [OperationContract]
+        void SetTime(int lobbyID, int tijd);
+
+        [OperationContract]
+        void SetReady(int spelerID);
 
         [OperationContract]
         bool OpzetFase();

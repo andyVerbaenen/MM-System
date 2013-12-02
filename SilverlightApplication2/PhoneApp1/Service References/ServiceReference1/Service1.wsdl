@@ -38,6 +38,12 @@
   <wsdl:message name="IService1_JoinLobby_OutputMessage">
     <wsdl:part name="parameters" element="tns:JoinLobbyResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_LeaveLobby_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveLobby" />
+  </wsdl:message>
+  <wsdl:message name="IService1_LeaveLobby_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveLobbyResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_MakeMap_InputMessage">
     <wsdl:part name="parameters" element="tns:MakeMap" />
   </wsdl:message>
@@ -49,6 +55,30 @@
   </wsdl:message>
   <wsdl:message name="IService1_MakeGrid_OutputMessage">
     <wsdl:part name="parameters" element="tns:MakeGridResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetLetGameBegin_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetLetGameBegin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetLetGameBegin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetLetGameBeginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_LetGameBegin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LetGameBegin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_LetGameBegin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LetGameBeginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetTime_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetTime" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetTime_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetReady_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetReady" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetReady_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetReadyResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_OpzetFase_InputMessage">
     <wsdl:part name="parameters" element="tns:OpzetFase" />
@@ -107,6 +137,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/JoinLobby" message="tns:IService1_JoinLobby_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/JoinLobbyResponse" message="tns:IService1_JoinLobby_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="LeaveLobby">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/LeaveLobby" message="tns:IService1_LeaveLobby_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/LeaveLobbyResponse" message="tns:IService1_LeaveLobby_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="MakeMap">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeMap" message="tns:IService1_MakeMap_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeMapResponse" message="tns:IService1_MakeMap_OutputMessage" />
@@ -114,6 +148,22 @@
     <wsdl:operation name="MakeGrid">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeGrid" message="tns:IService1_MakeGrid_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeGridResponse" message="tns:IService1_MakeGrid_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetLetGameBegin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetLetGameBegin" message="tns:IService1_SetLetGameBegin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetLetGameBeginResponse" message="tns:IService1_SetLetGameBegin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LetGameBegin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/LetGameBegin" message="tns:IService1_LetGameBegin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/LetGameBeginResponse" message="tns:IService1_LetGameBegin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetTime">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetTime" message="tns:IService1_SetTime_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetTimeResponse" message="tns:IService1_SetTime_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetReady">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetReady" message="tns:IService1_SetReady_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetReadyResponse" message="tns:IService1_SetReady_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="OpzetFase">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/OpzetFase" message="tns:IService1_OpzetFase_InputMessage" />
@@ -187,6 +237,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="LeaveLobby">
+      <soap:operation soapAction="http://tempuri.org/IService1/LeaveLobby" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="MakeMap">
       <soap:operation soapAction="http://tempuri.org/IService1/MakeMap" style="document" />
       <wsdl:input>
@@ -198,6 +257,42 @@
     </wsdl:operation>
     <wsdl:operation name="MakeGrid">
       <soap:operation soapAction="http://tempuri.org/IService1/MakeGrid" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetLetGameBegin">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetLetGameBegin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LetGameBegin">
+      <soap:operation soapAction="http://tempuri.org/IService1/LetGameBegin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetTime">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetReady">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetReady" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

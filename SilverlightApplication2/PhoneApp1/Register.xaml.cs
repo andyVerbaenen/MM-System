@@ -60,7 +60,7 @@ namespace PhoneApp1
         void client_AddSpelerCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             MessageBox.Show("Speler aangemaakt.");
-            //NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Login.xaml", UriKind.Relative));
         }
     }
 }

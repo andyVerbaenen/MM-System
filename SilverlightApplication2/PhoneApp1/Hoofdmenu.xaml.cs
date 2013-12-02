@@ -61,7 +61,7 @@ namespace PhoneApp1
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             
-            //ShowLobbies();
+            ShowLobbies();
         }
         public void ShowLobbies()
         {
@@ -87,6 +87,12 @@ namespace PhoneApp1
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             client.JoinLobbyCompleted += client_JoinLobbyCompleted;
             client.JoinLobbyAsync(tellerLobbyID, tellerSpelerID);
+        }
+
+        void client_JoinLobbyCompleted(object sender, ServiceReference1.JoinLobbyCompletedEventArgs e)
+        {
+            if(e.Result == "Waiting")
+                NavigationService.Navigate(new Uri("/Lobby.xaml", UriKind.Relative));
         }
 
         private static void GiveSpelerAndLobbyID(object sender, out int tellerLobbyID, out int tellerSpelerID)
@@ -117,12 +123,7 @@ namespace PhoneApp1
             } while (true);
         }
 
-        void client_JoinLobbyCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-
-            NavigationService.Navigate(new Uri("/Lobby.xaml", UriKind.Relative));
-            
-        }
+        
     }
 
     public class HoofdmenuClass

@@ -342,7 +342,12 @@ namespace PhoneApp1.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/JoinLobby", ReplyAction="http://tempuri.org/IService1/JoinLobbyResponse")]
         System.IAsyncResult BeginJoinLobby(int lobbyID, int spelerID, System.AsyncCallback callback, object asyncState);
         
-        void EndJoinLobby(System.IAsyncResult result);
+        string EndJoinLobby(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/LeaveLobby", ReplyAction="http://tempuri.org/IService1/LeaveLobbyResponse")]
+        System.IAsyncResult BeginLeaveLobby(int lobbyID, int spelerID, System.AsyncCallback callback, object asyncState);
+        
+        void EndLeaveLobby(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/MakeMap", ReplyAction="http://tempuri.org/IService1/MakeMapResponse")]
         System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState);
@@ -353,6 +358,26 @@ namespace PhoneApp1.ServiceReference1 {
         System.IAsyncResult BeginMakeGrid(System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<int> EndMakeGrid(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/SetLetGameBegin", ReplyAction="http://tempuri.org/IService1/SetLetGameBeginResponse")]
+        System.IAsyncResult BeginSetLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState);
+        
+        void EndSetLetGameBegin(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/LetGameBegin", ReplyAction="http://tempuri.org/IService1/LetGameBeginResponse")]
+        System.IAsyncResult BeginLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState);
+        
+        string EndLetGameBegin(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/SetTime", ReplyAction="http://tempuri.org/IService1/SetTimeResponse")]
+        System.IAsyncResult BeginSetTime(int lobbyID, int tijd, System.AsyncCallback callback, object asyncState);
+        
+        void EndSetTime(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/SetReady", ReplyAction="http://tempuri.org/IService1/SetReadyResponse")]
+        System.IAsyncResult BeginSetReady(int spelerID, System.AsyncCallback callback, object asyncState);
+        
+        void EndSetReady(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/OpzetFase", ReplyAction="http://tempuri.org/IService1/OpzetFaseResponse")]
         System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState);
@@ -429,6 +454,25 @@ namespace PhoneApp1.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class JoinLobbyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public JoinLobbyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class MakeMapCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -461,6 +505,25 @@ namespace PhoneApp1.ServiceReference1 {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<int>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class LetGameBeginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public LetGameBeginCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
             }
         }
     }
@@ -613,6 +676,12 @@ namespace PhoneApp1.ServiceReference1 {
         
         private System.Threading.SendOrPostCallback onJoinLobbyCompletedDelegate;
         
+        private BeginOperationDelegate onBeginLeaveLobbyDelegate;
+        
+        private EndOperationDelegate onEndLeaveLobbyDelegate;
+        
+        private System.Threading.SendOrPostCallback onLeaveLobbyCompletedDelegate;
+        
         private BeginOperationDelegate onBeginMakeMapDelegate;
         
         private EndOperationDelegate onEndMakeMapDelegate;
@@ -624,6 +693,30 @@ namespace PhoneApp1.ServiceReference1 {
         private EndOperationDelegate onEndMakeGridDelegate;
         
         private System.Threading.SendOrPostCallback onMakeGridCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetLetGameBeginDelegate;
+        
+        private EndOperationDelegate onEndSetLetGameBeginDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetLetGameBeginCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginLetGameBeginDelegate;
+        
+        private EndOperationDelegate onEndLetGameBeginDelegate;
+        
+        private System.Threading.SendOrPostCallback onLetGameBeginCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetTimeDelegate;
+        
+        private EndOperationDelegate onEndSetTimeDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetTimeCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetReadyDelegate;
+        
+        private EndOperationDelegate onEndSetReadyDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetReadyCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpzetFaseDelegate;
         
@@ -722,11 +815,21 @@ namespace PhoneApp1.ServiceReference1 {
         
         public event System.EventHandler<GetAllLobbiesCompletedEventArgs> GetAllLobbiesCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> JoinLobbyCompleted;
+        public event System.EventHandler<JoinLobbyCompletedEventArgs> JoinLobbyCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> LeaveLobbyCompleted;
         
         public event System.EventHandler<MakeMapCompletedEventArgs> MakeMapCompleted;
         
         public event System.EventHandler<MakeGridCompletedEventArgs> MakeGridCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SetLetGameBeginCompleted;
+        
+        public event System.EventHandler<LetGameBeginCompletedEventArgs> LetGameBeginCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SetTimeCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SetReadyCompleted;
         
         public event System.EventHandler<OpzetFaseCompletedEventArgs> OpzetFaseCompleted;
         
@@ -928,8 +1031,8 @@ namespace PhoneApp1.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void PhoneApp1.ServiceReference1.IService1.EndJoinLobby(System.IAsyncResult result) {
-            base.Channel.EndJoinLobby(result);
+        string PhoneApp1.ServiceReference1.IService1.EndJoinLobby(System.IAsyncResult result) {
+            return base.Channel.EndJoinLobby(result);
         }
         
         private System.IAsyncResult OnBeginJoinLobby(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -939,14 +1042,15 @@ namespace PhoneApp1.ServiceReference1 {
         }
         
         private object[] OnEndJoinLobby(System.IAsyncResult result) {
-            ((PhoneApp1.ServiceReference1.IService1)(this)).EndJoinLobby(result);
-            return null;
+            string retVal = ((PhoneApp1.ServiceReference1.IService1)(this)).EndJoinLobby(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnJoinLobbyCompleted(object state) {
             if ((this.JoinLobbyCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.JoinLobbyCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.JoinLobbyCompleted(this, new JoinLobbyCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
@@ -967,6 +1071,53 @@ namespace PhoneApp1.ServiceReference1 {
             base.InvokeAsync(this.onBeginJoinLobbyDelegate, new object[] {
                         lobbyID,
                         spelerID}, this.onEndJoinLobbyDelegate, this.onJoinLobbyCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginLeaveLobby(int lobbyID, int spelerID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLeaveLobby(lobbyID, spelerID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndLeaveLobby(System.IAsyncResult result) {
+            base.Channel.EndLeaveLobby(result);
+        }
+        
+        private System.IAsyncResult OnBeginLeaveLobby(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int lobbyID = ((int)(inValues[0]));
+            int spelerID = ((int)(inValues[1]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginLeaveLobby(lobbyID, spelerID, callback, asyncState);
+        }
+        
+        private object[] OnEndLeaveLobby(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndLeaveLobby(result);
+            return null;
+        }
+        
+        private void OnLeaveLobbyCompleted(object state) {
+            if ((this.LeaveLobbyCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.LeaveLobbyCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void LeaveLobbyAsync(int lobbyID, int spelerID) {
+            this.LeaveLobbyAsync(lobbyID, spelerID, null);
+        }
+        
+        public void LeaveLobbyAsync(int lobbyID, int spelerID, object userState) {
+            if ((this.onBeginLeaveLobbyDelegate == null)) {
+                this.onBeginLeaveLobbyDelegate = new BeginOperationDelegate(this.OnBeginLeaveLobby);
+            }
+            if ((this.onEndLeaveLobbyDelegate == null)) {
+                this.onEndLeaveLobbyDelegate = new EndOperationDelegate(this.OnEndLeaveLobby);
+            }
+            if ((this.onLeaveLobbyCompletedDelegate == null)) {
+                this.onLeaveLobbyCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLeaveLobbyCompleted);
+            }
+            base.InvokeAsync(this.onBeginLeaveLobbyDelegate, new object[] {
+                        lobbyID,
+                        spelerID}, this.onEndLeaveLobbyDelegate, this.onLeaveLobbyCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1055,6 +1206,189 @@ namespace PhoneApp1.ServiceReference1 {
                 this.onMakeGridCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnMakeGridCompleted);
             }
             base.InvokeAsync(this.onBeginMakeGridDelegate, null, this.onEndMakeGridDelegate, this.onMakeGridCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginSetLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetLetGameBegin(lobbyID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndSetLetGameBegin(System.IAsyncResult result) {
+            base.Channel.EndSetLetGameBegin(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetLetGameBegin(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int lobbyID = ((int)(inValues[0]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginSetLetGameBegin(lobbyID, callback, asyncState);
+        }
+        
+        private object[] OnEndSetLetGameBegin(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndSetLetGameBegin(result);
+            return null;
+        }
+        
+        private void OnSetLetGameBeginCompleted(object state) {
+            if ((this.SetLetGameBeginCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetLetGameBeginCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetLetGameBeginAsync(int lobbyID) {
+            this.SetLetGameBeginAsync(lobbyID, null);
+        }
+        
+        public void SetLetGameBeginAsync(int lobbyID, object userState) {
+            if ((this.onBeginSetLetGameBeginDelegate == null)) {
+                this.onBeginSetLetGameBeginDelegate = new BeginOperationDelegate(this.OnBeginSetLetGameBegin);
+            }
+            if ((this.onEndSetLetGameBeginDelegate == null)) {
+                this.onEndSetLetGameBeginDelegate = new EndOperationDelegate(this.OnEndSetLetGameBegin);
+            }
+            if ((this.onSetLetGameBeginCompletedDelegate == null)) {
+                this.onSetLetGameBeginCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetLetGameBeginCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetLetGameBeginDelegate, new object[] {
+                        lobbyID}, this.onEndSetLetGameBeginDelegate, this.onSetLetGameBeginCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLetGameBegin(lobbyID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string PhoneApp1.ServiceReference1.IService1.EndLetGameBegin(System.IAsyncResult result) {
+            return base.Channel.EndLetGameBegin(result);
+        }
+        
+        private System.IAsyncResult OnBeginLetGameBegin(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int lobbyID = ((int)(inValues[0]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginLetGameBegin(lobbyID, callback, asyncState);
+        }
+        
+        private object[] OnEndLetGameBegin(System.IAsyncResult result) {
+            string retVal = ((PhoneApp1.ServiceReference1.IService1)(this)).EndLetGameBegin(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnLetGameBeginCompleted(object state) {
+            if ((this.LetGameBeginCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.LetGameBeginCompleted(this, new LetGameBeginCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void LetGameBeginAsync(int lobbyID) {
+            this.LetGameBeginAsync(lobbyID, null);
+        }
+        
+        public void LetGameBeginAsync(int lobbyID, object userState) {
+            if ((this.onBeginLetGameBeginDelegate == null)) {
+                this.onBeginLetGameBeginDelegate = new BeginOperationDelegate(this.OnBeginLetGameBegin);
+            }
+            if ((this.onEndLetGameBeginDelegate == null)) {
+                this.onEndLetGameBeginDelegate = new EndOperationDelegate(this.OnEndLetGameBegin);
+            }
+            if ((this.onLetGameBeginCompletedDelegate == null)) {
+                this.onLetGameBeginCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLetGameBeginCompleted);
+            }
+            base.InvokeAsync(this.onBeginLetGameBeginDelegate, new object[] {
+                        lobbyID}, this.onEndLetGameBeginDelegate, this.onLetGameBeginCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginSetTime(int lobbyID, int tijd, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetTime(lobbyID, tijd, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndSetTime(System.IAsyncResult result) {
+            base.Channel.EndSetTime(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetTime(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int lobbyID = ((int)(inValues[0]));
+            int tijd = ((int)(inValues[1]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginSetTime(lobbyID, tijd, callback, asyncState);
+        }
+        
+        private object[] OnEndSetTime(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndSetTime(result);
+            return null;
+        }
+        
+        private void OnSetTimeCompleted(object state) {
+            if ((this.SetTimeCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetTimeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetTimeAsync(int lobbyID, int tijd) {
+            this.SetTimeAsync(lobbyID, tijd, null);
+        }
+        
+        public void SetTimeAsync(int lobbyID, int tijd, object userState) {
+            if ((this.onBeginSetTimeDelegate == null)) {
+                this.onBeginSetTimeDelegate = new BeginOperationDelegate(this.OnBeginSetTime);
+            }
+            if ((this.onEndSetTimeDelegate == null)) {
+                this.onEndSetTimeDelegate = new EndOperationDelegate(this.OnEndSetTime);
+            }
+            if ((this.onSetTimeCompletedDelegate == null)) {
+                this.onSetTimeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetTimeCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetTimeDelegate, new object[] {
+                        lobbyID,
+                        tijd}, this.onEndSetTimeDelegate, this.onSetTimeCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginSetReady(int spelerID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetReady(spelerID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndSetReady(System.IAsyncResult result) {
+            base.Channel.EndSetReady(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetReady(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int spelerID = ((int)(inValues[0]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginSetReady(spelerID, callback, asyncState);
+        }
+        
+        private object[] OnEndSetReady(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndSetReady(result);
+            return null;
+        }
+        
+        private void OnSetReadyCompleted(object state) {
+            if ((this.SetReadyCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetReadyCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetReadyAsync(int spelerID) {
+            this.SetReadyAsync(spelerID, null);
+        }
+        
+        public void SetReadyAsync(int spelerID, object userState) {
+            if ((this.onBeginSetReadyDelegate == null)) {
+                this.onBeginSetReadyDelegate = new BeginOperationDelegate(this.OnBeginSetReady);
+            }
+            if ((this.onEndSetReadyDelegate == null)) {
+                this.onEndSetReadyDelegate = new EndOperationDelegate(this.OnEndSetReady);
+            }
+            if ((this.onSetReadyCompletedDelegate == null)) {
+                this.onSetReadyCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetReadyCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetReadyDelegate, new object[] {
+                        spelerID}, this.onEndSetReadyDelegate, this.onSetReadyCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1457,9 +1791,23 @@ namespace PhoneApp1.ServiceReference1 {
                 return _result;
             }
             
-            public void EndJoinLobby(System.IAsyncResult result) {
+            public string EndJoinLobby(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("JoinLobby", _args, result);
+                string _result = ((string)(base.EndInvoke("JoinLobby", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginLeaveLobby(int lobbyID, int spelerID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = lobbyID;
+                _args[1] = spelerID;
+                System.IAsyncResult _result = base.BeginInvoke("LeaveLobby", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndLeaveLobby(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("LeaveLobby", _args, result);
             }
             
             public System.IAsyncResult BeginMakeMap(System.AsyncCallback callback, object asyncState) {
@@ -1484,6 +1832,56 @@ namespace PhoneApp1.ServiceReference1 {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<int> _result = ((System.Collections.ObjectModel.ObservableCollection<int>)(base.EndInvoke("MakeGrid", _args, result)));
                 return _result;
+            }
+            
+            public System.IAsyncResult BeginSetLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = lobbyID;
+                System.IAsyncResult _result = base.BeginInvoke("SetLetGameBegin", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndSetLetGameBegin(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("SetLetGameBegin", _args, result);
+            }
+            
+            public System.IAsyncResult BeginLetGameBegin(int lobbyID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = lobbyID;
+                System.IAsyncResult _result = base.BeginInvoke("LetGameBegin", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndLetGameBegin(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("LetGameBegin", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetTime(int lobbyID, int tijd, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = lobbyID;
+                _args[1] = tijd;
+                System.IAsyncResult _result = base.BeginInvoke("SetTime", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndSetTime(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("SetTime", _args, result);
+            }
+            
+            public System.IAsyncResult BeginSetReady(int spelerID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = spelerID;
+                System.IAsyncResult _result = base.BeginInvoke("SetReady", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndSetReady(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("SetReady", _args, result);
             }
             
             public System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState) {

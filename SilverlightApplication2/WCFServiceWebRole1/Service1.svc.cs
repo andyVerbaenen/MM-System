@@ -6,7 +6,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
-
 namespace WCFServiceWebRole1
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
@@ -64,10 +63,10 @@ namespace WCFServiceWebRole1
         }
         #endregion
 
-        #region (Make & Get & Join) - Lobby
+        #region (Make & Get & Join & Leave) - Lobby
         public void AddLobby()
         {
-            Lobby l = new Lobby() { MapColumns = 0, MapRows = 10, Tijd = "120", Vorm = "Default", Status = "Waiting" }; //MapColumns = aantal spelers in lobby
+            Lobby l = new Lobby() { MapColumns = 0, MapRows = 10, Tijd = "300", Vorm = "Default", Status = "Waiting" }; //MapColumns = aantal spelers in lobby
             dc.Lobbies.InsertOnSubmit(l);
             dc.SubmitChanges();
         }
@@ -91,26 +90,8 @@ namespace WCFServiceWebRole1
             }
             return lobbyLijst;
         }
-        public void JoinLobby(int lobbyID, int spelerID)
+        public string JoinLobby(int lobbyID, int spelerID)
         {
-            //Lobby record = (from l in dc.Lobbies
-            //              where l.ID == lobbyID
-            //              select l).SingleOrDefault();
-
-            //record.MapColumns++;
-
-
-            //Speler record2 = (from s in dc.Spelers
-            //             where s.ID == spelerID
-            //             select s).SingleOrDefault();
-
-            //record2.Lobby = lobbyID;
-            //record2.Ready = "false";
-
-            //dc.SubmitChanges();
-
-            //-------------------------------------
-
 
             var lobbies = (from l in dc.Lobbies
                            where l.ID == lobbyID
@@ -123,39 +104,27 @@ namespace WCFServiceWebRole1
 
             record2.Lobby = lobbyID;
             record2.Ready = "Waiting";
+            if (lobbies.Status == "Waiting")
+            {
+                dc.SubmitChanges();
+            }
+            return lobbies.Status.ToString();
+        }
+        public void LeaveLobby(int lobbyID, int spelerID)
+        {
+            var lobbies = (from l in dc.Lobbies
+                           where l.ID == lobbyID
+                           select l).Single();
+            lobbies.MapColumns--;
+
+            var record2 = (from s in dc.Spelers
+                           where s.ID == spelerID
+                           select s).Single();
+
+            record2.Lobby = -1;
+            record2.Ready = "Waiting";
 
             dc.SubmitChanges();
-
-
-            //---------------------------------------
-
-            //var lobbies = from l in dc.Lobbies
-            //              where l.ID == lobbyID
-            //              select l;
-
-            ////DTOLobby hulpLobby = new DTOLobby();
-            ////hulpLobby.AantalSpelers++;
-            //foreach (Lobby l in lobbies)
-            //{
-            //    l.MapColumns++; //MapColumns zijn het aantal spelers.
-            //}
-
-            //var speler = from s in dc.Spelers
-            //             where s.ID == spelerID
-            //             select s;
-
-            ////DTOSpeler hulpSpeler = new DTOSpeler();
-            ////hulpSpeler.LobbyID = lobbyID;
-            ////hulpSpeler.IsReady = "false";
-            //foreach (Speler s in speler)
-            //{
-            //    s.Lobby = lobbyID;
-            //    s.Ready = "false";
-            //}
-            
-            //dc.SubmitChanges();
-
-
         }
         #endregion
 
@@ -183,6 +152,48 @@ namespace WCFServiceWebRole1
                 grid[3] = 30;
             }
             return grid;
+        }
+        #endregion
+
+        #region Set - (Time & Ready)
+        public void SetTime(int lobbyID, int tijd)
+        {
+            var time = (from l in dc.Lobbies
+                           where l.ID == lobbyID
+                           select l).Single();
+
+            time.Tijd = tijd.ToString();
+
+            dc.SubmitChanges();
+        }
+        public void SetReady(int spelerID)
+        {
+            var query = (from s in dc.Spelers
+                         where s.ID == spelerID
+                         select s).Single();
+
+            query.Ready = "Ready";
+
+            dc.SubmitChanges();
+        }
+        #endregion
+
+        #region (Set & Get) - Let Game Begin
+        public void SetLetGameBegin(int lobbyID)
+        {
+            var lobbies = (from l in dc.Lobbies
+                           where l.ID == lobbyID
+                           select l).Single();
+            lobbies.Status = "Busy";
+
+            dc.SubmitChanges();            
+        }
+        public string LetGameBegin(int lobbyID)
+        {
+            var lobbies = (from l in dc.Lobbies
+                          where l.ID == lobbyID
+                          select l.Status).Single();
+            return lobbies;
         }
         #endregion
 
