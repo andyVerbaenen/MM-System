@@ -17,35 +17,95 @@ namespace SilverlightApplication2.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1")]
-    public partial class CompositeType : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="Pion", Namespace="http://schemas.datacontract.org/2004/07/SilverlightApplication2.Web")]
+    public partial class Pion : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private bool BoolValueField;
+        private int ColumnField;
         
-        private string StringValueField;
+        private int IDField;
+        
+        private int IjsschotsField;
+        
+        private int LobbyIDField;
+        
+        private int RowField;
+        
+        private int SpelerIDField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
+        public int Column {
             get {
-                return this.BoolValueField;
+                return this.ColumnField;
             }
             set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
+                if ((this.ColumnField.Equals(value) != true)) {
+                    this.ColumnField = value;
+                    this.RaisePropertyChanged("Column");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
+        public int ID {
             get {
-                return this.StringValueField;
+                return this.IDField;
             }
             set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Ijsschots {
+            get {
+                return this.IjsschotsField;
+            }
+            set {
+                if ((this.IjsschotsField.Equals(value) != true)) {
+                    this.IjsschotsField = value;
+                    this.RaisePropertyChanged("Ijsschots");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int LobbyID {
+            get {
+                return this.LobbyIDField;
+            }
+            set {
+                if ((this.LobbyIDField.Equals(value) != true)) {
+                    this.LobbyIDField = value;
+                    this.RaisePropertyChanged("LobbyID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Row {
+            get {
+                return this.RowField;
+            }
+            set {
+                if ((this.RowField.Equals(value) != true)) {
+                    this.RowField = value;
+                    this.RaisePropertyChanged("Row");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SpelerID {
+            get {
+                return this.SpelerIDField;
+            }
+            set {
+                if ((this.SpelerIDField.Equals(value) != true)) {
+                    this.SpelerIDField = value;
+                    this.RaisePropertyChanged("SpelerID");
                 }
             }
         }
@@ -64,15 +124,15 @@ namespace SilverlightApplication2.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/GetData", ReplyAction="http://tempuri.org/IService1/GetDataResponse")]
-        System.IAsyncResult BeginGetData(int value, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/DoWork", ReplyAction="http://tempuri.org/IService1/DoWorkResponse")]
+        System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState);
         
-        string EndGetData(System.IAsyncResult result);
+        void EndDoWork(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IService1/GetDataUsingDataContractResponse")]
-        System.IAsyncResult BeginGetDataUsingDataContract(SilverlightApplication2.ServiceReference1.CompositeType composite, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/AddPionToGameSte", ReplyAction="http://tempuri.org/IService1/AddPionToGameSteResponse")]
+        System.IAsyncResult BeginAddPionToGameSte(SilverlightApplication2.ServiceReference1.Pion p, System.AsyncCallback callback, object asyncState);
         
-        SilverlightApplication2.ServiceReference1.CompositeType EndGetDataUsingDataContract(System.IAsyncResult result);
+        void EndAddPionToGameSte(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -81,57 +141,19 @@ namespace SilverlightApplication2.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public GetDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public string Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetDataUsingDataContractCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public GetDataUsingDataContractCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public SilverlightApplication2.ServiceReference1.CompositeType Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((SilverlightApplication2.ServiceReference1.CompositeType)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class Service1Client : System.ServiceModel.ClientBase<SilverlightApplication2.ServiceReference1.IService1>, SilverlightApplication2.ServiceReference1.IService1 {
         
-        private BeginOperationDelegate onBeginGetDataDelegate;
+        private BeginOperationDelegate onBeginDoWorkDelegate;
         
-        private EndOperationDelegate onEndGetDataDelegate;
+        private EndOperationDelegate onEndDoWorkDelegate;
         
-        private System.Threading.SendOrPostCallback onGetDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onDoWorkCompletedDelegate;
         
-        private BeginOperationDelegate onBeginGetDataUsingDataContractDelegate;
+        private BeginOperationDelegate onBeginAddPionToGameSteDelegate;
         
-        private EndOperationDelegate onEndGetDataUsingDataContractDelegate;
+        private EndOperationDelegate onEndAddPionToGameSteDelegate;
         
-        private System.Threading.SendOrPostCallback onGetDataUsingDataContractCompletedDelegate;
+        private System.Threading.SendOrPostCallback onAddPionToGameSteCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -186,104 +208,100 @@ namespace SilverlightApplication2.ServiceReference1 {
             }
         }
         
-        public event System.EventHandler<GetDataCompletedEventArgs> GetDataCompleted;
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DoWorkCompleted;
         
-        public event System.EventHandler<GetDataUsingDataContractCompletedEventArgs> GetDataUsingDataContractCompleted;
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddPionToGameSteCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverlightApplication2.ServiceReference1.IService1.BeginGetData(int value, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetData(value, callback, asyncState);
+        System.IAsyncResult SilverlightApplication2.ServiceReference1.IService1.BeginDoWork(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDoWork(callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string SilverlightApplication2.ServiceReference1.IService1.EndGetData(System.IAsyncResult result) {
-            return base.Channel.EndGetData(result);
+        void SilverlightApplication2.ServiceReference1.IService1.EndDoWork(System.IAsyncResult result) {
+            base.Channel.EndDoWork(result);
         }
         
-        private System.IAsyncResult OnBeginGetData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int value = ((int)(inValues[0]));
-            return ((SilverlightApplication2.ServiceReference1.IService1)(this)).BeginGetData(value, callback, asyncState);
+        private System.IAsyncResult OnBeginDoWork(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((SilverlightApplication2.ServiceReference1.IService1)(this)).BeginDoWork(callback, asyncState);
         }
         
-        private object[] OnEndGetData(System.IAsyncResult result) {
-            string retVal = ((SilverlightApplication2.ServiceReference1.IService1)(this)).EndGetData(result);
-            return new object[] {
-                    retVal};
+        private object[] OnEndDoWork(System.IAsyncResult result) {
+            ((SilverlightApplication2.ServiceReference1.IService1)(this)).EndDoWork(result);
+            return null;
         }
         
-        private void OnGetDataCompleted(object state) {
-            if ((this.GetDataCompleted != null)) {
+        private void OnDoWorkCompleted(object state) {
+            if ((this.DoWorkCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetDataCompleted(this, new GetDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.DoWorkCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetDataAsync(int value) {
-            this.GetDataAsync(value, null);
+        public void DoWorkAsync() {
+            this.DoWorkAsync(null);
         }
         
-        public void GetDataAsync(int value, object userState) {
-            if ((this.onBeginGetDataDelegate == null)) {
-                this.onBeginGetDataDelegate = new BeginOperationDelegate(this.OnBeginGetData);
+        public void DoWorkAsync(object userState) {
+            if ((this.onBeginDoWorkDelegate == null)) {
+                this.onBeginDoWorkDelegate = new BeginOperationDelegate(this.OnBeginDoWork);
             }
-            if ((this.onEndGetDataDelegate == null)) {
-                this.onEndGetDataDelegate = new EndOperationDelegate(this.OnEndGetData);
+            if ((this.onEndDoWorkDelegate == null)) {
+                this.onEndDoWorkDelegate = new EndOperationDelegate(this.OnEndDoWork);
             }
-            if ((this.onGetDataCompletedDelegate == null)) {
-                this.onGetDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDataCompleted);
+            if ((this.onDoWorkCompletedDelegate == null)) {
+                this.onDoWorkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDoWorkCompleted);
             }
-            base.InvokeAsync(this.onBeginGetDataDelegate, new object[] {
-                        value}, this.onEndGetDataDelegate, this.onGetDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginDoWorkDelegate, null, this.onEndDoWorkDelegate, this.onDoWorkCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult SilverlightApplication2.ServiceReference1.IService1.BeginGetDataUsingDataContract(SilverlightApplication2.ServiceReference1.CompositeType composite, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetDataUsingDataContract(composite, callback, asyncState);
+        System.IAsyncResult SilverlightApplication2.ServiceReference1.IService1.BeginAddPionToGameSte(SilverlightApplication2.ServiceReference1.Pion p, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddPionToGameSte(p, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SilverlightApplication2.ServiceReference1.CompositeType SilverlightApplication2.ServiceReference1.IService1.EndGetDataUsingDataContract(System.IAsyncResult result) {
-            return base.Channel.EndGetDataUsingDataContract(result);
+        void SilverlightApplication2.ServiceReference1.IService1.EndAddPionToGameSte(System.IAsyncResult result) {
+            base.Channel.EndAddPionToGameSte(result);
         }
         
-        private System.IAsyncResult OnBeginGetDataUsingDataContract(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            SilverlightApplication2.ServiceReference1.CompositeType composite = ((SilverlightApplication2.ServiceReference1.CompositeType)(inValues[0]));
-            return ((SilverlightApplication2.ServiceReference1.IService1)(this)).BeginGetDataUsingDataContract(composite, callback, asyncState);
+        private System.IAsyncResult OnBeginAddPionToGameSte(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            SilverlightApplication2.ServiceReference1.Pion p = ((SilverlightApplication2.ServiceReference1.Pion)(inValues[0]));
+            return ((SilverlightApplication2.ServiceReference1.IService1)(this)).BeginAddPionToGameSte(p, callback, asyncState);
         }
         
-        private object[] OnEndGetDataUsingDataContract(System.IAsyncResult result) {
-            SilverlightApplication2.ServiceReference1.CompositeType retVal = ((SilverlightApplication2.ServiceReference1.IService1)(this)).EndGetDataUsingDataContract(result);
-            return new object[] {
-                    retVal};
+        private object[] OnEndAddPionToGameSte(System.IAsyncResult result) {
+            ((SilverlightApplication2.ServiceReference1.IService1)(this)).EndAddPionToGameSte(result);
+            return null;
         }
         
-        private void OnGetDataUsingDataContractCompleted(object state) {
-            if ((this.GetDataUsingDataContractCompleted != null)) {
+        private void OnAddPionToGameSteCompleted(object state) {
+            if ((this.AddPionToGameSteCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetDataUsingDataContractCompleted(this, new GetDataUsingDataContractCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.AddPionToGameSteCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetDataUsingDataContractAsync(SilverlightApplication2.ServiceReference1.CompositeType composite) {
-            this.GetDataUsingDataContractAsync(composite, null);
+        public void AddPionToGameSteAsync(SilverlightApplication2.ServiceReference1.Pion p) {
+            this.AddPionToGameSteAsync(p, null);
         }
         
-        public void GetDataUsingDataContractAsync(SilverlightApplication2.ServiceReference1.CompositeType composite, object userState) {
-            if ((this.onBeginGetDataUsingDataContractDelegate == null)) {
-                this.onBeginGetDataUsingDataContractDelegate = new BeginOperationDelegate(this.OnBeginGetDataUsingDataContract);
+        public void AddPionToGameSteAsync(SilverlightApplication2.ServiceReference1.Pion p, object userState) {
+            if ((this.onBeginAddPionToGameSteDelegate == null)) {
+                this.onBeginAddPionToGameSteDelegate = new BeginOperationDelegate(this.OnBeginAddPionToGameSte);
             }
-            if ((this.onEndGetDataUsingDataContractDelegate == null)) {
-                this.onEndGetDataUsingDataContractDelegate = new EndOperationDelegate(this.OnEndGetDataUsingDataContract);
+            if ((this.onEndAddPionToGameSteDelegate == null)) {
+                this.onEndAddPionToGameSteDelegate = new EndOperationDelegate(this.OnEndAddPionToGameSte);
             }
-            if ((this.onGetDataUsingDataContractCompletedDelegate == null)) {
-                this.onGetDataUsingDataContractCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDataUsingDataContractCompleted);
+            if ((this.onAddPionToGameSteCompletedDelegate == null)) {
+                this.onAddPionToGameSteCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddPionToGameSteCompleted);
             }
-            base.InvokeAsync(this.onBeginGetDataUsingDataContractDelegate, new object[] {
-                        composite}, this.onEndGetDataUsingDataContractDelegate, this.onGetDataUsingDataContractCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginAddPionToGameSteDelegate, new object[] {
+                        p}, this.onEndAddPionToGameSteDelegate, this.onAddPionToGameSteCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -362,30 +380,27 @@ namespace SilverlightApplication2.ServiceReference1 {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetData(int value, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = value;
-                System.IAsyncResult _result = base.BeginInvoke("GetData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public string EndGetData(System.IAsyncResult result) {
+            public System.IAsyncResult BeginDoWork(System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("GetData", _args, result)));
+                System.IAsyncResult _result = base.BeginInvoke("DoWork", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetDataUsingDataContract(SilverlightApplication2.ServiceReference1.CompositeType composite, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = composite;
-                System.IAsyncResult _result = base.BeginInvoke("GetDataUsingDataContract", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public SilverlightApplication2.ServiceReference1.CompositeType EndGetDataUsingDataContract(System.IAsyncResult result) {
+            public void EndDoWork(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                SilverlightApplication2.ServiceReference1.CompositeType _result = ((SilverlightApplication2.ServiceReference1.CompositeType)(base.EndInvoke("GetDataUsingDataContract", _args, result)));
+                base.EndInvoke("DoWork", _args, result);
+            }
+            
+            public System.IAsyncResult BeginAddPionToGameSte(SilverlightApplication2.ServiceReference1.Pion p, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = p;
+                System.IAsyncResult _result = base.BeginInvoke("AddPionToGameSte", _args, callback, asyncState);
                 return _result;
+            }
+            
+            public void EndAddPionToGameSte(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("AddPionToGameSte", _args, result);
             }
         }
     }

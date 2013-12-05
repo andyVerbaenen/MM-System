@@ -12,6 +12,7 @@
       <xs:element minOccurs="0" name="Gewonnen" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
       <xs:element minOccurs="0" name="IsReady" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Kleur" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LobbyID" type="xs:int" />
       <xs:element minOccurs="0" name="NickName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Punten" type="xs:int" />
@@ -30,6 +31,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="AantalSpelers" type="xs:int" />
       <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="KleurWieMagSpelen" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MapRows" type="xs:int" />
       <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Tijd" type="xs:int" />
@@ -37,6 +39,50 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DTOLobby" nillable="true" type="tns:DTOLobby" />
+  <xs:complexType name="ArrayOfDTOIjsschots">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DTOIjsschots" nillable="true" type="tns:DTOIjsschots" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDTOIjsschots" nillable="true" type="tns:ArrayOfDTOIjsschots" />
+  <xs:complexType name="DTOIjsschots">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AantalVissen" type="xs:int" />
+      <xs:element minOccurs="0" name="Column" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="LobbyID" type="xs:int" />
+      <xs:element minOccurs="0" name="Row" type="xs:int" />
+      <xs:element minOccurs="0" name="Visibility" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOIjsschots" nillable="true" type="tns:DTOIjsschots" />
+  <xs:complexType name="ArrayOfDTOPion">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DTOPion" nillable="true" type="tns:DTOPion" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDTOPion" nillable="true" type="tns:ArrayOfDTOPion" />
+  <xs:complexType name="DTOPion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Column" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="IjsschotsID" type="xs:int" />
+      <xs:element minOccurs="0" name="LobbyID" type="xs:int" />
+      <xs:element minOccurs="0" name="Row" type="xs:int" />
+      <xs:element minOccurs="0" name="SpelerID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOPion" nillable="true" type="tns:DTOPion" />
+  <xs:complexType name="DTOGameState">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllIjsschots" nillable="true" type="tns:ArrayOfDTOIjsschots" />
+      <xs:element minOccurs="0" name="AllPion" nillable="true" type="tns:ArrayOfDTOPion" />
+      <xs:element minOccurs="0" name="AllSpeler" nillable="true" type="tns:ArrayOfDTOSpeler" />
+      <xs:element minOccurs="0" name="HetIsAan" type="xs:int" />
+      <xs:element minOccurs="0" name="KleurSpeler" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOGameState" nillable="true" type="tns:DTOGameState" />
   <xs:complexType name="CompositeType">
     <xs:sequence>
       <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />

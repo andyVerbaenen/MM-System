@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
@@ -21,16 +22,25 @@ namespace PhoneApp1
 
         SpelSpeelstuk hulpSpeelstuk2; //Dit is de laatst aangeklikte pinguin.
 
+        SpelerLokaal lokeleSpeler = new SpelerLokaal();
+
         int teller = 0; //Dit is een teller voor te zien aan wie het is.
         int tellerAantalPinguins = 0; //Dit is een teller voor te te weten als het spel nog in de opzet fase is of niet.
         int aantalSpelers = 4;
         int[] punten = new int[4];
+        int tellerLobbyID = 0;
+        int tellerSpelerID;
 
-        string kleur; //Kleur van de speler bepalen.
+        string kleurVanSpeler; //Kleur van de speler bepalen.
+        string kleurAanDeBeurt;
 
         bool magVerplaatsen = false; //Bool voor te zien als de pinguin verplaatst mag worden.
         bool opZetFace = true; //Bool voor te zien als we in de opzet fase zitten of niet.
         bool verplaatsingsface = false; //Bool voor te zien als we in de aanduidingsfase of verplaatsingsface zitten.
+
+        DispatcherTimer newTimer = new DispatcherTimer(); // creating timer instance
+
+        ServiceReference1.DTOGameState gameState = new ServiceReference1.DTOGameState();
 
         #endregion
 
@@ -47,8 +57,28 @@ namespace PhoneApp1
 
             #region AddIamge
             //Voeg de tegels toe.
-            client.MakeMapCompleted += new EventHandler<ServiceReference1.MakeMapCompletedEventArgs>(client_MakeMapCompleted);
-            client.MakeMapAsync();
+            SpelerLokaal hulpSpeler = new SpelerLokaal();
+            string[] hulpString = new string[4];
+            hulpString = hulpSpeler.ReturnSpeler();
+            tellerLobbyID = 0;
+            tellerSpelerID = 0;
+            do
+            {
+                if (hulpString[3].ToString() == tellerLobbyID.ToString())
+                    break;
+                else
+                    tellerLobbyID++;
+            } while (true);
+            do
+            {
+                if (hulpString[0].ToString() == tellerSpelerID.ToString())
+                    break;
+                else
+                    tellerSpelerID++;
+            } while (true);
+            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted;
+            client.GetAllLobbiesAsync();
+            
             #endregion
 
             #region Zet het spel in de Opzet fase
@@ -62,14 +92,60 @@ namespace PhoneApp1
                 punten[i] = 0;
             }
         }
-        #region Make Grid & Map Completted
-        void client_MakeGridCompleted(object sender, ServiceReference1.MakeGridCompletedEventArgs e)
+
+        void client_GetAllLobbiesCompleted(object sender, ServiceReference1.GetAllLobbiesCompletedEventArgs e)
         {
-            ObservableCollection<int> hulpGrid = e.Result; //Een hulp grid aanmaken voor met de meegegeven waarden te kunnen werken.
-            AddGrid(hulpGrid[0], hulpGrid[1], hulpGrid[2], hulpGrid[3]); //Geef de rows, colomns, height en width mee.
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            foreach (var item in e.Result)
+            {
+                if (item.MapRows == tellerSpelerID && item.ID == tellerLobbyID) //MapRows is de HostID
+                {
+                    
+                    client.MakeMapCompleted += new EventHandler<ServiceReference1.MakeMapCompletedEventArgs>(client_MakeMapCompleted);
+                    client.MakeMapAsync(tellerLobbyID);
+                    client.SetKleurPerSpelerCompleted += client_SetKleurPerSpelerCompleted;
+                    client.SetKleurPerSpelerAsync(tellerLobbyID);
+                }
+            }
+            //client.GetAllIjschotsCompleted += client_GetAllIjschotsCompleted;
+            //client.GetAllIjschotsAsync(tellerLobbyID);
+            foreach (var item in e.Result)
+            {
+                if (item.ID == tellerLobbyID)
+                {
+                    aantalSpelers = item.AantalSpelers;
+                }
+            }
+            client.SpelerInLobbyCompleted += client_SpelerInLobbyCompleted;
+            client.SpelerInLobbyAsync(tellerLobbyID);
+            
         }
 
-        void client_MakeMapCompleted(object sender, ServiceReference1.MakeMapCompletedEventArgs e)
+        void client_SpelerInLobbyCompleted(object sender, ServiceReference1.SpelerInLobbyCompletedEventArgs e)
+        {
+            string[] hulpSpeler = lokeleSpeler.ReturnSpeler();
+            foreach (var item in e.Result)
+            {
+                if (item.NickName == hulpSpeler[1])
+                {
+                    kleurVanSpeler = item.Kleur;
+                    break;
+                }
+            }
+            
+            MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            System.Threading.Thread.Sleep(3000);
+            client.AddAllIjsschotsCompleted += client_AddAllIjsschotsCompleted;
+            client.AddAllIjsschotsAsync(tellerLobbyID);
+        }
+
+        void client_SetKleurPerSpelerCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void client_AddAllIjsschotsCompleted(object sender, ServiceReference1.AddAllIjsschotsCompletedEventArgs e)
         {
             ObservableCollection<ObservableCollection<int>> hulpMap = e.Result; //Maak hulpmap aan voor met waarden van sender te kunnen werken.
             int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
@@ -87,7 +163,142 @@ namespace PhoneApp1
                 else
                     evenOfOneven = 0; //Hebben we een oneven rij gehad, dan wordt deze nu even.
             }
-            MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
+            
+            // timer interval specified as 1 second
+            newTimer.Interval = TimeSpan.FromSeconds(1);
+            // Sub-routine OnTimerTick will be called at every 1 second
+            newTimer.Tick += newTimer_Tick;
+            // starting the timer
+            newTimer.Start();
+        }
+
+        void newTimer_Tick(object sender, EventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            client.GetGameStateCompleted += client_GetGameStateCompleted;
+            client.GetGameStateAsync(tellerLobbyID);
+        }
+
+        void client_GetGameStateCompleted(object sender, ServiceReference1.GetGameStateCompletedEventArgs e)
+        {
+            gameState = e.Result;
+            #region Update Map
+            int tellerRow = 0;
+            int tellerColumn = 0;
+            int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
+            Visibility hulpVisibility = Visibility.Visible;
+            
+            foreach (var item in gameState.AllIjsschots)
+            {
+                tellerRow = item.Row;
+                if (tellerRow % 2 == 0)
+                    evenOfOneven = 0;
+                else
+                    evenOfOneven = 1;
+                tellerColumn = item.Column * 2 + evenOfOneven;
+                
+                foreach (var tegel in SpelBord.Children)
+                {
+                    if (tegel is SpelTile)
+                    {
+                        SpelTile hulpTegel = tegel as SpelTile;
+                        if (hulpTegel.Row == tellerRow && hulpTegel.Column == tellerColumn)
+                        {
+                            if (item.Visibility == "Visible")
+                                hulpVisibility = Visibility.Visible;
+                            else
+                                hulpVisibility = Visibility.Collapsed;
+                            hulpTegel.Visibility = hulpVisibility;
+                            break;
+                        }
+                    }
+                    
+                    
+                }
+            }
+            #endregion
+            #region Update Pion
+            tellerRow = 0;
+            tellerColumn = 0;
+            evenOfOneven = 0;
+            bool bestaat = false;
+            tellerAantalPinguins = 0;
+            foreach (var pinguin in SpelBord.Children)
+            {
+                if (pinguin is SpelSpeelstuk)
+                {
+                    pinguin.Visibility = Visibility.Collapsed;
+                    tellerAantalPinguins++;
+                }
+                
+            }
+            foreach (var item in gameState.AllPion)
+            {
+                tellerRow = item.Row;
+                if (tellerRow % 2 == 0)
+                    evenOfOneven = 0;
+                else
+                    evenOfOneven = 1;
+                tellerColumn = item.Column; //item.Column * 2 + evenOfOneven
+                bestaat = false;
+                foreach (var pinguin in SpelBord.Children)
+                {
+                    if (pinguin is SpelSpeelstuk)
+                    {
+                        SpelSpeelstuk hulpPinguin = pinguin as SpelSpeelstuk;
+                        if (hulpPinguin.Column == tellerColumn && hulpPinguin.Row == tellerRow)
+                        {
+                            hulpPinguin.Visibility = Visibility.Visible;
+                            bestaat = true;
+                            break;
+                        }
+                    }
+                    
+                }
+                if (bestaat == false)
+                {
+                    AddPinguin(item.Row, item.Column, kleurAanDeBeurt);
+                }
+            }
+            #endregion
+            #region Update Kleur
+            kleurAanDeBeurt = gameState.KleurSpeler;
+            #endregion
+        }
+
+        void client_GetAllIjschotsCompleted(object sender, ServiceReference1.GetAllIjschotsCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+            MessageBox.Show("Map wordt aangepast.");
+
+        }
+        #region Make Grid & Map Completted
+        
+        void client_MakeGridCompleted(object sender, ServiceReference1.MakeGridCompletedEventArgs e)
+        {
+            ObservableCollection<int> hulpGrid = e.Result; //Een hulp grid aanmaken voor met de meegegeven waarden te kunnen werken.
+            AddGrid(hulpGrid[0], hulpGrid[1], hulpGrid[2], hulpGrid[3]); //Geef de rows, colomns, height en width mee.
+        }
+
+        void client_MakeMapCompleted(object sender, ServiceReference1.MakeMapCompletedEventArgs e)
+        {
+            //ObservableCollection<ObservableCollection<int>> hulpMap = e.Result; //Maak hulpmap aan voor met waarden van sender te kunnen werken.
+            //int evenOfOneven = 0; //Deze variabele dient voor te weten als de tegels op de even of oneven kollomen moeten komen.
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    int echteKollomWaarde = 0; //Omdat de collomen per twee optellen en soms starten bij 0 of 1, naargelang het even of oneven moet zijn, is het moeilijk om te weten in welke zichtbare kollom we echt zitten. Daarom deze variabele.
+            //    for (int j = evenOfOneven; j < 19; j += 2) //+2 omdat er dubbele zoveel collomen zijn als rijen voor de kollomen van de oneven rijen te laten uitkomen tussen twee kollomen van de even rijen.
+            //    {
+            //        AddTile(i, j, hulpMap[i][echteKollomWaarde]); //Add de tegel met parameters: rij, kollom, en aantal vissen.
+            //        echteKollomWaarde++; //We zijn nu 1 kollom verder dus daarom + 1.
+            //    }
+            //    if (evenOfOneven == 0) //Hebben we net een even rij gehad, dan wordt deze nu oneven.
+            //        evenOfOneven = 1;
+            //    else
+            //        evenOfOneven = 0; //Hebben we een oneven rij gehad, dan wordt deze nu even.
+            //}
+            //MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
         }
         #endregion
 
@@ -117,7 +328,7 @@ namespace PhoneApp1
             }
             #endregion
         }
-
+        
         void AddTile(int row, int column, int randomNumber)
         {
             Grid parent = SpelBord;
@@ -160,8 +371,8 @@ namespace PhoneApp1
             {
                 SpelSpeelstuk hulp = sender as SpelSpeelstuk; //Hulp speelstuk aanmaken zodat we aan de waarde van de sender kunnen.
                 hulpSpeelstuk2 = hulp;
-                kleur = CheckKleurVanSpeler(kleur);
-                if (hulpSpeelstuk2.Kleur == kleur)
+                kleurVanSpeler = CheckKleurVanSpeler(kleurVanSpeler);
+                if (hulpSpeelstuk2.Kleur == kleurVanSpeler)
                 {
                     foreach (SpelTile tile in SpelBord.Children) //Gaat alle tegels af.
                     {
@@ -186,70 +397,77 @@ namespace PhoneApp1
 
         void PushTile_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SpelTile hulp = sender as SpelTile; //Maak een hulptegel aan zondat we met de waarde van de sender kunnen werken.
-
-            if (opZetFace == false && verplaatsingsface == true)  //Wanneer we een pinguin willen verplaatsen. Dit is het moment dat we op de nieuwe tegel drukken.
+            if (kleurAanDeBeurt == kleurVanSpeler)
             {
-                int rowVerschil = hulp.Row - hulpTegel2.Row;
-                int columnVerschil = hulp.Column - hulpTegel2.Column;
-                int zoekTussenliggendeRows;
-                int zoekTussenliggendeColumns;
-                if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil)) || (hulp.Row == hulpTegel2.Row))
+                SpelTile hulp = sender as SpelTile; //Maak een hulptegel aan zondat we met de waarde van de sender kunnen werken.
+
+                if (opZetFace == false && verplaatsingsface == true)  //Wanneer we een pinguin willen verplaatsen. Dit is het moment dat we op de nieuwe tegel drukken.
                 {
-                    magVerplaatsen = true;
-                    if (rowVerschil > 0)
-                        zoekTussenliggendeRows = 1;
-                    else
-                        zoekTussenliggendeRows = -1;
-                    if (columnVerschil > 0)
-                        zoekTussenliggendeColumns = 1;
-                    else
-                        zoekTussenliggendeColumns = -1;
-
-
-                    for (int i = 1; i <= Math.Abs(columnVerschil); i++)
+                    int rowVerschil = hulp.Row - hulpTegel2.Row;
+                    int columnVerschil = hulp.Column - hulpTegel2.Column;
+                    int zoekTussenliggendeRows;
+                    int zoekTussenliggendeColumns;
+                    if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil)) || (hulp.Row == hulpTegel2.Row))
                     {
-                        foreach (var pinguin in SpelBord.Children)
-                        {
-                            SpelSpeelstuk eenSpeelstuk = pinguin as SpelSpeelstuk;
-                            if (eenSpeelstuk != null)
-                            {
-                                if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil) &&
-                                    Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row + i * zoekTussenliggendeRows &&
-                                    Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns) ||
-                                    (hulp.Row == hulpTegel2.Row &&
-                                    Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row &&
-                                    Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns))
-                                {
-                                    magVerplaatsen = false;
-                                    MessageBox.Show("Invalid action!\nJe mag niet over gaten en andere pinguins springen.");
-                                    break;
-                                }
-                            }
+                        magVerplaatsen = true;
+                        if (rowVerschil > 0)
+                            zoekTussenliggendeRows = 1;
+                        else
+                            zoekTussenliggendeRows = -1;
+                        if (columnVerschil > 0)
+                            zoekTussenliggendeColumns = 1;
+                        else
+                            zoekTussenliggendeColumns = -1;
 
+
+                        for (int i = 1; i <= Math.Abs(columnVerschil); i++)
+                        {
+                            foreach (var pinguin in SpelBord.Children)
+                            {
+                                SpelSpeelstuk eenSpeelstuk = pinguin as SpelSpeelstuk;
+                                if (eenSpeelstuk != null)
+                                {
+                                    if ((Math.Abs(rowVerschil) == Math.Abs(columnVerschil) &&
+                                        Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row + i * zoekTussenliggendeRows &&
+                                        Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns) ||
+                                        (hulp.Row == hulpTegel2.Row &&
+                                        Grid.GetRow(eenSpeelstuk) == hulpTegel2.Row &&
+                                        Grid.GetColumn(eenSpeelstuk) == hulpTegel2.Column + i * zoekTussenliggendeColumns))
+                                    {
+                                        magVerplaatsen = false;
+                                        MessageBox.Show("Invalid action!\nJe mag niet over gaten en andere pinguins springen.");
+                                        break;
+                                    }
+                                }
+
+                            }
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Invalid action!\nJe mag je alleen over de horizontale en diagonale lijnen verplaantsen.");
+                    }
+
+
                 }
-                else
+                if (opZetFace == true || magVerplaatsen == true) //Wanneer we een pinguin mogen plaatsen of verplaatsen.
                 {
-                    MessageBox.Show("Invalid action!\nJe mag je alleen over de horizontale en diagonale lijnen verplaantsen.");
+                    ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                    client.OpzetFaseCompleted += new EventHandler<ServiceReference1.OpzetFaseCompletedEventArgs>(client_OpzetFaseCompleted);
+                    client.OpzetFaseAsync();
+
+                    VorigeTegel = hulpTegel2; //Onthoud van waar de pinguin kwam.
+                    hulpTegel2 = hulp; //Onthound waar de pinguin op gezet wordt.
+                    magVerplaatsen = false; //De pinguin mag niet meer verpaatst worden.
+
+                    punten[teller] += hulp.RandomNummer;
+                    //kleurVanSpeler = CheckKleurVanSpeler(kleurVanSpeler);
+                    //MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
                 }
-
-
             }
-            if (opZetFace == true || magVerplaatsen == true) //Wanneer we een pinguin mogen plaatsen of verplaatsen.
+            else
             {
-                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-                client.OpzetFaseCompleted += new EventHandler<ServiceReference1.OpzetFaseCompletedEventArgs>(client_OpzetFaseCompleted);
-                client.OpzetFaseAsync();
-
-                VorigeTegel = hulpTegel2; //Onthoud van waar de pinguin kwam.
-                hulpTegel2 = hulp; //Onthound waar de pinguin op gezet wordt.
-                magVerplaatsen = false; //De pinguin mag niet meer verpaatst worden.
-
-                punten[teller] += hulp.RandomNummer;
-                kleur = CheckKleurVanSpeler(kleur);
-                //MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
+                MessageBox.Show("Wacht tot het jouw beurt is.");
             }
 
         }
@@ -260,13 +478,21 @@ namespace PhoneApp1
         {
             if (e.Result == true && hulpTegel2.RandomNummer == 1) //Als het de opzetfase is en de tegel waar we op klikken heeft 1 vis.
             {
-                kleur = CheckKleurVanSpeler(kleur);
-                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleur); //Voeg pinguin toe.
-
+                //kleurVanSpeler = CheckKleurVanSpeler(kleurVanSpeler);
+                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleurVanSpeler); //Voeg pinguin toe.
+                ServiceReference1.DTOPion pion = new ServiceReference1.DTOPion();
+                pion.Column = hulpTegel2.Column;
+                pion.Row = hulpTegel2.Row;
+                pion.IjsschotsID = 0;
+                pion.SpelerID = tellerSpelerID;
+                pion.LobbyID = tellerLobbyID;
+                ServiceReference1.Service1Client client2 = new ServiceReference1.Service1Client();
+                client2.AddPionToGameSteCompleted += client2_AddPionToGameSteCompleted;
+                client2.AddPionToGameSteAsync(tellerLobbyID, pion, kleurAanDeBeurt);
                 tellerAantalPinguins++; //Zien wanneer alle pinguins geplaatst zijn.
-                if (aantalSpelers == 4 && tellerAantalPinguins == 8 ||
-                    aantalSpelers == 3 && tellerAantalPinguins == 9 ||
-                    aantalSpelers == 2 && tellerAantalPinguins == 8)
+                if (aantalSpelers == 4 && tellerAantalPinguins >= 8 ||
+                    aantalSpelers == 3 && tellerAantalPinguins >= 9 ||
+                    aantalSpelers == 2 && tellerAantalPinguins >= 8)
                 {
                     //Verander opzet fase naar speel fase.
                     ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
@@ -284,6 +510,16 @@ namespace PhoneApp1
             }
 
 
+        }
+
+        void client2_AddPionToGameSteCompleted(object sender, ServiceReference1.AddPionToGameSteCompletedEventArgs e)
+        {
+           // MessageBox.Show(e.Result);
+        }
+
+        void client2_AddPionToGameSteCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
 
         void client_SetOpzetFaseCompleted(object sender, ServiceReference1.SetOpzetFaseCompletedEventArgs e)

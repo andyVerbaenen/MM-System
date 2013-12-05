@@ -14,52 +14,79 @@ namespace WCFServiceWebRole1
     {
         [OperationContract]
         List<DTOSpeler> GetAllSpelers();
-
+        
         [OperationContract]
         void AddSpeler(string name, string pass);
-
+        
         [OperationContract]
         void AddLobby();
 
         [OperationContract]
         List<DTOLobby> GetAllLobbies();
-
+        
         [OperationContract]
         string JoinLobby(int lobbyID, int spelerID);
-
+        
         [OperationContract]
         void LeaveLobby(int lobbyID, int spelerID);
-
+        
         [OperationContract]
-        int[][] MakeMap();
-
+        int[][] MakeMap(int lobbyID);
+        
         [OperationContract]
         int[] MakeGrid();
+        
+        [OperationContract]
+        int[][] AddAllIjsschots(int lobbyID);
+        
+        [OperationContract]
+        List<DTOIjsschots> GetAllIjschots(int lobbyID);
+
+        [OperationContract]
+        List<DTOPion> GetAllPion(int lobbyID);
+        
+        [OperationContract]
+        string GetKleur(int lobbyID);
+        
+        [OperationContract]
+        List<DTOSpeler> SpelerInLobby(int lobbyID);
+        
+        [OperationContract]
+        string SetTime(int lobbyID, int tijd);
+        
+        [OperationContract]
+        void SetReady(int spelerID);
+        
+        [OperationContract]
+        void SetHostID(int spelerID, int lobbyID);
+
+        [OperationContract]
+        void SetKleurPerSpeler(int lobbyID);
 
         [OperationContract]
         void SetLetGameBegin(int lobbyID);
-
+        
         [OperationContract]
         string LetGameBegin(int lobbyID);
+        
+        [OperationContract]
+        DTOGameState GetGameState(int lobbyID);
 
         [OperationContract]
-        void SetTime(int lobbyID, int tijd);
+        void UpdateGameState(int lobbyID, DTOGameState gameState);
 
         [OperationContract]
-        void SetReady(int spelerID);
+        string AddPionToGameSte(int lobbyID, DTOPion pion, string kleur);
 
         [OperationContract]
         bool OpzetFase();
-
+       
         [OperationContract]
         bool ChanceOpzetFase();
-
+        
         [OperationContract]
         bool SetOpzetFase();
-
-        [OperationContract]
-        string[] GameState();
-
+        
         [OperationContract]
         string GetData(int value);
 

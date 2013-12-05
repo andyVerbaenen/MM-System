@@ -50,6 +50,7 @@ namespace WCFServiceWebRole1
                 eenSpeler.LobbyID = speler.Lobby;
                 eenSpeler.Punten = Convert.ToInt32(speler.Punten);
                 eenSpeler.IsReady = speler.Ready;
+                eenSpeler.Kleur = speler.Kleur;
 
                 spelersLijst.Add(eenSpeler);
             }
@@ -57,7 +58,7 @@ namespace WCFServiceWebRole1
         }
         public void AddSpeler(string name, string pass)
         {
-            Speler s = new Speler() { Gelijk=0, Gewonnen=0, Lobby= 0, NickName=name, Punten=0, Ready= "false", Verloren=0, Wachtwoord= pass };
+            Speler s = new Speler() { Gelijk=0, Gewonnen=0, Lobby= 0, NickName=name, Punten=0, Ready= "false", Verloren=0, Wachtwoord= pass, Kleur = "Zwart"};
             dc.Spelers.InsertOnSubmit(s);
             dc.SubmitChanges();           
         }
@@ -66,7 +67,7 @@ namespace WCFServiceWebRole1
         #region (Make & Get & Join & Leave) - Lobby
         public void AddLobby()
         {
-            Lobby l = new Lobby() { MapColumns = 0, MapRows = 10, Tijd = "300", Vorm = "Default", Status = "Waiting" }; //MapColumns = aantal spelers in lobby
+            Lobby l = new Lobby() { MapColumns = 0, MapRows = 0, Tijd = "300", Vorm = "Default", Status = "Waiting", KleurWieMagSpelen = "Groen"}; //MapColumns = aantal spelers in lobby MapRows is de hostID
             dc.Lobbies.InsertOnSubmit(l);
             dc.SubmitChanges();
         }
@@ -86,6 +87,7 @@ namespace WCFServiceWebRole1
                 eenLobby.Status = lobby.Status;
                 eenLobby.Tijd =  Convert.ToInt32(lobby.Tijd);
                 eenLobby.Vorm = lobby.Vorm;
+                eenLobby.KleurWieMagSpelen = lobby.KleurWieMagSpelen;
                 lobbyLijst.Add(eenLobby);
             }
             return lobbyLijst;
@@ -128,16 +130,34 @@ namespace WCFServiceWebRole1
         }
         #endregion
 
-        #region Make - (Map & Grid)
-        public int[][] MakeMap() //Bepalen welke tegels er waar staan.
-        {
 
+        #region Make - (Map & Grid)
+        public int[][] MakeMap(int lobbyID) //Bepalen welke tegels er waar staan.
+        {
+            var query = from ijs in dc.Ijsschots
+                        where ijs.LobbyID == lobbyID
+                        select ijs;
+            foreach (var que in query)
+            {
+                dc.Ijsschots.DeleteOnSubmit(que);
+            }
+            var query2 = from p in dc.Pions
+                        where p.LobbyID == lobbyID
+                        select p;
+            foreach (var que in query2)
+            {
+                dc.Pions.DeleteOnSubmit(que);
+            }
+            dc.SubmitChanges();
             for (int i = 0; i < 10; i++)
             {
                 map[i] = new int[10]; //Steek in elke rij 10 colommen.
                 for (int j = 0; j < 10; j++)
                 {
                     map[i][j] = random.Next(1, 4); //Kies het aantal vissen op de tegels.
+                    Ijsschot t = new Ijsschot() { AantalVissen = map[i][j], Column = j, Row = i, Visibility = "Visible", LobbyID = lobbyID };
+                    dc.Ijsschots.InsertOnSubmit(t);
+                    dc.SubmitChanges();     
                 }
             }
             return map;
@@ -155,16 +175,237 @@ namespace WCFServiceWebRole1
         }
         #endregion
 
-        #region Set - (Time & Ready)
-        public void SetTime(int lobbyID, int tijd)
+        #region (Get & Add) - Ijsschots
+        public int[][] AddAllIjsschots(int lobbyID) //Voor de eerste keer tegels plaatsen op de client.
         {
-            var time = (from l in dc.Lobbies
-                           where l.ID == lobbyID
-                           select l).Single();
+            return map;
+        } 
+        public List<DTOIjsschots> GetAllIjschots(int lobbyID)
+        {
+            var ijsschotsen = from t in dc.Ijsschots
+                              where t.LobbyID == lobbyID
+                              select t;
 
-            time.Tijd = tijd.ToString();
+            List<DTOIjsschots> ijsschotsLijst = new List<DTOIjsschots>();
+
+            foreach (var ijs in ijsschotsen)
+            {
+                DTOIjsschots eenIjsschots = new DTOIjsschots();
+                eenIjsschots.ID = ijs.ID;
+                eenIjsschots.AantalVissen = ijs.AantalVissen;
+                eenIjsschots.Column = ijs.Column;
+                eenIjsschots.Row = ijs.Row;
+                eenIjsschots.Visibility = ijs.Visibility;
+                eenIjsschots.LobbyID = ijs.LobbyID;
+                ijsschotsLijst.Add(eenIjsschots);
+            }
+            return ijsschotsLijst;
+        }
+        #endregion
+
+        #region Get (Pion & Kleur & SpelerInLobby)
+        public List<DTOPion> GetAllPion(int lobbyID)
+        {
+            List<DTOPion> AllPion = new List<DTOPion>();
+
+            var pion = from p in dc.Pions
+                       where p.LobbyID == lobbyID
+                       select p;
+            foreach (var item in pion)
+            {
+                DTOPion eenPion = new DTOPion();
+                eenPion.ID = item.ID;
+                eenPion.Column = item.Column;
+                eenPion.Row = item.Row;
+                eenPion.IjsschotsID = item.Ijsschots;
+                eenPion.SpelerID = item.SpelerID;
+                AllPion.Add(eenPion);
+            }
+
+            return AllPion;
+        }
+        public string GetKleur(int lobbyID)
+        {
+            List<DTOLobby> hulpLobby = new List<DTOLobby>();
+            hulpLobby = GetAllLobbies();
+            foreach (var item in hulpLobby)
+            {
+                if (item.ID == lobbyID)
+                {
+                    return item.KleurWieMagSpelen;
+                }
+            }
+            return "Fout";
+        }
+        public List<DTOSpeler> SpelerInLobby(int lobbyID)
+        {
+            List<DTOSpeler> hulpSpeler = new List<DTOSpeler>();
+            List<DTOSpeler> hulpSpelerInLobby = new List<DTOSpeler>();
+            hulpSpeler = GetAllSpelers();
+            foreach (var item in hulpSpeler)
+            {
+                if (item.LobbyID == lobbyID)
+                {
+                    hulpSpelerInLobby.Add(item);
+                }
+            }
+            return hulpSpelerInLobby;
+        }
+        #endregion
+
+
+        #region Update - (Ijsschots & Speler & Pion & Kleur)
+        private void UpdateIjsschots(int lobbyID, List<DTOIjsschots> ijsschots)
+        {
+            var query = from t in dc.Ijsschots
+                        where t.LobbyID == lobbyID
+                        select t;
+
+            int teller = 0;
+
+            foreach (var item in query)
+            {
+                item.Visibility = ijsschots[teller].Visibility;
+                teller++;
+            }
+            dc.SubmitChanges();
+        }
+        private void UpdateSpeler(int lobbyID, List<DTOSpeler> speler)
+        {
+            var query = from s in dc.Spelers
+                        where s.Lobby == lobbyID
+                        select s;
+
+            int teller = 0;
+            foreach (var item in query)
+            {
+                item.Punten = speler[teller].Punten;
+                teller++;
+            }
+            dc.SubmitChanges();
+        }
+        private void UpdatePion(int lobbyID, List<DTOPion> pion)
+        {
+            var query = from p in dc.Pions
+                        where p.LobbyID == lobbyID
+                        select p;
+
+            int teller = 0;
+
+            foreach (var item in query)
+            {
+                item.Row = pion[teller].Row;
+                item.Column = pion[teller].Column;
+            }
 
             dc.SubmitChanges();
+        }
+        private void UpdateKleur(int lobbyID, string kleur)
+        {
+            var query = (from l in dc.Lobbies
+                         where l.ID == lobbyID
+                         select l).Single();
+
+            query.KleurWieMagSpelen = Kleur(kleur, query.MapColumns);
+
+            dc.SubmitChanges(); 
+        }
+        #endregion
+
+        #region (Update & Get AddTo) - GameState
+        public DTOGameState GetGameState(int lobbyID)
+        {
+            DTOGameState gameState = new DTOGameState();
+            gameState.AllIjsschots = GetAllIjschots(lobbyID);
+            gameState.AllPion = GetAllPion(lobbyID);
+            gameState.KleurSpeler = GetKleur(lobbyID);
+            gameState.AllSpeler = SpelerInLobby(lobbyID);
+
+            return gameState;
+        }
+        public void UpdateGameState(int lobbyID, DTOGameState gameState)
+        {
+            UpdateIjsschots(lobbyID, gameState.AllIjsschots);
+            UpdateSpeler(lobbyID, gameState.AllSpeler);
+            UpdatePion(lobbyID, gameState.AllPion);
+            UpdateKleur(lobbyID, gameState.KleurSpeler);
+        }
+        public string AddPionToGameSte(int lobbyID, DTOPion pion, string kleur)
+        {
+            //Pion p = new Pion();
+            //p.Ijsschots = 5;
+
+            //dc.Pions.InsertOnSubmit(p);
+            //dc.SubmitChanges();
+            try
+            {
+                LinqToSQLDataContext ab = new LinqToSQLDataContext();
+                Pion pi = new Pion();
+                pi.Ijsschots = 0;
+                pi.Column = 0;
+                pi.Row = 0;
+                pi.SpelerID = 0;
+                pi.LobbyID = 0;
+
+                dc.Pions.InsertOnSubmit(pi);
+                dc.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+
+            var query = (from p in dc.Pions
+                        where p.LobbyID == 0
+                        select p).Single();
+
+            query.Row = pion.Row;
+            query.Column = pion.Column;
+            query.Ijsschots = pion.IjsschotsID;
+            query.LobbyID = lobbyID;
+            query.SpelerID = pion.SpelerID;
+
+            dc.SubmitChanges();
+
+            //Pion eenPion = new Pion() { Ijsschots = 5};
+            //dc.Pions.InsertOnSubmit(eenPion);
+            //dc.SubmitChanges();
+
+            //var pi = (from p in dc.Pions
+            //          where p.ID == lobbyID
+            //          select p).Single();
+            //pi.Row = 5;
+            //pi.Column = 5;
+            //dc.SubmitChanges();
+            UpdateKleur(lobbyID, kleur);
+            return "geenFout";
+        }
+        #endregion
+
+
+        #region Set - (Time & Ready & HostID & SetKleurPerSeler)
+        public string SetTime(int lobbyID, int tijd)
+        {
+            try
+            {
+                var time = (from l in dc.Lobbies
+                            where l.ID == lobbyID
+                            select l).FirstOrDefault();
+
+                if (time != null)
+                {
+                    time.Tijd = tijd.ToString();
+
+                    dc.SubmitChanges();
+                    return "1";
+                }
+                return "0";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            
         }
         public void SetReady(int spelerID)
         {
@@ -174,6 +415,32 @@ namespace WCFServiceWebRole1
 
             query.Ready = "Ready";
 
+            dc.SubmitChanges();
+        }
+        public void SetHostID(int spelerID, int lobbyID)
+        {
+            var lobbies = (from l in dc.Lobbies
+                           where l.ID == lobbyID
+                           select l).Single();
+            lobbies.MapRows = spelerID;
+            dc.SubmitChanges();            
+        }
+        public void SetKleurPerSpeler(int lobbyID)
+        {
+            var query = (from l in dc.Lobbies
+                         where l.ID == lobbyID
+                         select l).Single();
+            int aantalSpelers = query.MapColumns;
+            string kleur = "Blauw";
+
+            var query2 = from s in dc.Spelers
+                         where s.Lobby == lobbyID
+                         select s;
+            foreach (var item in query2)
+            {
+                kleur = Kleur(kleur, aantalSpelers);
+                item.Kleur = kleur;
+            }
             dc.SubmitChanges();
         }
         #endregion
@@ -197,15 +464,22 @@ namespace WCFServiceWebRole1
         }
         #endregion
 
-        #region GameState
-        public string[] GameState()
+        
+        private string Kleur(string kleur, int aantalSpelers)
         {
-            gameState[0] = "kleur";     //Index 0: Kleur van speler.
-            gameState[1] = "nummer";    //Index 1: ID van de speler.
-            gameState[2] = "";
-            return gameState;
+            if (kleur == "Blauw")
+                kleur = "Rood";
+            else if (aantalSpelers == 2 && kleur == "Rood")
+                kleur = "Blauw";
+            else if (kleur == "Rood")
+                kleur = "Geel";
+            else if (aantalSpelers == 3 && kleur == "Geel")
+                kleur = "Blauw";
+            else if (kleur == "Geel")
+                kleur = "Groen";
+            return kleur;
         }
-        #endregion
+
 
         #region Fases
         public bool OpzetFase()
@@ -243,5 +517,6 @@ namespace WCFServiceWebRole1
             return composite;
         }
         #endregion
+
     }
 }

@@ -33,15 +33,15 @@ namespace WCFServiceWebRole1
     partial void InsertIjsschot(Ijsschot instance);
     partial void UpdateIjsschot(Ijsschot instance);
     partial void DeleteIjsschot(Ijsschot instance);
+    partial void InsertSpeler(Speler instance);
+    partial void UpdateSpeler(Speler instance);
+    partial void DeleteSpeler(Speler instance);
     partial void InsertLobby(Lobby instance);
     partial void UpdateLobby(Lobby instance);
     partial void DeleteLobby(Lobby instance);
     partial void InsertPion(Pion instance);
     partial void UpdatePion(Pion instance);
     partial void DeletePion(Pion instance);
-    partial void InsertSpeler(Speler instance);
-    partial void UpdateSpeler(Speler instance);
-    partial void DeleteSpeler(Speler instance);
     #endregion
 		
 		public LinqToSQLDataContext() : 
@@ -82,6 +82,14 @@ namespace WCFServiceWebRole1
 			}
 		}
 		
+		public System.Data.Linq.Table<Speler> Spelers
+		{
+			get
+			{
+				return this.GetTable<Speler>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Lobby> Lobbies
 		{
 			get
@@ -95,14 +103,6 @@ namespace WCFServiceWebRole1
 			get
 			{
 				return this.GetTable<Pion>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Speler> Spelers
-		{
-			get
-			{
-				return this.GetTable<Speler>();
 			}
 		}
 	}
@@ -123,6 +123,8 @@ namespace WCFServiceWebRole1
 		
 		private int _AantalVissen;
 		
+		private int _LobbyID;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -137,6 +139,8 @@ namespace WCFServiceWebRole1
     partial void OnVisibilityChanged();
     partial void OnAantalVissenChanging(int value);
     partial void OnAantalVissenChanged();
+    partial void OnLobbyIDChanging(int value);
+    partial void OnLobbyIDChanged();
     #endregion
 		
 		public Ijsschot()
@@ -244,342 +248,22 @@ namespace WCFServiceWebRole1
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Lobby")]
-	public partial class Lobby : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Tijd;
-		
-		private int _MapColumns;
-		
-		private int _MapRows;
-		
-		private string _Status;
-		
-		private string _Vorm;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnTijdChanging(string value);
-    partial void OnTijdChanged();
-    partial void OnMapColumnsChanging(int value);
-    partial void OnMapColumnsChanged();
-    partial void OnMapRowsChanging(int value);
-    partial void OnMapRowsChanged();
-    partial void OnStatusChanging(string value);
-    partial void OnStatusChanged();
-    partial void OnVormChanging(string value);
-    partial void OnVormChanged();
-    #endregion
-		
-		public Lobby()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LobbyID", DbType="Int NOT NULL")]
+		public int LobbyID
 		{
 			get
 			{
-				return this._ID;
+				return this._LobbyID;
 			}
 			set
 			{
-				if ((this._ID != value))
+				if ((this._LobbyID != value))
 				{
-					this.OnIDChanging(value);
+					this.OnLobbyIDChanging(value);
 					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tijd", DbType="VarChar(10)")]
-		public string Tijd
-		{
-			get
-			{
-				return this._Tijd;
-			}
-			set
-			{
-				if ((this._Tijd != value))
-				{
-					this.OnTijdChanging(value);
-					this.SendPropertyChanging();
-					this._Tijd = value;
-					this.SendPropertyChanged("Tijd");
-					this.OnTijdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapColumns", DbType="Int NOT NULL")]
-		public int MapColumns
-		{
-			get
-			{
-				return this._MapColumns;
-			}
-			set
-			{
-				if ((this._MapColumns != value))
-				{
-					this.OnMapColumnsChanging(value);
-					this.SendPropertyChanging();
-					this._MapColumns = value;
-					this.SendPropertyChanged("MapColumns");
-					this.OnMapColumnsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapRows", DbType="Int NOT NULL")]
-		public int MapRows
-		{
-			get
-			{
-				return this._MapRows;
-			}
-			set
-			{
-				if ((this._MapRows != value))
-				{
-					this.OnMapRowsChanging(value);
-					this.SendPropertyChanging();
-					this._MapRows = value;
-					this.SendPropertyChanged("MapRows");
-					this.OnMapRowsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this.OnStatusChanging(value);
-					this.SendPropertyChanging();
-					this._Status = value;
-					this.SendPropertyChanged("Status");
-					this.OnStatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vorm", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
-		public string Vorm
-		{
-			get
-			{
-				return this._Vorm;
-			}
-			set
-			{
-				if ((this._Vorm != value))
-				{
-					this.OnVormChanging(value);
-					this.SendPropertyChanging();
-					this._Vorm = value;
-					this.SendPropertyChanged("Vorm");
-					this.OnVormChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pion")]
-	public partial class Pion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _Column;
-		
-		private int _Row;
-		
-		private int _Speler;
-		
-		private int _Ijsschots;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnColumnChanging(int value);
-    partial void OnColumnChanged();
-    partial void OnRowChanging(int value);
-    partial void OnRowChanged();
-    partial void OnSpelerChanging(int value);
-    partial void OnSpelerChanged();
-    partial void OnIjsschotsChanging(int value);
-    partial void OnIjsschotsChanged();
-    #endregion
-		
-		public Pion()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Column]", Storage="_Column", DbType="Int NOT NULL")]
-		public int Column
-		{
-			get
-			{
-				return this._Column;
-			}
-			set
-			{
-				if ((this._Column != value))
-				{
-					this.OnColumnChanging(value);
-					this.SendPropertyChanging();
-					this._Column = value;
-					this.SendPropertyChanged("Column");
-					this.OnColumnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Row", DbType="Int NOT NULL")]
-		public int Row
-		{
-			get
-			{
-				return this._Row;
-			}
-			set
-			{
-				if ((this._Row != value))
-				{
-					this.OnRowChanging(value);
-					this.SendPropertyChanging();
-					this._Row = value;
-					this.SendPropertyChanged("Row");
-					this.OnRowChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Speler", DbType="Int NOT NULL")]
-		public int Speler
-		{
-			get
-			{
-				return this._Speler;
-			}
-			set
-			{
-				if ((this._Speler != value))
-				{
-					this.OnSpelerChanging(value);
-					this.SendPropertyChanging();
-					this._Speler = value;
-					this.SendPropertyChanged("Speler");
-					this.OnSpelerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ijsschots", DbType="Int NOT NULL")]
-		public int Ijsschots
-		{
-			get
-			{
-				return this._Ijsschots;
-			}
-			set
-			{
-				if ((this._Ijsschots != value))
-				{
-					this.OnIjsschotsChanging(value);
-					this.SendPropertyChanging();
-					this._Ijsschots = value;
-					this.SendPropertyChanged("Ijsschots");
-					this.OnIjsschotsChanged();
+					this._LobbyID = value;
+					this.SendPropertyChanged("LobbyID");
+					this.OnLobbyIDChanged();
 				}
 			}
 		}
@@ -629,6 +313,8 @@ namespace WCFServiceWebRole1
 		
 		private string _Ready;
 		
+		private string _Kleur;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -651,6 +337,8 @@ namespace WCFServiceWebRole1
     partial void OnPuntenChanged();
     partial void OnReadyChanging(string value);
     partial void OnReadyChanged();
+    partial void OnKleurChanging(string value);
+    partial void OnKleurChanged();
     #endregion
 		
 		public Speler()
@@ -834,6 +522,414 @@ namespace WCFServiceWebRole1
 					this._Ready = value;
 					this.SendPropertyChanged("Ready");
 					this.OnReadyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Kleur", DbType="VarChar(50)")]
+		public string Kleur
+		{
+			get
+			{
+				return this._Kleur;
+			}
+			set
+			{
+				if ((this._Kleur != value))
+				{
+					this.OnKleurChanging(value);
+					this.SendPropertyChanging();
+					this._Kleur = value;
+					this.SendPropertyChanged("Kleur");
+					this.OnKleurChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Lobby")]
+	public partial class Lobby : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Tijd;
+		
+		private int _MapColumns;
+		
+		private int _MapRows;
+		
+		private string _Status;
+		
+		private string _Vorm;
+		
+		private string _KleurWieMagSpelen;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnTijdChanging(string value);
+    partial void OnTijdChanged();
+    partial void OnMapColumnsChanging(int value);
+    partial void OnMapColumnsChanged();
+    partial void OnMapRowsChanging(int value);
+    partial void OnMapRowsChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnVormChanging(string value);
+    partial void OnVormChanged();
+    partial void OnKleurWieMagSpelenChanging(string value);
+    partial void OnKleurWieMagSpelenChanged();
+    #endregion
+		
+		public Lobby()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tijd", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Tijd
+		{
+			get
+			{
+				return this._Tijd;
+			}
+			set
+			{
+				if ((this._Tijd != value))
+				{
+					this.OnTijdChanging(value);
+					this.SendPropertyChanging();
+					this._Tijd = value;
+					this.SendPropertyChanged("Tijd");
+					this.OnTijdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapColumns", DbType="Int NOT NULL")]
+		public int MapColumns
+		{
+			get
+			{
+				return this._MapColumns;
+			}
+			set
+			{
+				if ((this._MapColumns != value))
+				{
+					this.OnMapColumnsChanging(value);
+					this.SendPropertyChanging();
+					this._MapColumns = value;
+					this.SendPropertyChanged("MapColumns");
+					this.OnMapColumnsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MapRows", DbType="Int NOT NULL")]
+		public int MapRows
+		{
+			get
+			{
+				return this._MapRows;
+			}
+			set
+			{
+				if ((this._MapRows != value))
+				{
+					this.OnMapRowsChanging(value);
+					this.SendPropertyChanging();
+					this._MapRows = value;
+					this.SendPropertyChanged("MapRows");
+					this.OnMapRowsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Vorm", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string Vorm
+		{
+			get
+			{
+				return this._Vorm;
+			}
+			set
+			{
+				if ((this._Vorm != value))
+				{
+					this.OnVormChanging(value);
+					this.SendPropertyChanging();
+					this._Vorm = value;
+					this.SendPropertyChanged("Vorm");
+					this.OnVormChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KleurWieMagSpelen", DbType="VarChar(10)")]
+		public string KleurWieMagSpelen
+		{
+			get
+			{
+				return this._KleurWieMagSpelen;
+			}
+			set
+			{
+				if ((this._KleurWieMagSpelen != value))
+				{
+					this.OnKleurWieMagSpelenChanging(value);
+					this.SendPropertyChanging();
+					this._KleurWieMagSpelen = value;
+					this.SendPropertyChanged("KleurWieMagSpelen");
+					this.OnKleurWieMagSpelenChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pion")]
+	public partial class Pion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _Row;
+		
+		private int _Column;
+		
+		private int _Ijsschots;
+		
+		private int _LobbyID;
+		
+		private int _SpelerID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnRowChanging(int value);
+    partial void OnRowChanged();
+    partial void OnColumnChanging(int value);
+    partial void OnColumnChanged();
+    partial void OnIjsschotsChanging(int value);
+    partial void OnIjsschotsChanged();
+    partial void OnLobbyIDChanging(int value);
+    partial void OnLobbyIDChanged();
+    partial void OnSpelerIDChanging(int value);
+    partial void OnSpelerIDChanged();
+    #endregion
+		
+		public Pion()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Row", DbType="Int NOT NULL")]
+		public int Row
+		{
+			get
+			{
+				return this._Row;
+			}
+			set
+			{
+				if ((this._Row != value))
+				{
+					this.OnRowChanging(value);
+					this.SendPropertyChanging();
+					this._Row = value;
+					this.SendPropertyChanged("Row");
+					this.OnRowChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Column]", Storage="_Column", DbType="Int NOT NULL")]
+		public int Column
+		{
+			get
+			{
+				return this._Column;
+			}
+			set
+			{
+				if ((this._Column != value))
+				{
+					this.OnColumnChanging(value);
+					this.SendPropertyChanging();
+					this._Column = value;
+					this.SendPropertyChanged("Column");
+					this.OnColumnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ijsschots", DbType="Int NOT NULL")]
+		public int Ijsschots
+		{
+			get
+			{
+				return this._Ijsschots;
+			}
+			set
+			{
+				if ((this._Ijsschots != value))
+				{
+					this.OnIjsschotsChanging(value);
+					this.SendPropertyChanging();
+					this._Ijsschots = value;
+					this.SendPropertyChanged("Ijsschots");
+					this.OnIjsschotsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LobbyID", DbType="Int NOT NULL")]
+		public int LobbyID
+		{
+			get
+			{
+				return this._LobbyID;
+			}
+			set
+			{
+				if ((this._LobbyID != value))
+				{
+					this.OnLobbyIDChanging(value);
+					this.SendPropertyChanging();
+					this._LobbyID = value;
+					this.SendPropertyChanged("LobbyID");
+					this.OnLobbyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SpelerID", DbType="Int NOT NULL")]
+		public int SpelerID
+		{
+			get
+			{
+				return this._SpelerID;
+			}
+			set
+			{
+				if ((this._SpelerID != value))
+				{
+					this.OnSpelerIDChanging(value);
+					this.SendPropertyChanging();
+					this._SpelerID = value;
+					this.SendPropertyChanged("SpelerID");
+					this.OnSpelerIDChanged();
 				}
 			}
 		}

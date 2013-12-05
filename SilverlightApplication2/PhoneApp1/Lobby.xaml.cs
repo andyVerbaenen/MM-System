@@ -46,18 +46,23 @@ namespace PhoneApp1
                 {
                     TijdBox.Text = "Game begins in " + item.Tijd + " sec...";
                     tijd = item.Tijd;
-                    if (tijd == 300)
+                    if (tijd == 300 && item.Status == "Waiting")
                     {
                         magIkTijdSetten = true;
+                        GiveLobbyID(out tellerLobbyID);
+                        GiveSpelerID(ref tellerSpelerID);
+                        ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                        client.SetHostIDCompleted += client_SetHostIDCompleted;
+                        client.SetHostIDAsync(tellerSpelerID, tellerLobbyID);
                     }
                     if (magIkTijdSetten == true && LetGameBegin == false)
                     {
                         tijd -= 1;
                         if (tijd == 0 && item.AantalSpelers > 1)
                         {
-                            
+                            newTimer.Stop();
                             LetGameBegin = true;
-                            tijd = 300;
+                            tijd = 400;
                             GiveLobbyID(out tellerLobbyID);
                             try
                             {
@@ -85,7 +90,7 @@ namespace PhoneApp1
                         try
                         {
                             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-                            client.SetTimeCompleted += client_SetTimeCompleted;
+                            client.SetTimeCompleted+=client_SetTimeCompleted;  
                             client.SetTimeAsync(tellerLobbyID, tijd);
                         }
                         catch
@@ -99,15 +104,25 @@ namespace PhoneApp1
             }
         }
 
+        void client_SetHostIDCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void client_SetTimeCompleted(object sender, ServiceReference1.SetTimeCompletedEventArgs e)
+        {
+            if (e.Result.ToString() != "0" && e.Result.ToString() != "1")
+            {
+                MessageBox.Show(e.Result.ToString());
+            }
+            
+        }
+
         void client2_SetLetGameBeginCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             //throw new NotImplementedException();
         }
 
-        void client_SetTimeCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
         void OnTimerTick(Object sender, EventArgs args)
         {
             // text box property is set to current system date.

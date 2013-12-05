@@ -177,7 +177,16 @@
     <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.DTOGameState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.DTOIjsschots.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.DTOLobby.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.DTOPion.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference1\PhoneApp1.ServiceReference1.DTOSpeler.datasource">

@@ -13,5 +13,9 @@ namespace SilverlightApplication2.Web
     {
         [OperationContract]
         void DoWork();
+
+         [OperationContract]
+         void AddPionToGameSte(Pion p);
+       
     }
 }

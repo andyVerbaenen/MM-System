@@ -14,5 +14,30 @@ namespace SilverlightApplication2.Web
         public void DoWork()
         {
         }
+
+        public void AddPionToGameSte(Pion p)
+        {
+            DataClasses1DataContext dc = new DataClasses1DataContext();
+            Pion pi = new Pion();
+            pi.Ijsschots = p.Ijsschots;
+            pi.Column = p.Column;
+            pi.Row = p.Row;
+            pi.SpelerID = p.SpelerID;
+            pi.LobbyID = p.LobbyID;
+
+            dc.Pions.InsertOnSubmit(pi);
+            dc.SubmitChanges();
+            //Pion eenPion = new Pion() { Ijsschots = 5};
+            //dc.Pions.InsertOnSubmit(eenPion);
+            //dc.SubmitChanges();
+
+            //var pi = (from p in dc.Pions
+            //          where p.ID == lobbyID
+            //          select p).Single();
+            //pi.Row = 5;
+            //pi.Column = 5;
+            //dc.SubmitChanges();
+            // UpdateKleur(lobbyID, kleur);
+        }
     }
 }

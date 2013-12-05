@@ -13,5 +13,6 @@ namespace WCFServiceWebRole1
         public int MapRows { get; set; }
         public string Status { get; set; }
         public string Vorm { get; set; }
+        public string KleurWieMagSpelen { get; set; }
     }
 }

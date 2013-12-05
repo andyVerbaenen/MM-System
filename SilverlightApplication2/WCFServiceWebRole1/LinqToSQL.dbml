@@ -7,25 +7,7 @@
       <Column Name="Row" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Visibility" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="AantalVissen" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Lobby" Member="Lobbies">
-    <Type Name="Lobby">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Tijd" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="MapColumns" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MapRows" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="Vorm" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Pion" Member="Pions">
-    <Type Name="Pion">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="[Column]" Member="Column" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Row" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Speler" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Ijsschots" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LobbyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Speler" Member="Spelers">
@@ -39,6 +21,28 @@
       <Column Name="Lobby" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Punten" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Ready" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Kleur" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lobby" Member="Lobbies">
+    <Type Name="Lobby">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tijd" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="MapColumns" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MapRows" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Vorm" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="KleurWieMagSpelen" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pion" Member="Pions">
+    <Type Name="Pion">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Row" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Column]" Member="Column" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ijsschots" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LobbyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpelerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

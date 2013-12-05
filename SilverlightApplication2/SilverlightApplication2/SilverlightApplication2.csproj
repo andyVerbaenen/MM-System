@@ -113,11 +113,8 @@
     <None Include="Service References\ServiceReference1\Service11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\Service12.xsd">
+    <None Include="Service References\ServiceReference1\Service111.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ServiceReference1\SilverlightApplication2.ServiceReference1.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

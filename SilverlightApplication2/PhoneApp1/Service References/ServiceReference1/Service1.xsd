@@ -79,7 +79,9 @@
   </xs:element>
   <xs:element name="MakeMap">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="MakeMapResponse">
@@ -99,6 +101,128 @@
       <xs:sequence>
         <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MakeGridResult" nillable="true" type="q4:ArrayOfint" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAllIjsschots">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAllIjsschotsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddAllIjsschotsResult" nillable="true" type="q5:ArrayOfArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllIjschots">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllIjschotsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="GetAllIjschotsResult" nillable="true" type="q6:ArrayOfDTOIjsschots" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllPionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="GetAllPionResult" nillable="true" type="q7:ArrayOfDTOPion" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKleur">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKleurResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetKleurResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SpelerInLobby">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SpelerInLobbyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="SpelerInLobbyResult" nillable="true" type="q8:ArrayOfDTOSpeler" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetTime">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+        <xs:element minOccurs="0" name="tijd" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetTimeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetTimeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetReady">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="spelerID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetReadyResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetHostID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="spelerID" type="xs:int" />
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetHostIDResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetKleurPerSpeler">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetKleurPerSpelerResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SetLetGameBegin">
@@ -127,29 +251,47 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SetTime">
+  <xs:element name="GetGameState">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
-        <xs:element minOccurs="0" name="tijd" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SetTimeResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SetReady">
+  <xs:element name="GetGameStateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="spelerID" type="xs:int" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="GetGameStateResult" nillable="true" type="q9:DTOGameState" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SetReadyResponse">
+  <xs:element name="UpdateGameState">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="gameState" nillable="true" type="q10:DTOGameState" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateGameStateResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddPionToGameSte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lobbyID" type="xs:int" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="pion" nillable="true" type="q11:DTOPion" />
+        <xs:element minOccurs="0" name="kleur" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddPionToGameSteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddPionToGameSteResult" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OpzetFase">
@@ -188,18 +330,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GameState">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GameStateResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GameStateResult" nillable="true" type="q5:ArrayOfstring" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetData">
     <xs:complexType>
       <xs:sequence>
@@ -217,14 +347,14 @@
   <xs:element name="GetDataUsingDataContract">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="composite" nillable="true" type="q6:CompositeType" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="composite" nillable="true" type="q12:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDataUsingDataContractResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q7:CompositeType" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WCFServiceWebRole1" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q13:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

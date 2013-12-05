@@ -18,24 +18,23 @@ namespace SilverlightApplication2
         public MainPage()
         {
             InitializeComponent();
-            Service1Client client = null;
-            try
-            {
-                client = new Service1Client();
-                client.GetDataCompleted += client_GetDataCompleted;
-                client.GetDataAsync(1);
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            ServiceReference1.Service1Client cl = new Service1Client();
+            cl.AddPionToGameSteCompleted += cl_AddPionToGameSteCompleted;
+            Pion p = new Pion();
+            p.Ijsschots= 33;
+            p.LobbyID = 5;
+            p.Row = 88;
+            p.SpelerID = 1;
+            p.Column = 4;
+            
+            cl.AddPionToGameSteAsync(p);
         }
 
-        void client_GetDataCompleted(object sender, GetDataCompletedEventArgs e)
+        void cl_AddPionToGameSteCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

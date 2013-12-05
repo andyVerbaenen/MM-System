@@ -16,5 +16,6 @@ namespace WCFServiceWebRole1
         public int LobbyID { get; set; }
         public int Punten { get; set; }
         public string IsReady { get; set; }
+        public string Kleur { get; set; }
     }
 }

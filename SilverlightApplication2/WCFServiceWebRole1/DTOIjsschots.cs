@@ -12,5 +12,6 @@ namespace WCFServiceWebRole1
         public int Row { get; set; }
         public string Visibility { get; set; }
         public int AantalVissen { get; set; }
+        public int LobbyID { get; set; }
     }
 }

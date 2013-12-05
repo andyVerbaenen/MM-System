@@ -56,17 +56,35 @@
   <wsdl:message name="IService1_MakeGrid_OutputMessage">
     <wsdl:part name="parameters" element="tns:MakeGridResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_SetLetGameBegin_InputMessage">
-    <wsdl:part name="parameters" element="tns:SetLetGameBegin" />
+  <wsdl:message name="IService1_AddAllIjsschots_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAllIjsschots" />
   </wsdl:message>
-  <wsdl:message name="IService1_SetLetGameBegin_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SetLetGameBeginResponse" />
+  <wsdl:message name="IService1_AddAllIjsschots_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAllIjsschotsResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_LetGameBegin_InputMessage">
-    <wsdl:part name="parameters" element="tns:LetGameBegin" />
+  <wsdl:message name="IService1_GetAllIjschots_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllIjschots" />
   </wsdl:message>
-  <wsdl:message name="IService1_LetGameBegin_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LetGameBeginResponse" />
+  <wsdl:message name="IService1_GetAllIjschots_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllIjschotsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAllPion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPion" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAllPion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetKleur_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetKleur" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetKleur_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetKleurResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SpelerInLobby_InputMessage">
+    <wsdl:part name="parameters" element="tns:SpelerInLobby" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SpelerInLobby_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SpelerInLobbyResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_SetTime_InputMessage">
     <wsdl:part name="parameters" element="tns:SetTime" />
@@ -79,6 +97,48 @@
   </wsdl:message>
   <wsdl:message name="IService1_SetReady_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetReadyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetHostID_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetHostID" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetHostID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetHostIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetKleurPerSpeler_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetKleurPerSpeler" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetKleurPerSpeler_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetKleurPerSpelerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetLetGameBegin_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetLetGameBegin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_SetLetGameBegin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetLetGameBeginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_LetGameBegin_InputMessage">
+    <wsdl:part name="parameters" element="tns:LetGameBegin" />
+  </wsdl:message>
+  <wsdl:message name="IService1_LetGameBegin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LetGameBeginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetGameState_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameState" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetGameState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdateGameState_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGameState" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UpdateGameState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateGameStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPionToGameSte_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPionToGameSte" />
+  </wsdl:message>
+  <wsdl:message name="IService1_AddPionToGameSte_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPionToGameSteResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_OpzetFase_InputMessage">
     <wsdl:part name="parameters" element="tns:OpzetFase" />
@@ -97,12 +157,6 @@
   </wsdl:message>
   <wsdl:message name="IService1_SetOpzetFase_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetOpzetFaseResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService1_GameState_InputMessage">
-    <wsdl:part name="parameters" element="tns:GameState" />
-  </wsdl:message>
-  <wsdl:message name="IService1_GameState_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GameStateResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
@@ -149,13 +203,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/MakeGrid" message="tns:IService1_MakeGrid_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/MakeGridResponse" message="tns:IService1_MakeGrid_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SetLetGameBegin">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetLetGameBegin" message="tns:IService1_SetLetGameBegin_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetLetGameBeginResponse" message="tns:IService1_SetLetGameBegin_OutputMessage" />
+    <wsdl:operation name="AddAllIjsschots">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddAllIjsschots" message="tns:IService1_AddAllIjsschots_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddAllIjsschotsResponse" message="tns:IService1_AddAllIjsschots_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="LetGameBegin">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/LetGameBegin" message="tns:IService1_LetGameBegin_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/LetGameBeginResponse" message="tns:IService1_LetGameBegin_OutputMessage" />
+    <wsdl:operation name="GetAllIjschots">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllIjschots" message="tns:IService1_GetAllIjschots_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAllIjschotsResponse" message="tns:IService1_GetAllIjschots_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetAllPion" message="tns:IService1_GetAllPion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetAllPionResponse" message="tns:IService1_GetAllPion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetKleur">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetKleur" message="tns:IService1_GetKleur_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetKleurResponse" message="tns:IService1_GetKleur_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SpelerInLobby">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SpelerInLobby" message="tns:IService1_SpelerInLobby_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SpelerInLobbyResponse" message="tns:IService1_SpelerInLobby_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SetTime">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetTime" message="tns:IService1_SetTime_InputMessage" />
@@ -164,6 +230,34 @@
     <wsdl:operation name="SetReady">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetReady" message="tns:IService1_SetReady_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetReadyResponse" message="tns:IService1_SetReady_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetHostID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetHostID" message="tns:IService1_SetHostID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetHostIDResponse" message="tns:IService1_SetHostID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetKleurPerSpeler">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetKleurPerSpeler" message="tns:IService1_SetKleurPerSpeler_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetKleurPerSpelerResponse" message="tns:IService1_SetKleurPerSpeler_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetLetGameBegin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetLetGameBegin" message="tns:IService1_SetLetGameBegin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetLetGameBeginResponse" message="tns:IService1_SetLetGameBegin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LetGameBegin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/LetGameBegin" message="tns:IService1_LetGameBegin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/LetGameBeginResponse" message="tns:IService1_LetGameBegin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGameState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetGameState" message="tns:IService1_GetGameState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetGameStateResponse" message="tns:IService1_GetGameState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGameState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UpdateGameState" message="tns:IService1_UpdateGameState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UpdateGameStateResponse" message="tns:IService1_UpdateGameState_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddPionToGameSte">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddPionToGameSte" message="tns:IService1_AddPionToGameSte_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPionToGameSteResponse" message="tns:IService1_AddPionToGameSte_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="OpzetFase">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/OpzetFase" message="tns:IService1_OpzetFase_InputMessage" />
@@ -176,10 +270,6 @@
     <wsdl:operation name="SetOpzetFase">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/SetOpzetFase" message="tns:IService1_SetOpzetFase_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/SetOpzetFaseResponse" message="tns:IService1_SetOpzetFase_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GameState">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GameState" message="tns:IService1_GameState_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GameStateResponse" message="tns:IService1_GameState_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
@@ -264,8 +354,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SetLetGameBegin">
-      <soap:operation soapAction="http://tempuri.org/IService1/SetLetGameBegin" style="document" />
+    <wsdl:operation name="AddAllIjsschots">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddAllIjsschots" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -273,8 +363,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="LetGameBegin">
-      <soap:operation soapAction="http://tempuri.org/IService1/LetGameBegin" style="document" />
+    <wsdl:operation name="GetAllIjschots">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAllIjschots" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPion">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetAllPion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetKleur">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetKleur" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SpelerInLobby">
+      <soap:operation soapAction="http://tempuri.org/IService1/SpelerInLobby" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -293,6 +410,69 @@
     </wsdl:operation>
     <wsdl:operation name="SetReady">
       <soap:operation soapAction="http://tempuri.org/IService1/SetReady" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetHostID">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetHostID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetKleurPerSpeler">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetKleurPerSpeler" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetLetGameBegin">
+      <soap:operation soapAction="http://tempuri.org/IService1/SetLetGameBegin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LetGameBegin">
+      <soap:operation soapAction="http://tempuri.org/IService1/LetGameBegin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGameState">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetGameState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGameState">
+      <soap:operation soapAction="http://tempuri.org/IService1/UpdateGameState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddPionToGameSte">
+      <soap:operation soapAction="http://tempuri.org/IService1/AddPionToGameSte" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -320,15 +500,6 @@
     </wsdl:operation>
     <wsdl:operation name="SetOpzetFase">
       <soap:operation soapAction="http://tempuri.org/IService1/SetOpzetFase" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GameState">
-      <soap:operation soapAction="http://tempuri.org/IService1/GameState" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
