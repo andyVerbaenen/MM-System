@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PinguinDatabase" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=csewpotsbp.database.windows.net;Initial Catalog=PinguinDatabase;Persist Security Info=True;User ID=JonathanSansens" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PinguinDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Pion" Member="Pions">
+    <Type Name="Pion">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[Column]" Member="Column" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Row" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpelerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ijsschots" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LobbyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
