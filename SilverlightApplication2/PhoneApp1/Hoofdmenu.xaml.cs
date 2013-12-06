@@ -121,9 +121,7 @@ namespace PhoneApp1
                 else
                     tellerSpelerID++;
             } while (true);
-        }
-
-        
+        }        
     }
 
     public class HoofdmenuClass

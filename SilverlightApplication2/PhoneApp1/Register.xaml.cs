@@ -16,10 +16,12 @@ namespace PhoneApp1
         {
             InitializeComponent();
         }
+
         string username;
         string password;
         bool nieuweGebruikersnaam;
         ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             username = Nickname.Text;

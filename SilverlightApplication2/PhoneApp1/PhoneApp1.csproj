@@ -207,6 +207,9 @@
     <Content Include="Images\PinguwinGeel.png" />
     <Content Include="Images\PinguwinGroen.png" />
     <Content Include="Images\PinguwinRood.png" />
+    <None Include="Service References\ServiceReference1\Service131.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceReference1\Service1.wsdl" />
     <None Include="Service References\ServiceReference1\Service1.xsd">

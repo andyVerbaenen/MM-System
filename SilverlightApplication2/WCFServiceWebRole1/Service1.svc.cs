@@ -67,7 +67,7 @@ namespace WCFServiceWebRole1
         #region (Make & Get & Join & Leave) - Lobby
         public void AddLobby()
         {
-            Lobby l = new Lobby() { MapColumns = 0, MapRows = 0, Tijd = "300", Vorm = "Default", Status = "Waiting", KleurWieMagSpelen = "Groen"}; //MapColumns = aantal spelers in lobby MapRows is de hostID
+            Lobby l = new Lobby() { MapColumns = 0, MapRows = 0, Tijd = "300", Vorm = "Default", Status = "Waiting", KleurWieMagSpelen = "Blauw"}; //MapColumns = aantal spelers in lobby MapRows is de hostID
             dc.Lobbies.InsertOnSubmit(l);
             dc.SubmitChanges();
         }
@@ -141,6 +141,7 @@ namespace WCFServiceWebRole1
             {
                 dc.Ijsschots.DeleteOnSubmit(que);
             }
+            dc.SubmitChanges();
             var query2 = from p in dc.Pions
                         where p.LobbyID == lobbyID
                         select p;
@@ -296,6 +297,7 @@ namespace WCFServiceWebRole1
             {
                 item.Row = pion[teller].Row;
                 item.Column = pion[teller].Column;
+                teller++;
             }
 
             dc.SubmitChanges();
@@ -477,6 +479,8 @@ namespace WCFServiceWebRole1
                 kleur = "Blauw";
             else if (kleur == "Geel")
                 kleur = "Groen";
+            else
+                kleur = "Blauw";
             return kleur;
         }
 

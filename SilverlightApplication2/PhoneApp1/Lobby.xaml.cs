@@ -14,6 +14,7 @@ namespace PhoneApp1
 {
     public partial class Lobby : PhoneApplicationPage
     {
+        #region Aanmaken variabelen
         int tellerLobbyID;
         int tellerSpelerID = 0;
         int tijd;
@@ -22,6 +23,9 @@ namespace PhoneApp1
         bool AllPlayersReady = false;
         // creating timer instance
         DispatcherTimer newTimer = new DispatcherTimer();
+        #endregion
+
+
         public Lobby()
         {
             InitializeComponent();
@@ -37,6 +41,91 @@ namespace PhoneApp1
             
         }
 
+
+        #region Set - (HostID & Time & LetGameBegin)
+        void client_SetHostIDCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+        void client_SetTimeCompleted(object sender, ServiceReference1.SetTimeCompletedEventArgs e)
+        {
+            if (e.Result.ToString() != "0" && e.Result.ToString() != "1")
+            {
+                //MessageBox.Show(e.Result.ToString());
+            }
+            
+        }
+        void client2_SetLetGameBeginCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+        #endregion
+
+
+        #region Update Lobby
+        void OnTimerTick(Object sender, EventArgs args)
+        {
+            // text box property is set to current system date.
+            // ToString() converts the datetime value into text
+            //txtClock.Text = DateTime.Now.ToString();
+            UpdateLobby();
+
+        }
+        private void UpdateLobby()
+        {
+            GiveLobbyID(out tellerLobbyID);
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            client.GetAllSpelersCompleted += client_GetAllSpelersCompleted;
+            client.GetAllSpelersAsync();
+            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted;
+            client.GetAllLobbiesAsync();
+            if (LetGameBegin == true || tijd == 1)
+                NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative));
+            if (tijd <= 10)
+                LeaveButton.IsEnabled = false;
+            else
+                LeaveButton.IsEnabled = true;
+        }
+        #endregion
+
+
+        #region LetGameBegin
+        void client_LetGameBeginCompleted(object sender, ServiceReference1.LetGameBeginCompletedEventArgs e)
+        {
+            if (e.Result == "Full")
+            {
+                //newTimer.Stop();
+                LetGameBegin = true;
+            }
+        }
+        #endregion
+
+
+        #region Get - (AllSpelers & AllLobbies)
+        void client_GetAllSpelersCompleted(object sender, ServiceReference1.GetAllSpelersCompletedEventArgs e)
+        {            
+            ObservableCollection<LobbyClass> showPlayers = new ObservableCollection<LobbyClass>();
+            AllPlayersReady = true;
+            foreach (var item in e.Result)
+            {
+                
+                if (item.LobbyID == tellerLobbyID)
+                {
+                    LobbyClass temp = new LobbyClass();
+                    temp.SpelerNaam = item.NickName;
+                    temp.Status = item.IsReady;
+
+                    showPlayers.Add(temp);
+                    if (item.IsReady != "Ready")
+                    {
+                        AllPlayersReady = false;
+                    }
+
+
+                }
+            }
+            mijnListbox.ItemsSource = showPlayers;
+        }
         void client_GetAllLobbiesCompleted(object sender, ServiceReference1.GetAllLobbiesCompletedEventArgs e)
         {
             LobbyClass showTijd = new LobbyClass();
@@ -64,22 +153,17 @@ namespace PhoneApp1
                             LetGameBegin = true;
                             tijd = 400;
                             GiveLobbyID(out tellerLobbyID);
-                            try
-                            {
-                                ServiceReference1.Service1Client client2 = new ServiceReference1.Service1Client();
-                                client2.SetLetGameBeginCompleted += client2_SetLetGameBeginCompleted;
-                                client2.SetLetGameBeginAsync(tellerLobbyID);
-                            }
-                            catch
-                            {
-                                MessageBox.Show("De SetLetGameBegin fout was er.");
-                            }
+
+                            ServiceReference1.Service1Client client2 = new ServiceReference1.Service1Client();
+                            client2.SetLetGameBeginCompleted += client2_SetLetGameBeginCompleted;
+                            client2.SetLetGameBeginAsync(tellerLobbyID);
+
                         }
                         else if (tijd == 0)
                         {
                             tijd = 300;
                         }
-                        else if ((AllPlayersReady == true && tijd > 10 && item.AantalSpelers > 1) || (item.AantalSpelers == 4))
+                        else if ((AllPlayersReady == true && tijd > 10 && item.AantalSpelers > 1))
                         {
                             tijd = 10;
                         }
@@ -87,100 +171,19 @@ namespace PhoneApp1
                         {
                             AllPlayersReady = false;
                         }
-                        try
-                        {
-                            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-                            client.SetTimeCompleted+=client_SetTimeCompleted;  
-                            client.SetTimeAsync(tellerLobbyID, tijd);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("De fout was er bij de SetTime.");
-                        }
 
-                    }                    
+                        ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                        client.SetTimeCompleted += client_SetTimeCompleted;
+                        client.SetTimeAsync(tellerLobbyID, tijd);
+
+                    }
                     break;
                 }
             }
         }
+        #endregion
 
-        void client_SetHostIDCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        void client_SetTimeCompleted(object sender, ServiceReference1.SetTimeCompletedEventArgs e)
-        {
-            if (e.Result.ToString() != "0" && e.Result.ToString() != "1")
-            {
-                MessageBox.Show(e.Result.ToString());
-            }
-            
-        }
-
-        void client2_SetLetGameBeginCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        void OnTimerTick(Object sender, EventArgs args)
-        {
-            // text box property is set to current system date.
-            // ToString() converts the datetime value into text
-            //txtClock.Text = DateTime.Now.ToString();
-            UpdateLobby();
-
-        }
-
-        private void UpdateLobby()
-        {
-            GiveLobbyID(out tellerLobbyID);
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.GetAllSpelersCompleted += client_GetAllSpelersCompleted;
-            client.GetAllSpelersAsync();
-            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted;
-            client.GetAllLobbiesAsync();
-            if (LetGameBegin == true || tijd == 1)
-                NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative));
-            if (tijd <= 10)
-                LeaveButton.IsEnabled = false;
-            else
-                LeaveButton.IsEnabled = true;
-        }
-
-        void client_LetGameBeginCompleted(object sender, ServiceReference1.LetGameBeginCompletedEventArgs e)
-        {
-            if (e.Result == "Full")
-            {
-                //newTimer.Stop();
-                LetGameBegin = true;
-            }
-        }
-        void client_GetAllSpelersCompleted(object sender, ServiceReference1.GetAllSpelersCompletedEventArgs e)
-        {            
-            ObservableCollection<LobbyClass> showPlayers = new ObservableCollection<LobbyClass>();
-            AllPlayersReady = true;
-            foreach (var item in e.Result)
-            {
-                
-                if (item.LobbyID == tellerLobbyID)
-                {
-                    LobbyClass temp = new LobbyClass();
-                    temp.SpelerNaam = item.NickName;
-                    temp.Status = item.IsReady;
-
-                    showPlayers.Add(temp);
-                    if (item.IsReady != "Ready")
-                    {
-                        AllPlayersReady = false;
-                    }
-
-
-                }
-            }
-            mijnListbox.ItemsSource = showPlayers;
-        }
-
+        #region Give - (LobbyID & SpelerID)
         private static void GiveLobbyID(out int tellerLobbyID)
         {
             SpelerLokaal hulpLobby = new SpelerLokaal();
@@ -208,7 +211,10 @@ namespace PhoneApp1
                     tellerSpelerID++;
             } while (true);
         }
+        #endregion
 
+
+        #region Button_Click
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             GiveSpelerID(ref tellerSpelerID);
@@ -218,26 +224,26 @@ namespace PhoneApp1
             UpdateLobby();
 
         }
-
-        void client_SetReadyCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GiveSpelerID(ref tellerSpelerID);
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             client.LeaveLobbyCompleted += client_LeaveLobbyCompleted;
             client.LeaveLobbyAsync(tellerLobbyID, tellerSpelerID);
-            
-        }
 
+        }
+        #endregion
+
+        #region SetReady & LeaveLobby
+        void client_SetReadyCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
         void client_LeaveLobbyCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
         }
-        
+        #endregion
     }
     public class LobbyClass
     {
