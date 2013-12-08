@@ -49,10 +49,10 @@ namespace PhoneApp1
         }
         void client_SetTimeCompleted(object sender, ServiceReference1.SetTimeCompletedEventArgs e)
         {
-            if (e.Result.ToString() != "0" && e.Result.ToString() != "1")
-            {
-                //MessageBox.Show(e.Result.ToString());
-            }
+            //if (e.Result.ToString() != "0" && e.Result.ToString() != "1")
+            //{
+            //    //MessageBox.Show(e.Result.ToString());
+            //}
             
         }
         void client2_SetLetGameBeginCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -65,24 +65,20 @@ namespace PhoneApp1
         #region Update Lobby
         void OnTimerTick(Object sender, EventArgs args)
         {
-            // text box property is set to current system date.
-            // ToString() converts the datetime value into text
-            //txtClock.Text = DateTime.Now.ToString();
             UpdateLobby();
-
         }
         private void UpdateLobby()
         {
             GiveLobbyID(out tellerLobbyID);
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.GetAllSpelersCompleted += client_GetAllSpelersCompleted;
+            client.GetAllSpelersCompleted += client_GetAllSpelersCompleted; //Geef alle spelers in de lobby.
             client.GetAllSpelersAsync();
-            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted;
+            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted; //Geef de lobby weer om de gegevens er van te kunnen bepalen.
             client.GetAllLobbiesAsync();
             if (LetGameBegin == true || tijd == 1)
-                NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative)); //Laat het spel beginnen.
             if (tijd <= 10)
-                LeaveButton.IsEnabled = false;
+                LeaveButton.IsEnabled = false; //Zorg er voor dat de spelers de lobby niet meer kunnen verlaten als iedereen heeft gezegd dat ze klaar zijn.
             else
                 LeaveButton.IsEnabled = true;
         }
@@ -94,7 +90,6 @@ namespace PhoneApp1
         {
             if (e.Result == "Full")
             {
-                //newTimer.Stop();
                 LetGameBegin = true;
             }
         }
@@ -107,73 +102,72 @@ namespace PhoneApp1
             ObservableCollection<LobbyClass> showPlayers = new ObservableCollection<LobbyClass>();
             AllPlayersReady = true;
             foreach (var item in e.Result)
-            {
-                
-                if (item.LobbyID == tellerLobbyID)
+            {               
+                if (item.LobbyID == tellerLobbyID) //Geef alle spelers in de lobby.
                 {
+                    //Alle gegevens van de spelers tonen.
                     LobbyClass temp = new LobbyClass();
                     temp.SpelerNaam = item.NickName;
                     temp.Status = item.IsReady;
 
-                    showPlayers.Add(temp);
-                    if (item.IsReady != "Ready")
+                    showPlayers.Add(temp); //Voeg alle spelers in de lobby toe aan de ObservableCollection.
+
+                    if (item.IsReady != "Ready") //Wanneer een speler nog niet klaar is dit melden.
                     {
                         AllPlayersReady = false;
                     }
-
-
                 }
             }
-            mijnListbox.ItemsSource = showPlayers;
+            mijnListbox.ItemsSource = showPlayers; //Update de spelers in de lobby.
         }
         void client_GetAllLobbiesCompleted(object sender, ServiceReference1.GetAllLobbiesCompletedEventArgs e)
         {
             LobbyClass showTijd = new LobbyClass();
             foreach (var item in e.Result)
             {
-                if (item.ID == tellerLobbyID)
+                if (item.ID == tellerLobbyID) //Geef de juiste lobby.
                 {
-                    TijdBox.Text = "Game begins in " + item.Tijd + " sec...";
+                    TijdBox.Text = "Game begins in " + item.Tijd + " sec..."; //Laat de tijd op het scherm zien.
                     tijd = item.Tijd;
-                    if (tijd == 300 && item.Status == "Waiting")
-                    {
+                    if (tijd == 300 && item.Status == "Waiting") //Voor te bepalen wie de tijd mag setten.
+                    { //De speler die eerst joint, is de host. Deze code gebeurd 1 keer.
                         magIkTijdSetten = true;
                         GiveLobbyID(out tellerLobbyID);
                         GiveSpelerID(ref tellerSpelerID);
                         ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-                        client.SetHostIDCompleted += client_SetHostIDCompleted;
+                        client.SetHostIDCompleted += client_SetHostIDCompleted; //Stelt deze speler in als host player.
                         client.SetHostIDAsync(tellerSpelerID, tellerLobbyID);
                     }
-                    if (magIkTijdSetten == true && LetGameBegin == false)
+                    if (magIkTijdSetten == true && LetGameBegin == false) //Wat de host player moet doen.
                     {
-                        tijd -= 1;
-                        if (tijd == 0 && item.AantalSpelers > 1)
+                        tijd -= 1; //Tel af..
+                        if (tijd == 0 && item.AantalSpelers > 1) //Als de tijd op 0 staat en er zijn minstens twee spelers...
                         {
-                            newTimer.Stop();
-                            LetGameBegin = true;
-                            tijd = 400;
+                            newTimer.Stop(); //Stop de timer.
+                            LetGameBegin = true; //Laat het spel beginnen.
+                            tijd = 400; 
                             GiveLobbyID(out tellerLobbyID);
 
                             ServiceReference1.Service1Client client2 = new ServiceReference1.Service1Client();
-                            client2.SetLetGameBeginCompleted += client2_SetLetGameBeginCompleted;
+                            client2.SetLetGameBeginCompleted += client2_SetLetGameBeginCompleted; //Stel in dat het spel begint.
                             client2.SetLetGameBeginAsync(tellerLobbyID);
 
                         }
-                        else if (tijd == 0)
+                        else if (tijd == 0) //Wanneer de tijd op 0 is en er zijn niet meer dan 2 spelers.
                         {
-                            tijd = 300;
+                            tijd = 120;
                         }
                         else if ((AllPlayersReady == true && tijd > 10 && item.AantalSpelers > 1))
                         {
-                            tijd = 10;
+                            tijd = 10; //Wanneer alle spelers klaar zijn het spel laten beignnen in 10 seconden.
                         }
                         else
                         {
-                            AllPlayersReady = false;
+                            AllPlayersReady = false; //Als er maar 1 speler is mag het spel niet beginnen.
                         }
 
                         ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-                        client.SetTimeCompleted += client_SetTimeCompleted;
+                        client.SetTimeCompleted += client_SetTimeCompleted; //Pas de tijd in de database aan.
                         client.SetTimeAsync(tellerLobbyID, tijd);
 
                     }
@@ -190,7 +184,7 @@ namespace PhoneApp1
             string[] hulpString = new string[4];
             hulpString = hulpLobby.ReturnSpeler();
             tellerLobbyID = 0;
-            do
+            do //Via deze mannier omdat er geen ConvertToInt32() methode bestaat.
             {
                 if (hulpString[3].ToString() == tellerLobbyID.ToString())
                     break;
@@ -203,7 +197,7 @@ namespace PhoneApp1
             SpelerLokaal hulpSpeler = new SpelerLokaal();
             string[] hulpString = new string[4];
             hulpString = hulpSpeler.ReturnSpeler();
-            do
+            do //Via deze mannier omdat er geen ConvertToInt32() methode bestaat.
             {
                 if (hulpString[0].ToString() == tellerSpelerID.ToString())
                     break;
@@ -215,20 +209,20 @@ namespace PhoneApp1
 
 
         #region Button_Click
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) //Ik ben klaar voor te spelen.
         {
             GiveSpelerID(ref tellerSpelerID);
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.SetReadyCompleted += client_SetReadyCompleted;
+            client.SetReadyCompleted += client_SetReadyCompleted; //Geef aan dat je klaar bent voor het spel.
             client.SetReadyAsync(tellerSpelerID);
             UpdateLobby();
 
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e) //Ik wil de lobby verlaten.
         {
             GiveSpelerID(ref tellerSpelerID);
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.LeaveLobbyCompleted += client_LeaveLobbyCompleted;
+            client.LeaveLobbyCompleted += client_LeaveLobbyCompleted; //Verlaat de lobby.
             client.LeaveLobbyAsync(tellerLobbyID, tellerSpelerID);
 
         }
@@ -241,11 +235,11 @@ namespace PhoneApp1
         }
         void client_LeaveLobbyCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative)); //Ga terug naar het hoofdmenu.
         }
         #endregion
     }
-    public class LobbyClass
+    public class LobbyClass //Hulp classe.
     {
         public string SpelerNaam { get; set; }
         public string Status { get; set; }

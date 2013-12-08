@@ -22,26 +22,26 @@ namespace PhoneApp1
 
         SpelSpeelstuk hulpSpeelstuk2; //Dit is de laatst aangeklikte pinguin.
 
-        SpelerLokaal lokeleSpeler = new SpelerLokaal();
+        SpelerLokaal lokeleSpeler = new SpelerLokaal(); //Hier worden de gegevens van de speler van dit device opgeslagen.
 
         int teller = 0; //Dit is een teller voor te zien aan wie het is.
         int tellerAantalPinguins = 0; //Dit is een teller voor te te weten als het spel nog in de opzet fase is of niet.
-        int aantalSpelers = 4;
-        int[] punten = new int[4];
-        int tellerLobbyID = 0;
-        int tellerSpelerID;
+        int aantalSpelers = 4; //Het aantal speler die er zijn.
+        int[] punten = new int[4]; //De punten per speler.
+        int tellerLobbyID = 0; //Hulpvarialbele voor te weten in welke lobby we zijn.
+        int tellerSpelerID; //Hulpvariabele voor te weten welke speler we zijn.
 
         string kleurVanSpeler; //Kleur van de speler bepalen.
-        string kleurAanDeBeurt;
+        string kleurAanDeBeurt; //Kleur voor te weten wie er aan de beurt is.
 
         bool magVerplaatsen = false; //Bool voor te zien als de pinguin verplaatst mag worden.
         bool opZetFace = true; //Bool voor te zien als we in de opzet fase zitten of niet.
         bool verplaatsingsface = false; //Bool voor te zien als we in de aanduidingsfase of verplaatsingsface zitten.
-        bool ChangeOpzetFaceFirstTime = false;
+        bool ChangeOpzetFaceFirstTime = false; //Bool voor te zien als de opzet face al eens is veranderd.
 
-        DispatcherTimer newTimer = new DispatcherTimer(); // creating timer instance
+        DispatcherTimer newTimer = new DispatcherTimer(); // Timer aanmaken
 
-        ServiceReference1.DTOGameState gameState = new ServiceReference1.DTOGameState();
+        ServiceReference1.DTOGameState gameState = new ServiceReference1.DTOGameState(); //Voor de gamestate te onthouden.
 
         #endregion
 
@@ -61,24 +61,24 @@ namespace PhoneApp1
             //Voeg de tegels toe.
             SpelerLokaal hulpSpeler = new SpelerLokaal();
             string[] hulpString = new string[4];
-            hulpString = hulpSpeler.ReturnSpeler();
+            hulpString = hulpSpeler.ReturnSpeler(); //De gegevens van de lokale speler achterhalen.
             tellerLobbyID = 0;
             tellerSpelerID = 0;
-            do
+            do //Achterhalen wat het lobbyID is. Op deze manier omdat ik enkel de ToString() kan doen en niet de ConvertToInt32().
             {
                 if (hulpString[3].ToString() == tellerLobbyID.ToString())
                     break;
                 else
                     tellerLobbyID++;
             } while (true);
-            do
+            do //Achterhalen wat het SpelerID is. Op deze manier omdat ik enkel de ToString() kan doen en niet de ConvertToInt32().
             {
                 if (hulpString[0].ToString() == tellerSpelerID.ToString())
                     break;
                 else
                     tellerSpelerID++;
             } while (true);
-            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted;
+            client.GetAllLobbiesCompleted += client_GetAllLobbiesCompleted; //Voor te weten wie de map mag maken.
             client.GetAllLobbiesAsync();
             
             #endregion
@@ -89,10 +89,13 @@ namespace PhoneApp1
             client.SetOpzetFaseAsync();
             #endregion
 
+            #region Punten op 0 zetten
+            //Punten op 0 zetten.
             for (int i = 0; i < punten.Length; i++)
             {
                 punten[i] = 0;
             }
+            #endregion
         }       
 
 
@@ -100,13 +103,13 @@ namespace PhoneApp1
         void newTimer_Tick(object sender, EventArgs e)
         {
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            client.GetGameStateCompleted += client_GetGameStateCompleted;
+            client.GetGameStateCompleted += client_GetGameStateCompleted; //Get game state.
             client.GetGameStateAsync(tellerLobbyID);
             if (aantalSpelers == 4 && tellerAantalPinguins == 8 ||
                 aantalSpelers == 3 && tellerAantalPinguins == 9 ||
                 aantalSpelers == 2 && tellerAantalPinguins == 8)
             {
-                if (ChangeOpzetFaceFirstTime == false)
+                if (ChangeOpzetFaceFirstTime == false) //Zo weten we wanneer er de opzetface gedaan is. 
                 {
                     //Verander opzet fase naar speel fase.
                     //ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
@@ -120,6 +123,7 @@ namespace PhoneApp1
         }        
         void client_UpdateGameStateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            //Get game state.
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             client.GetGameStateCompleted += client_GetGameStateCompleted;
             client.GetGameStateAsync(tellerLobbyID);
@@ -190,11 +194,11 @@ namespace PhoneApp1
             Grid.SetColumnSpan(Ss, 2);
             Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
 
-            teller++; //Volgende speler
-            if (teller == 4)
-            {
-                teller = 0;
-            }
+            //teller++; //Volgende speler
+            //if (teller == 4)
+            //{
+            //    teller = 0;
+            //}
         }
         #endregion
 
@@ -321,7 +325,7 @@ namespace PhoneApp1
         #region Get - (GameState & AllLobies & AllIjsschots & SpelersInLobby)
         void client_GetGameStateCompleted(object sender, ServiceReference1.GetGameStateCompletedEventArgs e)
         {
-            gameState = e.Result;
+            gameState = e.Result; //Get de game state.
             #region Update Map
             int tellerRow = 0;
             int tellerColumn = 0;
@@ -330,6 +334,7 @@ namespace PhoneApp1
 
             foreach (var item in gameState.AllIjsschots)
             {
+                //De tegels moeten iedere rij in de helft van de vorige tegel beginnen.
                 tellerRow = item.Row;
                 if (tellerRow % 2 == 0)
                     evenOfOneven = 0;
@@ -337,6 +342,7 @@ namespace PhoneApp1
                     evenOfOneven = 1;
                 tellerColumn = item.Column * 2 + evenOfOneven;
 
+                //Gaat alle tegels af en zet deze zichtbaar of niet, naargelang de situatie is veranderd of niet.
                 foreach (var tegel in SpelBord.Children)
                 {
                     if (tegel is SpelTile)
@@ -360,49 +366,44 @@ namespace PhoneApp1
             #region Update Pion
             tellerRow = 0;
             tellerColumn = 0;
-            evenOfOneven = 0;
-            bool bestaat = false;
+            bool bestaat = false; //Voor te zien als de pinguin bestaat.
             tellerAantalPinguins = 0;
             foreach (var pinguin in SpelBord.Children)
             {
                 if (pinguin is SpelSpeelstuk)
                 {
                     pinguin.Visibility = Visibility.Collapsed;
-                    tellerAantalPinguins++;
+                    tellerAantalPinguins++; //Aantal pinguins tellen.
                 }
 
             }
             foreach (var item in gameState.AllPion)
             {
-                tellerRow = item.Row;
-                if (tellerRow % 2 == 0)
-                    evenOfOneven = 0;
-                else
-                    evenOfOneven = 1;
-                tellerColumn = item.Column; //item.Column * 2 + evenOfOneven
+                tellerRow = item.Row; //Welke row het is.
+                tellerColumn = item.Column; //Welke column het is.
                 bestaat = false;
                 foreach (var pinguin in SpelBord.Children)
                 {
                     if (pinguin is SpelSpeelstuk)
                     {
                         SpelSpeelstuk hulpPinguin = pinguin as SpelSpeelstuk;
-                        if (hulpPinguin.Column == tellerColumn && hulpPinguin.Row == tellerRow)
+                        if (hulpPinguin.Column == tellerColumn && hulpPinguin.Row == tellerRow) //Zien als de pinguin is blijven staan.
                         {
-                            hulpPinguin.Visibility = Visibility.Visible;
+                            hulpPinguin.Visibility = Visibility.Visible; //Laat pinguin staan.
                             bestaat = true;
                             break;
                         }
                     }
 
                 }
-                if (bestaat == false)
+                if (bestaat == false) //Indien pinguin niet bestaat.
                 {
-                    AddPinguin(item.Row, item.Column, kleurAanDeBeurt);
+                    AddPinguin(item.Row, item.Column, kleurAanDeBeurt); //Voeg nieuwe pinguin toe.
                 }
             }
             #endregion
             #region Update Kleur
-            kleurAanDeBeurt = gameState.KleurSpeler;
+            kleurAanDeBeurt = gameState.KleurSpeler; //Achterhaal de kleur van de speler die aan de beurt is.
             #endregion
         }
         void client_GetAllIjschotsCompleted(object sender, ServiceReference1.GetAllIjschotsCompletedEventArgs e)
@@ -415,13 +416,14 @@ namespace PhoneApp1
         {
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             #region Enkel voor de HostPlayer
-            foreach (var item in e.Result)
+            foreach (var item in e.Result) //Voor te zien wie de HOST is.
             {
                 if (item.MapRows == tellerSpelerID && item.ID == tellerLobbyID) //MapRows is de HostID
                 {
-
+                    //Maakt de map aan (Pepaald welke tegels er waar staan).
                     client.MakeMapCompleted += new EventHandler<ServiceReference1.MakeMapCompletedEventArgs>(client_MakeMapCompleted);
-                    client.MakeMapAsync(tellerLobbyID);
+                    client.MakeMapAsync(tellerLobbyID); 
+                    //Gaat elke speler een kleur geven.
                     client.SetKleurPerSpelerCompleted += client_SetKleurPerSpelerCompleted;
                     client.SetKleurPerSpelerAsync(tellerLobbyID);
                 }
@@ -431,11 +433,12 @@ namespace PhoneApp1
             #region Voor iedereen
             foreach (var item in e.Result)
             {
-                if (item.ID == tellerLobbyID)
+                if (item.ID == tellerLobbyID) //Aantal spelers bepalen.
                 {
                     aantalSpelers = item.AantalSpelers;
                 }
             }
+            //Voor te achterhalen wat de kleur van de speler wordt.
             client.SpelerInLobbyCompleted += client_SpelerInLobbyCompleted;
             client.SpelerInLobbyAsync(tellerLobbyID);
             #endregion
@@ -445,7 +448,7 @@ namespace PhoneApp1
             string[] hulpSpeler = lokeleSpeler.ReturnSpeler();
             foreach (var item in e.Result)
             {
-                if (item.NickName == hulpSpeler[1])
+                if (item.NickName == hulpSpeler[1]) //Achterhaal welke kleur je bent.
                 {
                     kleurVanSpeler = item.Kleur;
                     break;
@@ -453,9 +456,9 @@ namespace PhoneApp1
             }
 
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(3000); //Dit is noodzakelijk om er voor te zorgen dat er genoeg tijd is om de map aan te maken. 
             MessageBox.Show("Plaats je pinguins op ijsschotsen met 1 vis."); //De map is nu compleet opgebouwd dus we mogen de pinguins gaan zetten.
-            client.AddAllIjsschotsCompleted += client_AddAllIjsschotsCompleted;
+            client.AddAllIjsschotsCompleted += client_AddAllIjsschotsCompleted; //Voeg alle ijsschotsen toe
             client.AddAllIjsschotsAsync(tellerLobbyID);
         }
         #endregion
@@ -499,8 +502,9 @@ namespace PhoneApp1
         {
             if (e.Result == true && hulpTegel2.RandomNummer == 1) //Als het de opzetfase is en de tegel waar we op klikken heeft 1 vis.
             {
-                //kleurVanSpeler = CheckKleurVanSpeler(kleurVanSpeler);
-                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleurVanSpeler); //Voeg pinguin toe.
+                AddPinguin(hulpTegel2.Row, hulpTegel2.Column, kleurVanSpeler); //Voeg pinguin lokaal toe.
+
+                //Voeg pinguin in database toe.
                 ServiceReference1.DTOPion pion = new ServiceReference1.DTOPion();
                 pion.Column = hulpTegel2.Column;
                 pion.Row = hulpTegel2.Row;
@@ -515,14 +519,17 @@ namespace PhoneApp1
             }
             else if (e.Result == false && verplaatsingsface == true) //Als we tijdens het spel zijn en de pinguin mag verplaatst worden.
             {
+                //Lokaal voor onmiddelijke weergave.
                 VorigeTegel.Visibility = Visibility.Collapsed; //Laat de tegel van waar de pinguin kwam verdwijnen.
                 hulpSpeelstuk2.Visibility = Visibility.Collapsed; //Laat ook de pinguin op die tegel verdwijnen.
                 AddPinguin(hulpTegel2.Row, hulpTegel2.Column, hulpSpeelstuk2.Kleur); //Plaats de pinguin op zijn nieuwe lokatie.
 
+                //In de datebase voor iedereen.
                 foreach (var item in gameState.AllPion)
                 {
                     if (item.Column == hulpSpeelstuk2.Column && item.Row == hulpSpeelstuk2.Row)
                     {
+                        //Geef alle pinguins de juist coördinaten mee.
                         item.Column = hulpTegel2.Column;
                         item.Row = hulpTegel2.Row;
                     }
@@ -531,9 +538,11 @@ namespace PhoneApp1
                 {
                     if (item.Column == (Convert.ToInt32(VorigeTegel.Column / 2)) && item.Row == VorigeTegel.Row)
                     {
-                        item.Visibility = "Collapsed";
+                        item.Visibility = "Collapsed"; //Laat de tegel van waar de pinguin kwam verdwijnen.
                     }
                 }
+
+                //Udate de gamestate voor iedereen.
                 ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
                 client.UpdateGameStateCompleted += client_UpdateGameStateCompleted;
                 client.UpdateGameStateAsync(tellerLobbyID, gameState);
