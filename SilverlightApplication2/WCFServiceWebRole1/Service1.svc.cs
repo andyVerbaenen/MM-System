@@ -168,6 +168,18 @@ namespace WCFServiceWebRole1
             dc.SubmitChanges();
             #endregion
 
+            #region Verwijder punten van alle spelers.
+            //Selecteer alle spelers in de lobby en verwijder de punten.
+            var query3 = from s in dc.Spelers
+                         where s.Lobby == lobbyID
+                         select s;
+            foreach (var que in query3)
+            {
+                que.Punten = 0;
+            }
+            dc.SubmitChanges();
+            #endregion
+
             #region Maak de map aan.
             for (int i = 0; i < 10; i++)
             {
