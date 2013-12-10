@@ -121,8 +121,7 @@ namespace PhoneApp1
                     client.ChanceOpzetFaseAsync();
                     opZetFace = false;
                     ChangeOpzetFaceFirstTime = true;
-                }
-                
+                }                
             }
             if (kleurAanDeBeurt == kleurVanSpeler)
                 kanNogSpelen++;
