@@ -28,11 +28,15 @@ namespace PhoneApp1
         int tellerAantalPinguins = 0; //Dit is een teller voor te te weten als het spel nog in de opzet fase is of niet.
         int aantalSpelers = 4; //Het aantal speler die er zijn.
         int[] punten = new int[4]; //De punten per speler.
+        int eigenPunten = 0;
         int tellerLobbyID = 0; //Hulpvarialbele voor te weten in welke lobby we zijn.
         int tellerSpelerID; //Hulpvariabele voor te weten welke speler we zijn.
+        int kanNogSpelen;
+        int hostID = 0;
 
         string kleurVanSpeler; //Kleur van de speler bepalen.
         string kleurAanDeBeurt; //Kleur voor te weten wie er aan de beurt is.
+        string status;
 
         bool magVerplaatsen = false; //Bool voor te zien als de pinguin verplaatst mag worden.
         bool opZetFace = true; //Bool voor te zien als we in de opzet fase zitten of niet.
@@ -117,9 +121,14 @@ namespace PhoneApp1
                     client.ChanceOpzetFaseAsync();
                     opZetFace = false;
                     ChangeOpzetFaceFirstTime = true;
-                }
-                
+                }                
             }
+            if (kleurAanDeBeurt == kleurVanSpeler)
+                kanNogSpelen++;
+            else
+                kanNogSpelen = 0;
+            if (kanNogSpelen == 15 || kanNogSpelen == 5)
+                MessageBox.Show("You have " + Convert.ToInt32(30-kanNogSpelen) + "sec to play!");
         }        
         void client_UpdateGameStateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -194,11 +203,11 @@ namespace PhoneApp1
             Grid.SetColumnSpan(Ss, 2);
             Ss.MouseLeftButtonDown += new MouseButtonEventHandler(PushPinguin_MouseLeftButtonDown); //Laat een pinguin reageren als op hem gedrukt wordt.
 
-            //teller++; //Volgende speler
-            //if (teller == 4)
-            //{
-            //    teller = 0;
-            //}
+            teller++; //Volgende speler
+            if (teller == 4)
+            {
+                teller = 0;
+            }
         }
         #endregion
 
@@ -219,6 +228,7 @@ namespace PhoneApp1
                             if (hulp.Row == Grid.GetRow(tile) && hulp.Column == Grid.GetColumn(tile)) //Wanneer hij een tegel vind die gelijk is aan de coördinaten van de pinguin..
                             {
                                 hulpTegel2 = tile; //Krijgt de hulptegel de coördinaten van de pinguin. Op deze manier want anders zit je met referentie problemen. 
+                                kanNogSpelen = 0;
                                 break;
                             }
                         }
@@ -308,6 +318,8 @@ namespace PhoneApp1
                     magVerplaatsen = false; //De pinguin mag niet meer verpaatst worden.
 
                     punten[teller] += hulp.RandomNummer;
+
+                    eigenPunten += hulp.RandomNummer;
                     //kleurVanSpeler = CheckKleurVanSpeler(kleurVanSpeler);
                     //MessageBox.Show("Speler: " + kleur + "\nteller: " + teller + "\nPunten: " + punten[teller]);
                 }
@@ -405,6 +417,73 @@ namespace PhoneApp1
             #region Update Kleur
             kleurAanDeBeurt = gameState.KleurSpeler; //Achterhaal de kleur van de speler die aan de beurt is.
             #endregion
+            #region Update Info
+            if (kleurVanSpeler == kleurAanDeBeurt)
+                InfoBar.Text = "Het is jouw beurt. " + kleurVanSpeler + " is je kleur.";
+            else
+                InfoBar.Text = "Wachten op je beurt.";
+            string text = "Score: ";
+            foreach (var item in gameState.AllSpeler)
+            {
+                text += item.NickName + ": " + item.Punten + "\t\t";
+            }
+            Punten.Text = text;
+            #endregion
+            #region Update Speler status
+            foreach (var item in gameState.AllSpeler)
+            {
+                if (kanNogSpelen > 30 && item.Kleur == kleurVanSpeler)
+                {
+                    item.IsReady = "Out";
+                    ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                    client.UpdateGameStateCompleted += client_UpdateGameStateCompleted;
+                    client.UpdateGameStateAsync(tellerLobbyID, gameState);
+                }
+            }
+            #endregion
+            #region Update Game Status
+            ServiceReference1.Service1Client client2 = new ServiceReference1.Service1Client();
+            client2.LetGameBeginCompleted += client_LetGameBeginCompleted; //check als spel ten einde is.
+            client2.LetGameBeginAsync(tellerLobbyID);
+            if (status == "Zwart")
+            {
+                
+                newTimer.Stop();
+                string gameOverString = "Game over!";
+                string hulpString = "";
+                int stopFor = 0;
+                for (int i = 200; i > 0; i--)
+                {
+                    foreach (var item in gameState.AllSpeler)
+                    {
+                        if (item.Punten == i)
+                        {
+                            hulpString = "\n" + item.NickName + ": " + item.Punten;
+                            stopFor++;                            
+                        }
+                    }
+                    gameOverString += hulpString;
+                    if (stopFor == aantalSpelers)
+                        break;
+                }                
+                MessageBox.Show(gameOverString);
+                if (hostID == tellerSpelerID)
+                {
+                    client2.EndGameCompleted += client2_EndGameCompleted;
+                    client2.EndGameAsync(tellerLobbyID);
+                }
+                NavigationService.Navigate(new Uri("/Hoofdmenu.xaml", UriKind.Relative)); //Ga naar het hoofdmenu.
+            }
+            #endregion
+
+        }
+        void client2_EndGameCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            
+        }
+        void client_LetGameBeginCompleted(object sender, ServiceReference1.LetGameBeginCompletedEventArgs e)//Get Status game
+        {
+            status = e.Result;
         }
         void client_GetAllIjschotsCompleted(object sender, ServiceReference1.GetAllIjschotsCompletedEventArgs e)
         {
@@ -420,6 +499,7 @@ namespace PhoneApp1
             {
                 if (item.MapRows == tellerSpelerID && item.ID == tellerLobbyID) //MapRows is de HostID
                 {
+                    hostID = item.MapRows;
                     //Maakt de map aan (Pepaald welke tegels er waar staan).
                     client.MakeMapCompleted += new EventHandler<ServiceReference1.MakeMapCompletedEventArgs>(client_MakeMapCompleted);
                     client.MakeMapAsync(tellerLobbyID); 
@@ -474,6 +554,10 @@ namespace PhoneApp1
                 int echteKollomWaarde = 0; //Omdat de collomen per twee optellen en soms starten bij 0 of 1, naargelang het even of oneven moet zijn, is het moeilijk om te weten in welke zichtbare kollom we echt zitten. Daarom deze variabele.
                 for (int j = evenOfOneven; j < 19; j += 2) //+2 omdat er dubbele zoveel collomen zijn als rijen voor de kollomen van de oneven rijen te laten uitkomen tussen twee kollomen van de even rijen.
                 {
+                    if (hulpMap[i] == null)
+                    {
+                        NavigationService.Navigate(new Uri("/GameBoard.xaml", UriKind.Relative)); //Ga naar het gameboard.
+                    };
                     AddTile(i, j, hulpMap[i][echteKollomWaarde]); //Add de tegel met parameters: rij, kollom, en aantal vissen.
                     echteKollomWaarde++; //We zijn nu 1 kollom verder dus daarom + 1.
                 }
@@ -541,6 +625,14 @@ namespace PhoneApp1
                         item.Visibility = "Collapsed"; //Laat de tegel van waar de pinguin kwam verdwijnen.
                     }
                 }
+                foreach (var item in gameState.AllSpeler)
+                {
+                    if (item.Kleur == kleurVanSpeler)
+                    {
+                        item.Punten = eigenPunten;
+                    }
+                }
+
 
                 //Udate de gamestate voor iedereen.
                 ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();

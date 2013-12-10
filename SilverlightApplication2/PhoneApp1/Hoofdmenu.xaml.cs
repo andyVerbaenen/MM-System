@@ -37,7 +37,11 @@ namespace PhoneApp1
                 temp.welkeLobby = item.ID.ToString();
 
                 //Voeg toe in ObservableCollection.
-                showLobbies.Add(temp);
+                if (temp.Status == "Waiting")
+                {
+                    showLobbies.Add(temp);
+                }
+                
             }
             mijnListbox.ItemsSource = showLobbies; //Laat alle lobbies zijn in het lobby menu.
             

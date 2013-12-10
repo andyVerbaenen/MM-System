@@ -79,6 +79,9 @@ namespace WCFServiceWebRole1
         string AddPionToGameSte(int lobbyID, DTOPion pion, string kleur);
 
         [OperationContract]
+        void EndGame(int lobbyID);
+
+        [OperationContract]
         bool OpzetFase();
        
         [OperationContract]

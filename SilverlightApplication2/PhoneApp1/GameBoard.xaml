@@ -14,8 +14,20 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="SpelBord" Background="#FF5679EF">
-
+    <Grid x:Name="Hoofd" Background="#FF5679EF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Name="InfoBar" Grid.Row="0">Welcom to the Game!</TextBlock>
+        <TextBlock Name="Punten" Grid.Row="0" TextAlignment="Right"></TextBlock>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1">
+            <Grid x:Name="SpelBord" Background="#FF5679EF">                    
+            </Grid>            
+        </ScrollViewer>
+        <TextBlock Grid.Row="2" TextAlignment="Left" Text="Don't forget to scroll.."></TextBlock>
+        <TextBlock Grid.Row="2" TextAlignment="Right" Text="Made by Jonathan Sansens and Andy Verbaenen"></TextBlock>
     </Grid>
 
 </phone:PhoneApplicationPage>

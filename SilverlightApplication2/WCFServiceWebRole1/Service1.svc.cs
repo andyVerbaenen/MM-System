@@ -168,6 +168,19 @@ namespace WCFServiceWebRole1
             dc.SubmitChanges();
             #endregion
 
+            #region Verwijder punten van alle spelers.
+            //Selecteer alle spelers in de lobby en verwijder de punten.
+            var query3 = from s in dc.Spelers
+                         where s.Lobby == lobbyID
+                         select s;
+            foreach (var que in query3)
+            {
+                que.Punten = 0;
+                que.Ready = "Playing";
+            }
+            dc.SubmitChanges();
+            #endregion
+
             #region Maak de map aan.
             for (int i = 0; i < 10; i++)
             {
@@ -307,6 +320,7 @@ namespace WCFServiceWebRole1
             foreach (var item in query) //Geef de punten mee.
             {
                 item.Punten = speler[teller].Punten;
+                item.Ready = speler[teller].IsReady;
                 teller++;
             }
             dc.SubmitChanges();
@@ -336,8 +350,35 @@ namespace WCFServiceWebRole1
                          where l.ID == lobbyID
                          select l).Single();
 
-            query.KleurWieMagSpelen = Kleur(kleur, query.MapColumns); //Verander de kleur van de volgende speler.
+            var qeury2 = from s in dc.Spelers
+                         where s.Lobby == lobbyID
+                         select s;
 
+            kleur = Kleur(kleur, query.MapColumns); //Verander de kleur van de volgende speler.
+            bool outSpelerGevonden = false;
+            int tellerOutSpelers = 0;
+            do
+            {
+                outSpelerGevonden = false;
+                foreach (var item in qeury2)
+                {
+                    if (item.Ready == "Out" && kleur == item.Kleur)
+                    {
+                        kleur = Kleur(kleur, query.MapColumns); //Verander de kleur van de volgende speler.
+                        outSpelerGevonden = true;
+                        tellerOutSpelers++;
+                        break;
+                    }
+                    if (tellerOutSpelers == query.MapColumns)
+                    {
+                        query.Status = "Ending";
+                        kleur = "Zwart";
+                    }
+                }
+            } while (outSpelerGevonden == true && query.Status != "Ending");
+
+
+            query.KleurWieMagSpelen = kleur;
             dc.SubmitChanges(); 
         }
         #endregion
@@ -502,7 +543,42 @@ namespace WCFServiceWebRole1
         }
         #endregion
 
-        
+        #region End game
+        public void EndGame(int lobbyID)
+        {
+            #region Verwijder vorige tegels.
+            var query = from ijs in dc.Ijsschots
+                        where ijs.LobbyID == lobbyID
+                        select ijs;
+            foreach (var que in query)
+            {
+                dc.Ijsschots.DeleteOnSubmit(que);
+            }
+            dc.SubmitChanges();
+            #endregion
+
+            #region Verwijder vorige pinguins in de lobby.
+            var query2 = from p in dc.Pions
+                         where p.LobbyID == lobbyID
+                         select p;
+            foreach (var que in query2)
+            {
+                dc.Pions.DeleteOnSubmit(que);
+            }
+            dc.SubmitChanges();
+            #endregion
+
+            #region Verwijder lobby
+            var query3 = (from l in dc.Lobbies
+                          where l.ID == lobbyID
+                          select l).Single();
+            dc.Lobbies.DeleteOnSubmit(query3);
+            dc.SubmitChanges();
+            #endregion
+
+        }
+        #endregion
+
         private string Kleur(string kleur, int aantalSpelers)
         {
             //Update de kleur. (Update dus aan wie het is.)

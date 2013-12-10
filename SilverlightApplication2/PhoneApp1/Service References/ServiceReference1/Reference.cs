@@ -759,6 +759,11 @@ namespace PhoneApp1.ServiceReference1 {
         
         string EndAddPionToGameSte(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/EndGame", ReplyAction="http://tempuri.org/IService1/EndGameResponse")]
+        System.IAsyncResult BeginEndGame(int lobbyID, System.AsyncCallback callback, object asyncState);
+        
+        void EndEndGame(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IService1/OpzetFase", ReplyAction="http://tempuri.org/IService1/OpzetFaseResponse")]
         System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState);
         
@@ -1286,6 +1291,12 @@ namespace PhoneApp1.ServiceReference1 {
         
         private System.Threading.SendOrPostCallback onAddPionToGameSteCompletedDelegate;
         
+        private BeginOperationDelegate onBeginEndGameDelegate;
+        
+        private EndOperationDelegate onEndEndGameDelegate;
+        
+        private System.Threading.SendOrPostCallback onEndGameCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpzetFaseDelegate;
         
         private EndOperationDelegate onEndOpzetFaseDelegate;
@@ -1412,6 +1423,8 @@ namespace PhoneApp1.ServiceReference1 {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> UpdateGameStateCompleted;
         
         public event System.EventHandler<AddPionToGameSteCompletedEventArgs> AddPionToGameSteCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> EndGameCompleted;
         
         public event System.EventHandler<OpzetFaseCompletedEventArgs> OpzetFaseCompleted;
         
@@ -2440,6 +2453,51 @@ namespace PhoneApp1.ServiceReference1 {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginEndGame(int lobbyID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginEndGame(lobbyID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        void PhoneApp1.ServiceReference1.IService1.EndEndGame(System.IAsyncResult result) {
+            base.Channel.EndEndGame(result);
+        }
+        
+        private System.IAsyncResult OnBeginEndGame(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int lobbyID = ((int)(inValues[0]));
+            return ((PhoneApp1.ServiceReference1.IService1)(this)).BeginEndGame(lobbyID, callback, asyncState);
+        }
+        
+        private object[] OnEndEndGame(System.IAsyncResult result) {
+            ((PhoneApp1.ServiceReference1.IService1)(this)).EndEndGame(result);
+            return null;
+        }
+        
+        private void OnEndGameCompleted(object state) {
+            if ((this.EndGameCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.EndGameCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void EndGameAsync(int lobbyID) {
+            this.EndGameAsync(lobbyID, null);
+        }
+        
+        public void EndGameAsync(int lobbyID, object userState) {
+            if ((this.onBeginEndGameDelegate == null)) {
+                this.onBeginEndGameDelegate = new BeginOperationDelegate(this.OnBeginEndGame);
+            }
+            if ((this.onEndEndGameDelegate == null)) {
+                this.onEndEndGameDelegate = new EndOperationDelegate(this.OnEndEndGame);
+            }
+            if ((this.onEndGameCompletedDelegate == null)) {
+                this.onEndGameCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnEndGameCompleted);
+            }
+            base.InvokeAsync(this.onBeginEndGameDelegate, new object[] {
+                        lobbyID}, this.onEndEndGameDelegate, this.onEndGameCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult PhoneApp1.ServiceReference1.IService1.BeginOpzetFase(System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginOpzetFase(callback, asyncState);
         }
@@ -3019,6 +3077,18 @@ namespace PhoneApp1.ServiceReference1 {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("AddPionToGameSte", _args, result)));
                 return _result;
+            }
+            
+            public System.IAsyncResult BeginEndGame(int lobbyID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = lobbyID;
+                System.IAsyncResult _result = base.BeginInvoke("EndGame", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public void EndEndGame(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                base.EndInvoke("EndGame", _args, result);
             }
             
             public System.IAsyncResult BeginOpzetFase(System.AsyncCallback callback, object asyncState) {

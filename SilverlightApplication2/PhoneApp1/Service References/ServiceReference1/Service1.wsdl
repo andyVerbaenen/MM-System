@@ -140,6 +140,12 @@
   <wsdl:message name="IService1_AddPionToGameSte_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddPionToGameSteResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_EndGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:EndGame" />
+  </wsdl:message>
+  <wsdl:message name="IService1_EndGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EndGameResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_OpzetFase_InputMessage">
     <wsdl:part name="parameters" element="tns:OpzetFase" />
   </wsdl:message>
@@ -258,6 +264,10 @@
     <wsdl:operation name="AddPionToGameSte">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddPionToGameSte" message="tns:IService1_AddPionToGameSte_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddPionToGameSteResponse" message="tns:IService1_AddPionToGameSte_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EndGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/EndGame" message="tns:IService1_EndGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/EndGameResponse" message="tns:IService1_EndGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="OpzetFase">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/OpzetFase" message="tns:IService1_OpzetFase_InputMessage" />
@@ -473,6 +483,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddPionToGameSte">
       <soap:operation soapAction="http://tempuri.org/IService1/AddPionToGameSte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EndGame">
+      <soap:operation soapAction="http://tempuri.org/IService1/EndGame" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
